@@ -1,0 +1,45 @@
+{
+  "name": "smolblog/smolblog-wp",
+  "description": "Smolblog as a WordPress plugin",
+  "type": "wordpress-plugin",
+  "license": "AGPL-3.0-only",
+  "authors": [
+    {
+      "name": "Smolblog",
+      "email": "dev@smolblog.org"
+    },
+    {
+      "name": "Evan Hildreth",
+      "email": "me@eph.me"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/smolblog/smolblog-core"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/smolblog/smolblog-twitter"
+    }
+  ],
+  "require": {
+    "smolblog/smolblog-core": "dev-main",
+    "smolblog/smolblog-twitter": "dev-main"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+    "phpcompatibility/phpcompatibility-wp": "^2.1.1",
+    "wp-coding-standards/wpcs": "~2.3.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "composer/installers": true
+    }
+  },
+  "scripts": {
+    "lint": "./vendor/squizlabs/php_codesniffer/bin/phpcs",
+    "lintfix": "./vendor/squizlabs/php_codesniffer/bin/phpcbf"
+  }
+}
