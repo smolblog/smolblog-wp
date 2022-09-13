@@ -4,6 +4,8 @@
  *
  * An interface between the core Smolblog library and WordPress.
  *
+ * @package Smolblog\WP
+ *
  * @wordpress-plugin
  * Plugin Name:       Smolblog WP
  * Plugin URI:        http://github.com/smolblog/smolblog-wp
@@ -19,6 +21,7 @@
 
 namespace Smolblog\WP;
 
+require_once 'vendor/autoload.php';
 require_once 'class-endpoint-registrar.php';
 
 use Smolblog\Core\{App, Environment};

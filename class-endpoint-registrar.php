@@ -1,14 +1,27 @@
 <?php
+/**
+ * Class to handle registering the Smolblog endpoints with WordPress.
+ *
+ * @package Smolblog\WP
+ */
 
 namespace Smolblog\WP;
 
 use \WP_REST_Request;
 use \WP_REST_Response;
-use Smolblog\Core\{Endpoint, EndpointRequest};
+use Smolblog\Core\{Endpoint, EndpointRegistrar, EndpointRequest};
 use Smolblog\Core\Definitions\{HttpVerb, SecurityLevel};
 
-class Endpoint_Registrar implements Smolblog\Core\EndpointRegistrar {
+/**
+ * Class to handle registering the Smolblog endpoints with WordPress.
+ */
+class Endpoint_Registrar implements EndpointRegistrar {
 
+	/**
+	 * Hold the endpoints until we are ready to register them.
+	 *
+	 * @var array
+	 */
 	private $registry = array();
 
 	/**
@@ -22,10 +35,27 @@ class Endpoint_Registrar implements Smolblog\Core\EndpointRegistrar {
 		$registry[] = $endpoint;
 	}
 
+	/**
+	 * Register the endpoints we've been given
+	 *
+	 * @return void
+	 */
 	public function init_endpoints() : void {
 		foreach ( $registry as $endpoint ) {
 			$config = $endpoint->getConfig();
-			$route  = $config->route;
+			$route  =
+				( $config->route[0] === '/' ? '' : '/' ) .
+				preg_replace_callback(
+					'\[([a-z]+)\]',
+					function( $param ) use ( $config ) {
+						if ( ! isset( $config->params[ $param[1] ] ) ) {
+							return $param[0];
+						}
+
+						return '(?P<' . $param[1] . '>' . $config->params[ $param[1] ] . ')';
+					},
+					$config->route
+				);
 
 			register_rest_route(
 				'smolblog/v1',
@@ -39,6 +69,12 @@ class Endpoint_Registrar implements Smolblog\Core\EndpointRegistrar {
 		}
 	}
 
+	/**
+	 * Translate array of Smolblog\Core\HttpVerb into strings.
+	 *
+	 * @param array $verbs HTTP methods for this endpoint.
+	 * @return array HTTP methods for this endpoint as strings.
+	 */
 	private function get_methods( array $verbs ): array {
 		return array_map(
 			function ( $verb ) {
@@ -48,6 +84,12 @@ class Endpoint_Registrar implements Smolblog\Core\EndpointRegistrar {
 		);
 	}
 
+	/**
+	 * Turn the SecurityLevel into a WordPress-friendly callback.
+	 *
+	 * @param SecurityLevel $security Security level for this endpoint.
+	 * @return callable Callback that checks for the analogous WordPress role.
+	 */
 	private function get_permission_callback( SecurityLevel $security ): callable {
 		switch ( $security ) {
 			case SecurityLevel::Anonymous:
@@ -76,6 +118,12 @@ class Endpoint_Registrar implements Smolblog\Core\EndpointRegistrar {
 		return '__return_false';
 	}
 
+	/**
+	 * Create a callback function for this endpoint.
+	 *
+	 * @param callable $run_endpoint Smolblog callback function for the endpoint.
+	 * @return callable Callback function that translates WordPress constructs and Smolblog constructs.
+	 */
 	private function get_callback( callable $run_endpoint ): callable {
 		return function( WP_REST_Request $incoming ) use ( $run_endpoint ) {
 			$request = new EndpointRequest(
