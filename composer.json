@@ -3,6 +3,7 @@
   "description": "Smolblog as a WordPress plugin",
   "type": "wordpress-plugin",
   "license": "AGPL-3.0-only",
+  "minimum-stability": "dev",
   "authors": [
     {
       "name": "Smolblog",
@@ -28,9 +29,9 @@
     "smolblog/smolblog-twitter": "dev-main"
   },
   "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
-    "phpcompatibility/phpcompatibility-wp": "^2.1.1",
-    "wp-coding-standards/wpcs": "~2.3.0"
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "wp-coding-standards/wpcs": "dev-develop"
   },
   "config": {
     "allow-plugins": {
