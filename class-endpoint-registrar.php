@@ -32,7 +32,7 @@ class Endpoint_Registrar implements EndpointRegistrar {
 	 * @return void
 	 */
 	public function registerEndpoint( Endpoint $endpoint ): void {
-		$registry[] = $endpoint;
+		$this->registry[] = $endpoint;
 	}
 
 	/**
@@ -41,12 +41,12 @@ class Endpoint_Registrar implements EndpointRegistrar {
 	 * @return void
 	 */
 	public function init_endpoints() : void {
-		foreach ( $registry as $endpoint ) {
+		foreach ( $this->registry as $endpoint ) {
 			$config = $endpoint->getConfig();
 			$route  =
 				( $config->route[0] === '/' ? '' : '/' ) .
 				preg_replace_callback(
-					'\[([a-z]+)\]',
+					'/\[([a-z]+)\]/',
 					function( $param ) use ( $config ) {
 						if ( ! isset( $config->params[ $param[1] ] ) ) {
 							return $param[0];
@@ -63,7 +63,7 @@ class Endpoint_Registrar implements EndpointRegistrar {
 				array(
 					'methods'             => $this->get_methods( $config->verbs ),
 					'callback'            => $this->get_callback( array( $endpoint, 'run' ) ),
-					'permission_callback' => $this->get_permission_callback( $endpoint->security ),
+					'permission_callback' => $this->get_permission_callback( $config->security ),
 				),
 			);
 		}
@@ -130,7 +130,7 @@ class Endpoint_Registrar implements EndpointRegistrar {
 				userId: get_current_user_id(),
 				siteId: get_current_blog_id(),
 				params: $incoming->get_params(),
-				json: $incoming->get_json_params()
+				json: $incoming->get_json_params() ?? false
 			);
 
 			$response = call_user_func( $run_endpoint, $request );

@@ -23,15 +23,17 @@ namespace Smolblog\WP;
 
 require_once 'vendor/autoload.php';
 require_once 'class-endpoint-registrar.php';
+require_once 'class-connection-credential-helper.php';
+require_once 'class-transient-helper.php';
 
 use Smolblog\Core\{App, Environment};
-use Smolblog\Core\Models\{ConnectionCredential, Transient};
+use Smolblog\Core\Factories\{ConnectionCredentialFactory, TransientFactory};
 
 add_action(
 	'plugins_loaded',
 	function() {
 		// Load environment variables.
-		$environment = new Environment( apiBase: get_rest_url( null, '/smolblog/v1' ) );
+		$environment = new Environment( apiBase: 'https://smolbeta.localhost/wp-json/smolblog/v1' );
 
 		// Create empty Endpoint Registrar and instantiate the App.
 		$endpoint_registrar = new Endpoint_Registrar();
