@@ -103,12 +103,40 @@ class Connection_Credential_Helper implements ModelHelper {
 		if ( $id ) {
 			$result = $wpdb->update(
 				$tablename,
-			)
+				array(
+					'user_id'      => $withData['userId'],
+					'provider'     => $withData['provider'],
+					'provider_key' => $withData['providerKey'],
+					'display_name' => $withData['displayName'],
+					'details'      => $withData['details'],
+				),
+				array( 'id' => $id ),
+				$this->formats_from_model( $forModel ),
+				array( '%d' )
+			);
 		} else {
-
+			$result = $wpdb->insert(
+				$tablename,
+				array(
+					'user_id'      => $withData['userId'],
+					'provider'     => $withData['provider'],
+					'provider_key' => $withData['providerKey'],
+					'display_name' => $withData['displayName'],
+					'details'      => $withData['details'],
+				),
+				$this->formats_from_model( $forModel )
+			);
 		}
+
+		return $result ? true : false;
 	}
 
+	/**
+	 * Create a WPDB formats array from the given model's fields
+	 *
+	 * @param Model $model Smolblog model with fields.
+	 * @return array WPDB translation of the model's FIELDS constant
+	 */
 	private function formats_from_model( Model $model ): array {
 		$formats = array();
 		foreach ( get_class( $model )::FIELDS as $field ) {
