@@ -58,7 +58,7 @@ class Endpoint_Registrar implements EndpointRegistrar {
 				);
 
 			register_rest_route(
-				'smolblog/v1',
+				'smolblog/v2',
 				$route,
 				array(
 					'methods'             => $this->get_methods( $config->verbs ),

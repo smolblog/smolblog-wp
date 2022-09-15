@@ -1188,12 +1188,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "7ee56e734e77b5ae211e59650d96391fe6e5af71"
+                "reference": "70856ca1390cdbe80c7daede73da69fa660dc233"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/7ee56e734e77b5ae211e59650d96391fe6e5af71",
-                "reference": "7ee56e734e77b5ae211e59650d96391fe6e5af71",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/70856ca1390cdbe80c7daede73da69fa660dc233",
+                "reference": "70856ca1390cdbe80c7daede73da69fa660dc233",
                 "shasum": ""
             },
             "require": {
@@ -1242,7 +1242,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2022-09-14T21:24:16+00:00"
+            "time": "2022-09-15T00:48:42+00:00"
         },
         {
             "name": "smolblog/smolblog-twitter",
