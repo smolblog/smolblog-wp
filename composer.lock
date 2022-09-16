@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1b935d7cff06cff60d907707f9604ea",
+    "content-hash": "e7c15b69a679786cfcb9aab5ee910a09",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -725,16 +725,16 @@
         },
         {
             "name": "paragonie/sodium_compat",
-            "version": "v1.17.1",
+            "version": "v1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/sodium_compat.git",
-                "reference": "ac994053faac18d386328c91c7900f930acadf1e"
+                "reference": "906e0b925895d3a5941eda25f371fbafb3cbc22f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/ac994053faac18d386328c91c7900f930acadf1e",
-                "reference": "ac994053faac18d386328c91c7900f930acadf1e",
+                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/906e0b925895d3a5941eda25f371fbafb3cbc22f",
+                "reference": "906e0b925895d3a5941eda25f371fbafb3cbc22f",
                 "shasum": ""
             },
             "require": {
@@ -805,9 +805,9 @@
             ],
             "support": {
                 "issues": "https://github.com/paragonie/sodium_compat/issues",
-                "source": "https://github.com/paragonie/sodium_compat/tree/v1.17.1"
+                "source": "https://github.com/paragonie/sodium_compat/tree/v1.18.0"
             },
-            "time": "2022-03-23T19:32:04+00:00"
+            "time": "2022-09-13T20:54:27+00:00"
         },
         {
             "name": "psr/container",
@@ -1184,16 +1184,16 @@
         },
         {
             "name": "smolblog/smolblog-core",
-            "version": "dev-main",
+            "version": "dev-feature/plugin-interface",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "70856ca1390cdbe80c7daede73da69fa660dc233"
+                "reference": "86ad984041badcdbc1fe860c4a5380c34e66a92f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/70856ca1390cdbe80c7daede73da69fa660dc233",
-                "reference": "70856ca1390cdbe80c7daede73da69fa660dc233",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/86ad984041badcdbc1fe860c4a5380c34e66a92f",
+                "reference": "86ad984041badcdbc1fe860c4a5380c34e66a92f",
                 "shasum": ""
             },
             "require": {
@@ -1206,7 +1206,6 @@
                 "phpunit/phpunit": "^9",
                 "squizlabs/php_codesniffer": "^3.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1239,10 +1238,10 @@
             ],
             "description": "Core features for Smolblog independent of other frameworks",
             "support": {
-                "source": "https://github.com/smolblog/smolblog-core/tree/main",
+                "source": "https://github.com/smolblog/smolblog-core/tree/feature/plugin-interface",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2022-09-15T00:48:42+00:00"
+            "time": "2022-09-16T00:18:45+00:00"
         },
         {
             "name": "smolblog/smolblog-twitter",
@@ -1250,28 +1249,37 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-twitter.git",
-                "reference": "33eca88f45b056fb1a65bdf71667d7bfcfe187f1"
+                "reference": "c8d772be60744f2c4ec5c06195c82f1711ab21e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-twitter/zipball/33eca88f45b056fb1a65bdf71667d7bfcfe187f1",
-                "reference": "33eca88f45b056fb1a65bdf71667d7bfcfe187f1",
+                "url": "https://api.github.com/repos/smolblog/smolblog-twitter/zipball/c8d772be60744f2c4ec5c06195c82f1711ab21e5",
+                "reference": "c8d772be60744f2c4ec5c06195c82f1711ab21e5",
                 "shasum": ""
             },
             "require": {
                 "smolblog/oauth2-twitter": "^1.0",
-                "smolblog/smolblog-core": "dev-main"
+                "smolblog/smolblog-core": "dev-feature/plugin-interface"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9",
                 "squizlabs/php_codesniffer": "^3.0"
             },
             "default-branch": true,
-            "type": "library",
+            "type": "smolblog-plugin",
+            "extra": {
+                "smolblog": {
+                    "title": "Twitter Connector",
+                    "entrypoint": "\\Smolblog\\Twitter\\loadPlugin"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Smolblog\\Twitter\\": "src/"
-                }
+                },
+                "files": [
+                    "index.php"
+                ]
             },
             "scripts": {
                 "test": [
@@ -1290,19 +1298,21 @@
             "authors": [
                 {
                     "name": "Smolblog",
-                    "email": "dev@smolblog.org"
+                    "email": "dev@smolblog.org",
+                    "homepage": "https://www.smolblog.org/"
                 },
                 {
                     "name": "Evan Hildreth",
-                    "email": "me@eph.me"
+                    "email": "me@eph.me",
+                    "homepage": "https://www.oddevan.com/"
                 }
             ],
             "description": "Twitter functionality for Smolblog",
             "support": {
-                "source": "https://github.com/smolblog/smolblog-twitter/tree/feature/authentication",
+                "source": "https://github.com/smolblog/smolblog-twitter/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-twitter/issues"
             },
-            "time": "2022-09-12T01:24:57+00:00"
+            "time": "2022-09-16T01:00:53+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -1771,12 +1781,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "b860f758b87bf43b7e5a7e0ebe1804f2f9771f1b"
+                "reference": "19855395ad42a9692542be3f7cd68f000edcce5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/b860f758b87bf43b7e5a7e0ebe1804f2f9771f1b",
-                "reference": "b860f758b87bf43b7e5a7e0ebe1804f2f9771f1b",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/19855395ad42a9692542be3f7cd68f000edcce5d",
+                "reference": "19855395ad42a9692542be3f7cd68f000edcce5d",
                 "shasum": ""
             },
             "require": {
@@ -1821,7 +1831,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2022-09-10T07:27:09+00:00"
+            "time": "2022-09-15T22:19:54+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
