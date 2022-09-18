@@ -73,9 +73,9 @@ add_action(
 			function() {
 				global $smolblog_app;
 				?>
-			<a href="<?php echo esc_attr( get_rest_url( null, 'smolblog/v2/connect/init/twitter' ) ); ?>?_wpnonce=<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>" class="button">Sign in with Twitter</a>
+			<p><a href="<?php echo esc_attr( get_rest_url( null, 'smolblog/v2/connect/init/twitter' ) ); ?>?_wpnonce=<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>" class="button">Sign in with Twitter</a></p>
 
-			<pre><?php print_r( $smolblog_app ); ?></pre>
+			<p><a href="<?php echo esc_attr( get_rest_url( null, 'smolblog/v2/admin/plugins' ) ); ?>?_wpnonce=<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>" class="button">See plugin info</a></p>
 				<?php
 			}
 		);

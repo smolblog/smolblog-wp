@@ -25,7 +25,7 @@
     }
   ],
   "require": {
-    "smolblog/smolblog-core": "dev-feature/plugin-interface",
+    "smolblog/smolblog-core": "dev-main",
     "smolblog/smolblog-twitter": "dev-main"
   },
   "require-dev": {
