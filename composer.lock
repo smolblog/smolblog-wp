@@ -604,6 +604,116 @@
             "time": "2021-12-22T16:42:49+00:00"
         },
         {
+            "name": "league/tactician",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/tactician.git",
+                "reference": "4ea79b34fff0aac6eb6bbed9d1100183c53a564e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/tactician/zipball/4ea79b34fff0aac6eb6bbed9d1100183c53a564e",
+                "reference": "4ea79b34fff0aac6eb6bbed9d1100183c53a564e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3",
+                "phpunit/phpunit": "^7.5.20 || ^9.3.8",
+                "squizlabs/php_codesniffer": "^3.5.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Tactician\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ross Tuck",
+                    "homepage": "http://tactician.thephpleague.com"
+                }
+            ],
+            "description": "A small, flexible command bus. Handy for building service layers.",
+            "keywords": [
+                "command",
+                "command bus",
+                "service layer"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/tactician/issues",
+                "source": "https://github.com/thephpleague/tactician/tree/1.x"
+            },
+            "time": "2022-01-17T17:16:14+00:00"
+        },
+        {
+            "name": "league/tactician-container",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/tactician-container.git",
+                "reference": "5150cbf861a51b1b27eba28449b46deee18cc423"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/tactician-container/zipball/5150cbf861a51b1b27eba28449b46deee18cc423",
+                "reference": "5150cbf861a51b1b27eba28449b46deee18cc423",
+                "shasum": ""
+            },
+            "require": {
+                "league/tactician": "^1.0",
+                "php": ">=7.4",
+                "psr/container": "~2.0"
+            },
+            "require-dev": {
+                "league/container": "~4.0",
+                "phpunit/phpunit": "~6.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Tactician\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nigel Greenway",
+                    "homepage": "http://futurepixels.co.uk"
+                }
+            ],
+            "description": "Tactician integration for any container implementing PSR-11",
+            "keywords": [
+                "container",
+                "container-interop",
+                "di",
+                "interoperable",
+                "league",
+                "tactician"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/tactician-container/issues",
+                "source": "https://github.com/thephpleague/tactician-container/tree/v3.0.0"
+            },
+            "time": "2021-12-16T20:15:05+00:00"
+        },
+        {
             "name": "paragonie/random-lib",
             "version": "dev-master",
             "source": {
@@ -725,16 +835,16 @@
         },
         {
             "name": "paragonie/sodium_compat",
-            "version": "v1.18.0",
+            "version": "v1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/sodium_compat.git",
-                "reference": "906e0b925895d3a5941eda25f371fbafb3cbc22f"
+                "reference": "cb15e403ecbe6a6cc515f855c310eb6b1872a933"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/906e0b925895d3a5941eda25f371fbafb3cbc22f",
-                "reference": "906e0b925895d3a5941eda25f371fbafb3cbc22f",
+                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/cb15e403ecbe6a6cc515f855c310eb6b1872a933",
+                "reference": "cb15e403ecbe6a6cc515f855c310eb6b1872a933",
                 "shasum": ""
             },
             "require": {
@@ -805,9 +915,9 @@
             ],
             "support": {
                 "issues": "https://github.com/paragonie/sodium_compat/issues",
-                "source": "https://github.com/paragonie/sodium_compat/tree/v1.18.0"
+                "source": "https://github.com/paragonie/sodium_compat/tree/v1.19.0"
             },
-            "time": "2022-09-13T20:54:27+00:00"
+            "time": "2022-09-26T03:40:35+00:00"
         },
         {
             "name": "psr/container",
@@ -1188,17 +1298,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "6d74c0b68cdb57b8e33b7746ae59283c10ecd538"
+                "reference": "451923f3cb5ec838f37d6ef3dbc3a3dcbdf7fefa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/6d74c0b68cdb57b8e33b7746ae59283c10ecd538",
-                "reference": "6d74c0b68cdb57b8e33b7746ae59283c10ecd538",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/451923f3cb5ec838f37d6ef3dbc3a3dcbdf7fefa",
+                "reference": "451923f3cb5ec838f37d6ef3dbc3a3dcbdf7fefa",
                 "shasum": ""
             },
             "require": {
                 "league/container": "^4.2",
                 "league/event": "^3.0",
+                "league/tactician": "^1.1",
+                "league/tactician-container": "^3.0",
                 "psr/container": "^2.0",
                 "psr/event-dispatcher": "^1.0"
             },
@@ -1215,6 +1327,9 @@
                 }
             },
             "scripts": {
+                "coverage": [
+                    "export XDEBUG_MODE=coverage; phpunit --testsuite core; cat coverage.txt"
+                ],
                 "test": [
                     "phpunit --testsuite core"
                 ],
@@ -1243,7 +1358,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2022-09-17T23:59:34+00:00"
+            "time": "2022-10-04T13:30:03+00:00"
         },
         {
             "name": "smolblog/smolblog-twitter",
@@ -1638,12 +1753,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "8324f1143f8b1a2c89d4cba869a1b7e06913ee1a"
+                "reference": "b67f494d6705bba323498f8dcacee84a76f06e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/8324f1143f8b1a2c89d4cba869a1b7e06913ee1a",
-                "reference": "8324f1143f8b1a2c89d4cba869a1b7e06913ee1a",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/b67f494d6705bba323498f8dcacee84a76f06e60",
+                "reference": "b67f494d6705bba323498f8dcacee84a76f06e60",
                 "shasum": ""
             },
             "require": {
@@ -1655,7 +1770,7 @@
             "require-dev": {
                 "php-parallel-lint/php-console-highlighter": "^1.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
-                "phpcsstandards/phpcsdevtools": "^1.0",
+                "phpcsstandards/phpcsdevtools": "^1.2.0",
                 "phpunit/phpunit": "^4.5 || ^5.0 || ^6.0 || ^7.0"
             },
             "default-branch": true,
@@ -1694,7 +1809,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSExtra/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSExtra"
             },
-            "time": "2022-09-04T21:26:24+00:00"
+            "time": "2022-09-23T12:57:51+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -1702,12 +1817,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "8d100f07534809aa7031629e9da1bab4f32be393"
+                "reference": "23542d969da8e23d147b6e62a5e585f9772af12e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/8d100f07534809aa7031629e9da1bab4f32be393",
-                "reference": "8d100f07534809aa7031629e9da1bab4f32be393",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/23542d969da8e23d147b6e62a5e585f9772af12e",
+                "reference": "23542d969da8e23d147b6e62a5e585f9772af12e",
                 "shasum": ""
             },
             "require": {
@@ -1722,7 +1837,7 @@
                 "ext-filter": "*",
                 "php-parallel-lint/php-console-highlighter": "^1.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
-                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.0 || ^7.0 || ^8.0 || ^9.3",
                 "yoast/phpunit-polyfills": "^1.0.1"
             },
             "default-branch": true,
@@ -1772,7 +1887,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2022-09-04T21:25:18+00:00"
+            "time": "2022-09-30T00:51:43+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1780,12 +1895,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "19855395ad42a9692542be3f7cd68f000edcce5d"
+                "reference": "d7864cb3d5446565348de80441643bd7c4056215"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/19855395ad42a9692542be3f7cd68f000edcce5d",
-                "reference": "19855395ad42a9692542be3f7cd68f000edcce5d",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7864cb3d5446565348de80441643bd7c4056215",
+                "reference": "d7864cb3d5446565348de80441643bd7c4056215",
                 "shasum": ""
             },
             "require": {
@@ -1830,7 +1945,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2022-09-15T22:19:54+00:00"
+            "time": "2022-09-26T02:14:32+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -1838,12 +1953,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "17dbd1758d60e9cea3bc134cd68fe133a8826266"
+                "reference": "21cd342a1bae70c2ed693f23758f80176068a972"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/17dbd1758d60e9cea3bc134cd68fe133a8826266",
-                "reference": "17dbd1758d60e9cea3bc134cd68fe133a8826266",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/21cd342a1bae70c2ed693f23758f80176068a972",
+                "reference": "21cd342a1bae70c2ed693f23758f80176068a972",
                 "shasum": ""
             },
             "require": {
@@ -1856,7 +1971,7 @@
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcompatibility/php-compatibility": "^9.0",
-                "phpcsstandards/phpcsdevtools": "^1.0",
+                "phpcsstandards/phpcsdevtools": "^1.2.0",
                 "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "default-branch": true,
@@ -1883,7 +1998,7 @@
                 "source": "https://github.com/WordPress/WordPress-Coding-Standards",
                 "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
             },
-            "time": "2022-08-24T16:25:42+00:00"
+            "time": "2022-09-23T16:28:48+00:00"
         }
     ],
     "aliases": [],

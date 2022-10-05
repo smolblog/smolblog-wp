@@ -5,17 +5,16 @@
  * @package Smolblog\WP
  */
 
-// phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 namespace Smolblog\WP;
 
-use Smolblog\Core\{Model, ModelHelper};
-use Smolblog\Core\Definitions\ModelField;
+use Smolblog\Core\Connector\{Connection, ConnectionReader, ConnectionWriter};
 
 /**
  * Helper class for Connection Credentials
  */
-class Connection_Credential_Helper implements ModelHelper {
+class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter {
 	/**
 	 * Check the schema version and update if needed.
 	 *
@@ -28,7 +27,7 @@ class Connection_Credential_Helper implements ModelHelper {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE $table_name (
-			`id` bigint(20) NOT NULL AUTO_INCREMENT,
+			`id` varchar(101) NOT NULL,
 			`user_id` bigint(20) NOT NULL,
 			`provider` varchar(50) NOT NULL,
 			`provider_key` varchar(50) NOT NULL,
@@ -48,110 +47,76 @@ class Connection_Credential_Helper implements ModelHelper {
 	}
 
 	/**
-	 * Get data from the persistent store for the given model.
+	 * Check the repository for the object identified by $id.
 	 *
-	 * @param Model|null $forModel Model to get data for.
-	 * @param mixed      $withId   Primary key(s) to search for in the persistent store; default none.
-	 * @return array|null Associative array of the model's data; null if data is not in store.
+	 * @param string|integer $id Unique identifier for the object.
+	 * @return boolean True if the repository contains an object with the given $id.
 	 */
-	public function getData( Model $forModel = null, mixed $withId = null ): ?array {
-		global $wpdb;
-		$tablename = $wpdb->prefix . 'smolblog_connection_credential';
-
-		$db_data = $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT * FROM $tablename WHERE `provider` = %s AND `provider_key` = %s", //phpcs:ignore
-				$withId['provider'],
-				$withId['providerKey']
-			),
-			ARRAY_A
-		);
-
-		if ( ! $db_data ) {
-			return $withId;
-		}
-
-		return array(
-			'userId'      => $db_data['user_id'],
-			'displayName' => $db_data['display_name'],
-			'details'     => $db_data['details'],
-		);
-	}
-
-	/**
-	 * Save the given data from the given model to the persistent store.
-	 *
-	 * It is recommended that the implementing class throw a ModelException if there is an unexpected error.
-	 *
-	 * @param Model|null $model    Model to save data for.
-	 * @param array      $withData Data from the model to save.
-	 * @return boolean True if save was successful.
-	 */
-	public function save( Model $model = null, array $withData = array() ): bool {
+	public function has( string|int $id ): bool {
 		global $wpdb;
 		$tablename = $wpdb->prefix . 'smolblog_connection_credential';
 
 		$id = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT `id` FROM $tablename WHERE `provider` = %s AND `provider_key` = %s", //phpcs:ignore
-				$withData['provider'],
-				$withData['providerKey']
+				"SELECT `id` FROM $tablename WHERE `id` = %s", //phpcs:ignore
+				$id,
 			)
 		);
 
-		$result = false;
-		if ( $id ) {
-			$result = $wpdb->update(
-				$tablename,
-				array(
-					'user_id'      => $withData['userId'],
-					'provider'     => $withData['provider'],
-					'provider_key' => $withData['providerKey'],
-					'display_name' => $withData['displayName'],
-					'details'      => $withData['details'],
-				),
-				array( 'id' => $id ),
-				$this->formats_from_model( $forModel ),
-				array( '%d' )
-			);
-		} else {
-			$result = $wpdb->insert(
-				$tablename,
-				array(
-					'user_id'      => $withData['userId'],
-					'provider'     => $withData['provider'],
-					'provider_key' => $withData['providerKey'],
-					'display_name' => $withData['displayName'],
-					'details'      => $withData['details'],
-				),
-				$this->formats_from_model( $forModel )
-			);
-		}
-
-		return $result ? true : false;
+		return isset( $id );
 	}
 
 	/**
-	 * Create a WPDB formats array from the given model's fields
+	 * Get the indicated Connection from the repository. Should return null if not found.
 	 *
-	 * @param Model $model Smolblog model with fields.
-	 * @return array WPDB translation of the model's FIELDS constant
+	 * @param string|integer $id Unique identifier for the object.
+	 * @return Entity Object identified by $id; null if it does not exist.
 	 */
-	private function formats_from_model( Model $model ): array {
-		$formats = array();
-		foreach ( get_class( $model )::FIELDS as $field ) {
-			switch ( $field ) {
-				case ModelField::int:
-					$formats[] = '%d';
-					break;
-				case ModelField::float:
-					$formats[] = '%f';
-					break;
-				case ModelField::string:
-					$formats[] = '%s';
-					break;
-			}
+	public function get( string|int $id ): Connection {
+		global $wpdb;
+		$tablename = $wpdb->prefix . 'smolblog_connection_credential';
+
+		$db_data = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM $tablename WHERE `id` = %s", //phpcs:ignore
+				$id
+			),
+			ARRAY_A
+		);
+		if ( ! isset( $db_data ) ) {
+			return null;
 		}
-		return $formats;
+
+		return new Connection(
+			userId: $db_data['user_id'],
+			provider: $db_data['provider'],
+			providerKey: $db_data['provider_key'],
+			displayName: $db_data['display_name'],
+			details: json_decode( $db_data['details'], true ),
+		);
+	}
+
+	/**
+	 * Save the given Connection
+	 *
+	 * @param Connection $connection State to save.
+	 * @return void
+	 */
+	public function save( Connection $connection ): void {
+		global $wpdb;
+		$tablename = $wpdb->prefix . 'smolblog_connection_credential';
+
+		$wpdb->replace(
+			$tablename,
+			array(
+				'id'           => $connection->id,
+				'user_id'      => $connection->userId,
+				'provider'     => $connection->provider,
+				'provider_key' => $connection->providerKey,
+				'display_name' => $connection->displayName,
+				'details'      => wp_json_encode( $connection->details ),
+			),
+			array( '%s', '%d', '%s', '%s', '%s', '%s' )
+		);
 	}
 }

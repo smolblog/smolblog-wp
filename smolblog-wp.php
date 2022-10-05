@@ -24,9 +24,10 @@ namespace Smolblog\WP;
 require_once 'vendor/autoload.php';
 require_once 'class-endpoint-registrar.php';
 require_once 'class-connection-credential-helper.php';
-require_once 'class-transient-helper.php';
+require_once 'class-auth-request-state-helper.php';
 
 use Smolblog\Core\{App, Environment};
+use Smolblog\Core\Connector\{AuthRequestStateReader, AuthRequestStateWriter, ConnectionReader, ConnectionWriter};
 use Smolblog\Core\Factories\{ConnectionCredentialFactory, TransientFactory};
 use Smolblog\Core\Registrars\ConnectorRegistrar;
 use Smolblog\Twitter\TwitterConnector;
@@ -40,19 +41,20 @@ add_action(
 		// Load environment variables.
 		$environment = new Environment( apiBase: 'https://smolbeta.localhost/wp-json/smolblog/v2' );
 
-		// Create empty Endpoint Registrar and instantiate the App.
-		$endpoint_registrar = new Endpoint_Registrar();
-		$app                = new App(
-			withEndpointRegistrar: $endpoint_registrar,
+		// Create the app.
+		$app = new App(
 			withEnvironment: $environment
 		);
 
-		// Load the model helpers into the DI container.
-		$app->container->add( Connection_Credential_Helper::class );
-		$app->container->add( Transient_Helper::class );
+		// Create the model helpers.
+		$state_helper = new Auth_Request_State_Helper();
+		$cred_helper  = new Connection_Credential_Helper();
 
-		$app->container->extend( ConnectionCredentialFactory::class )->addArgument( Connection_Credential_Helper::class );
-		$app->container->extend( TransientFactory::class )->addArgument( Transient_Helper::class );
+		// Load the model helpers into the DI container.
+		$app->container->addShared( AuthRequestStateReader::class, fn() => $state_helper );
+		$app->container->addShared( AuthRequestStateWriter::class, fn() => $state_helper );
+		$app->container->addShared( ConnectionReader::class, fn() => $cred_helper );
+		$app->container->addShared( ConnectionWriter::class, fn() => $cred_helper );
 
 		// Start Smolblog.
 		$app->startup();
