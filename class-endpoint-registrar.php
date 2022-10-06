@@ -9,64 +9,44 @@ namespace Smolblog\WP;
 
 use \WP_REST_Request;
 use \WP_REST_Response;
-use Smolblog\Core\{Endpoint, EndpointRegistrar, EndpointRequest};
-use Smolblog\Core\Definitions\{HttpVerb, SecurityLevel};
+use Smolblog\Core\Endpoint\{Endpoint, EndpointRegistrar, EndpointRequest, HttpVerb, SecurityLevel};
 
 /**
  * Class to handle registering the Smolblog endpoints with WordPress.
  */
-class Endpoint_Registrar implements EndpointRegistrar {
-
+class Endpoint_Registrar extends EndpointRegistrar {
 	/**
-	 * Hold the endpoints until we are ready to register them.
+	 * Handle the configuration of the endpoint. Should return the string key used to retrieve the class.
 	 *
-	 * @var array
+	 * @param mixed $config Configuration array from the class.
+	 * @return string Key to retrieve the class with.
 	 */
-	private $registry = array();
+	protected function processConfig( mixed $config ): string {
+		$route =
+			( $config->route[0] === '/' ? '' : '/' ) .
+			preg_replace_callback(
+				'/\[([a-z]+)\]/',
+				function( $param ) use ( $config ) {
+					if ( ! isset( $config->params[ $param[1] ] ) ) {
+						return $param[0];
+					}
 
-	/**
-	 * Register the given endpoint with the REST API
-	 *
-	 * @param Endpoint $endpoint Endpoint to register.
-	 *
-	 * @return void
-	 */
-	public function registerEndpoint( Endpoint $endpoint ): void {
-		$this->registry[] = $endpoint;
-	}
-
-	/**
-	 * Register the endpoints we've been given
-	 *
-	 * @return void
-	 */
-	public function init_endpoints() : void {
-		foreach ( $this->registry as $endpoint ) {
-			$config = $endpoint->getConfig();
-			$route  =
-				( $config->route[0] === '/' ? '' : '/' ) .
-				preg_replace_callback(
-					'/\[([a-z]+)\]/',
-					function( $param ) use ( $config ) {
-						if ( ! isset( $config->params[ $param[1] ] ) ) {
-							return $param[0];
-						}
-
-						return '(?P<' . $param[1] . '>' . $config->params[ $param[1] ] . ')';
-					},
-					$config->route
-				);
-
-			register_rest_route(
-				'smolblog/v2',
-				$route,
-				array(
-					'methods'             => $this->get_methods( $config->verbs ),
-					'callback'            => $this->get_callback( array( $endpoint, 'run' ) ),
-					'permission_callback' => $this->get_permission_callback( $config->security ),
-				),
+					return '(?P<' . $param[1] . '>' . $config->params[ $param[1] ] . ')';
+				},
+				$config->route
 			);
-		}
+
+		register_rest_route(
+			'smolblog/v2',
+			$route,
+			array(
+				'methods'             => $this->get_methods( $config->verbs ),
+				'callback'            => $this->get_callback( $config->route ),
+				'permission_callback' => $this->get_permission_callback( $config->security ),
+			),
+		);
+
+		return $config->route;
 	}
 
 	/**
@@ -121,11 +101,11 @@ class Endpoint_Registrar implements EndpointRegistrar {
 	/**
 	 * Create a callback function for this endpoint.
 	 *
-	 * @param callable $run_endpoint Smolblog callback function for the endpoint.
+	 * @param string $route Route for the endpoint (to retrieve from library).
 	 * @return callable Callback function that translates WordPress constructs and Smolblog constructs.
 	 */
-	private function get_callback( callable $run_endpoint ): callable {
-		return function( WP_REST_Request $incoming ) use ( $run_endpoint ) {
+	private function get_callback( string $route ): callable {
+		return function( WP_REST_Request $incoming ) use ( $route ) {
 			$request = new EndpointRequest(
 				userId: get_current_user_id(),
 				siteId: get_current_blog_id(),
@@ -133,7 +113,7 @@ class Endpoint_Registrar implements EndpointRegistrar {
 				json: $incoming->get_json_params() ?? false
 			);
 
-			$response = call_user_func( $run_endpoint, $request );
+			$response = $this->get( key: $route )->run( request: $request );
 
 			$outgoing = new WP_REST_Response( $response->body );
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
