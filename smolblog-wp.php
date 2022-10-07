@@ -67,18 +67,65 @@ add_action(
 );
 
 add_action(
-	'wp_dashboard_setup',
+	'admin_enqueue_scripts',
 	function() {
-		wp_add_dashboard_widget(
-			'smolblog-test',
-			'Smolblog',
-			function() {
-				?>
-			<p><a href="<?php echo esc_attr( get_rest_url( null, 'smolblog/v2/connect/init/twitter' ) ); ?>?_wpnonce=<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>" class="button">Sign in with Twitter</a></p>
-
-			<p><a href="<?php echo esc_attr( get_rest_url( null, 'smolblog/v2/admin/plugins' ) ); ?>?_wpnonce=<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>" class="button">See plugin info</a></p>
-				<?php
-			}
+		// Register our script for enqueuing.
+		$smolblog_asset_info =
+		file_exists( plugin_dir_path( __FILE__ ) . 'build/index.asset.php' ) ?
+		require plugin_dir_path( __FILE__ ) . 'build/index.asset.php' :
+		array(
+			'dependencies' => 'wp-element',
+			'version'      => filemtime( 'js/index.js' ),
 		);
-	}
+
+		wp_register_script(
+			'smolblog_admin',
+			plugin_dir_url( __FILE__ ) . 'build/index.js',
+			$smolblog_asset_info['dependencies'],
+			$smolblog_asset_info['version'],
+			true
+		);
+	},
+	1,
+	0
 );
+
+/**
+ * Add page to admin
+ */
+function add_smolblog_page() {
+	add_menu_page(
+		'Smolblog Dashboard',
+		'Smolblog',
+		'read',
+		'smolblog',
+		__NAMESPACE__ . '\smolblog_admin',
+		'dashicons-controls-repeat',
+		3
+	);
+}
+add_action( 'admin_menu', __NAMESPACE__ . '\add_smolblog_page' );
+
+/**
+ * Add the Smolblog admin javascript
+ *
+ * @param string $admin_page Current page.
+ */
+function enqueue_scripts( $admin_page ) {
+	if ( $admin_page !== 'toplevel_page_smolblog' ) {
+		return;
+	}
+
+	wp_enqueue_script( 'smolblog_admin' );
+}
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_scripts' );
+
+/**
+ * Output the Smolblog dashboard page
+ */
+function smolblog_admin() {
+	?>
+	<h1>Smolblog Admin</h1>
+	<div id="smolblog-admin-app"></div>
+	<?php
+}
