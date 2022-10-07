@@ -1,5 +1,12 @@
-const { render, useState } = wp.element;
+import Connections from "./Connections";
 
-const ManageConnections = () => <p>React is reacting!</p>;
+const { render, Fragment } = wp.element;
 
-render(<ManageConnections />, document.getElementById("smolblog-admin-app"));
+const SmolblogAdmin = () => (
+  <Fragment>
+    <h2>Connections</h2>
+    <Connections />
+  </Fragment>
+);
+
+render(<SmolblogAdmin />, document.getElementById("smolblog-admin-app"));

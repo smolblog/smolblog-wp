@@ -39,8 +39,8 @@ add_action(
 		// Load environment variables.
 		$environment = new Environment(
 			apiBase: get_rest_url( null, '/smolblog/v2' ),
-			twitterAppId: 'mememe',
-			twitterAppSecret: 'youyou',
+			twitterAppId: SMOLBLOG_TWITTER_APPLICATION_KEY,
+			twitterAppSecret: SMOLBLOG_TWITTER_APPLICATION_SECRET,
 		);
 
 		// Create the app.
