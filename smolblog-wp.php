@@ -46,7 +46,7 @@ add_action(
 		// Create the app.
 		$app = new App(
 			withEnvironment: $environment,
-			pluginClasses: array( Smolblog\Twitter\Plugin::class )
+			pluginClasses: array( \Smolblog\Twitter\Plugin::class )
 		);
 
 		// Create the model helpers and load into the DI container.

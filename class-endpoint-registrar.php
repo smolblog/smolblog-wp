@@ -110,7 +110,7 @@ class Endpoint_Registrar extends EndpointRegistrar {
 				userId: get_current_user_id(),
 				siteId: get_current_blog_id(),
 				params: $incoming->get_params(),
-				json: $incoming->get_json_params() ?? false
+				json: $incoming->get_json_params() ?? null,
 			);
 
 			$response = $this->get( key: $route )->run( request: $request );

@@ -1298,12 +1298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "451923f3cb5ec838f37d6ef3dbc3a3dcbdf7fefa"
+                "reference": "ef473328f00caf518a9d244f2ba6b2e9265864bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/451923f3cb5ec838f37d6ef3dbc3a3dcbdf7fefa",
-                "reference": "451923f3cb5ec838f37d6ef3dbc3a3dcbdf7fefa",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/ef473328f00caf518a9d244f2ba6b2e9265864bd",
+                "reference": "ef473328f00caf518a9d244f2ba6b2e9265864bd",
                 "shasum": ""
             },
             "require": {
@@ -1358,7 +1358,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2022-10-04T13:30:03+00:00"
+            "time": "2022-10-07T00:12:22+00:00"
         },
         {
             "name": "smolblog/smolblog-twitter",
@@ -1366,12 +1366,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-twitter.git",
-                "reference": "feeb18c13946a58f48ff2b79be0af42955bea5e1"
+                "reference": "24f5008424001e4b7bfd7f57d4257a0f22343a5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-twitter/zipball/feeb18c13946a58f48ff2b79be0af42955bea5e1",
-                "reference": "feeb18c13946a58f48ff2b79be0af42955bea5e1",
+                "url": "https://api.github.com/repos/smolblog/smolblog-twitter/zipball/24f5008424001e4b7bfd7f57d4257a0f22343a5e",
+                "reference": "24f5008424001e4b7bfd7f57d4257a0f22343a5e",
                 "shasum": ""
             },
             "require": {
@@ -1426,7 +1426,7 @@
                 "source": "https://github.com/smolblog/smolblog-twitter/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-twitter/issues"
             },
-            "time": "2022-09-18T00:07:50+00:00"
+            "time": "2022-10-07T00:09:54+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
