@@ -21,6 +21,7 @@
 
 namespace Smolblog\WP;
 
+require_once 'env.php';
 require_once 'vendor/autoload.php';
 require_once 'class-endpoint-registrar.php';
 require_once 'class-connection-credential-helper.php';
@@ -127,5 +128,6 @@ function smolblog_admin() {
 	?>
 	<h1>Smolblog Admin</h1>
 	<div id="smolblog-admin-app"></div>
+
 	<?php
 }
