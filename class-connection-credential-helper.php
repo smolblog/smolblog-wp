@@ -20,14 +20,15 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 	 *
 	 * @return void
 	 */
-	public function update_schema(): void {
+	public static function update_schema(): void {
 		global $wpdb;
 
-		$table_name      = $wpdb->prefix . 'smolblog_connection_credential';
+		$table_name      = $wpdb->prefix . 'smolblog_connection';
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE $table_name (
-			`id` varchar(101) NOT NULL,
+			`id` bigint(20) NOT NULL AUTO_INCREMENT,
+			`guid` varchar(101) NOT NULL UNIQUE,
 			`user_id` bigint(20) NOT NULL,
 			`provider` varchar(50) NOT NULL,
 			`provider_key` varchar(50) NOT NULL,
@@ -36,14 +37,14 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 			PRIMARY KEY  (id)
 		) $charset_collate;";
 
-		if ( md5( $sql ) === get_option( 'smolblog_schemaver_connection_credential', '' ) ) {
+		if ( md5( $sql ) === get_option( 'smolblog_schemaver_connection', '' ) ) {
 			return;
 		}
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 
-		update_option( 'smolblog_schemaver_connection_credential', md5( $sql ) );
+		update_option( 'smolblog_schemaver_connection', md5( $sql ) );
 	}
 
 	/**
@@ -54,11 +55,11 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 	 */
 	public function has( string|int $id ): bool {
 		global $wpdb;
-		$tablename = $wpdb->prefix . 'smolblog_connection_credential';
+		$tablename = $wpdb->prefix . 'smolblog_connection';
 
 		$id = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT `id` FROM $tablename WHERE `id` = %s", //phpcs:ignore
+				"SELECT `id` FROM $tablename WHERE `guid` = %s", //phpcs:ignore
 				$id,
 			)
 		);
@@ -74,11 +75,11 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 	 */
 	public function get( string|int $id ): Connection {
 		global $wpdb;
-		$tablename = $wpdb->prefix . 'smolblog_connection_credential';
+		$tablename = $wpdb->prefix . 'smolblog_connection';
 
 		$db_data = $wpdb->get_row(
 			$wpdb->prepare(
-				"SELECT * FROM $tablename WHERE `id` = %s", //phpcs:ignore
+				"SELECT * FROM $tablename WHERE `guid` = %s", //phpcs:ignore
 				$id
 			),
 			ARRAY_A
@@ -104,19 +105,27 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 	 */
 	public function save( Connection $connection ): void {
 		global $wpdb;
-		$tablename = $wpdb->prefix . 'smolblog_connection_credential';
+		$tablename = $wpdb->prefix . 'smolblog_connection';
+
+		$id = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT `id` FROM $tablename WHERE `guid` = %s", //phpcs:ignore
+				$id,
+			)
+		);
 
 		$wpdb->replace(
 			$tablename,
 			array(
-				'id'           => $connection->id,
+				'id'           => $id,
+				'guid'         => $connection->id,
 				'user_id'      => $connection->userId,
 				'provider'     => $connection->provider,
 				'provider_key' => $connection->providerKey,
 				'display_name' => $connection->displayName,
 				'details'      => wp_json_encode( $connection->details ),
 			),
-			array( '%s', '%d', '%s', '%s', '%s', '%s' )
+			array( '%d', '%s', '%d', '%s', '%s', '%s', '%s' )
 		);
 	}
 }

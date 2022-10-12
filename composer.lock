@@ -1298,12 +1298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "ef473328f00caf518a9d244f2ba6b2e9265864bd"
+                "reference": "6d6d24a33011dd762317e422ebd3ffd59e6cf9e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/ef473328f00caf518a9d244f2ba6b2e9265864bd",
-                "reference": "ef473328f00caf518a9d244f2ba6b2e9265864bd",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/6d6d24a33011dd762317e422ebd3ffd59e6cf9e4",
+                "reference": "6d6d24a33011dd762317e422ebd3ffd59e6cf9e4",
                 "shasum": ""
             },
             "require": {
@@ -1358,7 +1358,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2022-10-07T00:12:22+00:00"
+            "time": "2022-10-09T01:51:29+00:00"
         },
         {
             "name": "smolblog/smolblog-twitter",
@@ -1366,12 +1366,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-twitter.git",
-                "reference": "24f5008424001e4b7bfd7f57d4257a0f22343a5e"
+                "reference": "977ce1a18c06356502a6f357a74ec2b5962c45a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-twitter/zipball/24f5008424001e4b7bfd7f57d4257a0f22343a5e",
-                "reference": "24f5008424001e4b7bfd7f57d4257a0f22343a5e",
+                "url": "https://api.github.com/repos/smolblog/smolblog-twitter/zipball/977ce1a18c06356502a6f357a74ec2b5962c45a0",
+                "reference": "977ce1a18c06356502a6f357a74ec2b5962c45a0",
                 "shasum": ""
             },
             "require": {
@@ -1426,7 +1426,7 @@
                 "source": "https://github.com/smolblog/smolblog-twitter/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-twitter/issues"
             },
-            "time": "2022-10-07T00:09:54+00:00"
+            "time": "2022-10-12T22:02:19+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -1817,12 +1817,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "23542d969da8e23d147b6e62a5e585f9772af12e"
+                "reference": "6242122151eb7ecbe22a33cd260b0ab1db8501a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/23542d969da8e23d147b6e62a5e585f9772af12e",
-                "reference": "23542d969da8e23d147b6e62a5e585f9772af12e",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/6242122151eb7ecbe22a33cd260b0ab1db8501a5",
+                "reference": "6242122151eb7ecbe22a33cd260b0ab1db8501a5",
                 "shasum": ""
             },
             "require": {
@@ -1887,7 +1887,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2022-09-30T00:51:43+00:00"
+            "time": "2022-10-12T15:44:47+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
