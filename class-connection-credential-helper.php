@@ -33,7 +33,7 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 			`provider` varchar(50) NOT NULL,
 			`provider_key` varchar(50) NOT NULL,
 			`display_name` varchar(100) NOT NULL,
-			`details` varchar(255) NOT NULL, 
+			`details` text NOT NULL, 
 			PRIMARY KEY  (id)
 		) $charset_collate;";
 
@@ -100,6 +100,7 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 	/**
 	 * Save the given Connection
 	 *
+	 * @throws \Exception Throws database errors.
 	 * @param Connection $connection State to save.
 	 * @return void
 	 */
@@ -107,25 +108,29 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 		global $wpdb;
 		$tablename = $wpdb->prefix . 'smolblog_connection';
 
+		$data    = array(
+			'guid'         => $connection->id,
+			'user_id'      => $connection->userId,
+			'provider'     => $connection->provider,
+			'provider_key' => $connection->providerKey,
+			'display_name' => $connection->displayName,
+			'details'      => wp_json_encode( $connection->details ),
+		);
+		$formats = array( '%s', '%d', '%s', '%s', '%s', '%s' );
+
 		$id = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT `id` FROM $tablename WHERE `guid` = %s", //phpcs:ignore
-				$id,
+				$connection->id,
 			)
 		);
+		if ( isset( $id ) ) {
+			$data['id'] = $id;
+			$formats[]  = '%d';
+		}
 
-		$wpdb->replace(
-			$tablename,
-			array(
-				'id'           => $id,
-				'guid'         => $connection->id,
-				'user_id'      => $connection->userId,
-				'provider'     => $connection->provider,
-				'provider_key' => $connection->providerKey,
-				'display_name' => $connection->displayName,
-				'details'      => wp_json_encode( $connection->details ),
-			),
-			array( '%d', '%s', '%d', '%s', '%s', '%s', '%s' )
-		);
+		if ( false === $wpdb->replace( $tablename, $data, $formats ) ) {
+			throw new \Exception( "Database error: $wpdb->last_error" );
+		}
 	}
 }
