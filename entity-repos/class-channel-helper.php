@@ -10,7 +10,7 @@
 
 namespace Smolblog\WP;
 
-use Smolblog\Core\Connector\{Connection, ChannelReader, ChannelWriter};
+use Smolblog\Core\Connector\{Connection, Channel, ChannelReader, ChannelWriter};
 
 /**
  * Helper class for Connection Credentials
@@ -125,13 +125,11 @@ class Channel_Helper implements ChannelReader, ChannelWriter {
 		global $wpdb;
 		$tablename = $wpdb->prefix . 'smolblog_channels';
 
-		$db_ready_ids = array_map( fn( $id) => $wpdb->prepare( '%s', $id ) );
+		$prepared_ids = array_map( fn( $id) => $wpdb->prepare( '%s', $id ), $connectionIds );
+		$db_ready_ids = implode( ',', $prepared_ids );
 
 		$db_data = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT * FROM $tablename WHERE `connection_id` in %s ORDER BY `connection_id`", //phpcs:ignore
-				'(' . implode( ',', $db_ready_ids ) . ')'
-			),
+			"SELECT * FROM $tablename WHERE `connection_id` in ($db_ready_ids) ORDER BY `connection_id`", //phpcs:ignore
 			ARRAY_A
 		);
 		if ( ! isset( $db_data ) ) {

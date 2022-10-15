@@ -25,10 +25,11 @@ require_once 'env.php';
 require_once 'vendor/autoload.php';
 require_once 'class-endpoint-registrar.php';
 require_once 'entity-repos/class-connection-credential-helper.php';
+require_once 'entity-repos/class-channel-helper.php';
 require_once 'entity-repos/class-auth-request-state-helper.php';
 
 use Smolblog\Core\{App, Environment};
-use Smolblog\Core\Connector\{AuthRequestStateReader, AuthRequestStateWriter, ConnectionReader, ConnectionWriter};
+use Smolblog\Core\Connector\{AuthRequestStateReader, AuthRequestStateWriter, ConnectionReader, ConnectionWriter, ChannelReader, ChannelWriter};
 use Smolblog\Core\Endpoint\EndpointRegistrar;
 use Smolblog\Twitter\TwitterConnector;
 use Smolblog\OAuth2\Client\Provider\Twitter as TwitterOAuth;
@@ -55,11 +56,16 @@ add_action(
 
 		// Create the model helpers and load into the DI container.
 		$state_helper = new Auth_Request_State_Helper();
-		$cred_helper  = new Connection_Credential_Helper();
 		$app->container->addShared( AuthRequestStateReader::class, fn() => $state_helper );
 		$app->container->addShared( AuthRequestStateWriter::class, fn() => $state_helper );
+
+		$cred_helper  = new Connection_Credential_Helper();
 		$app->container->addShared( ConnectionReader::class, fn() => $cred_helper );
 		$app->container->addShared( ConnectionWriter::class, fn() => $cred_helper );
+
+		$channel_helper = new Channel_Helper();
+		$app->container->addShared( ChannelReader::class, fn() => $channel_helper );
+		$app->container->addShared( ChannelWriter::class, fn() => $channel_helper );
 
 		// Create the Endpoint Registrar and load into the DI container.
 		$endpoint_registrar = new Endpoint_Registrar();
@@ -134,3 +140,9 @@ function smolblog_admin() {
 
 	<?php
 }
+
+/*
+
+<a href="<?php echo esc_attr( get_rest_url( null, 'smolblog/v2/my/connections' ) ); ?>?_wpnonce=<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>">drink me</a>
+
+*/

@@ -1,6 +1,6 @@
 import apiFetch from "@wordpress/api-fetch";
 
-const { render, useState, useEffect } = wp.element;
+const { useState, useEffect } = wp.element;
 
 const Plugins = () => {
   const [plugins, setPlugins] = useState([]);

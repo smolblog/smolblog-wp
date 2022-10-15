@@ -102,15 +102,15 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 		global $wpdb;
 		$tablename = $wpdb->prefix . 'smolblog_connection';
 
-		$db_data = $wpdb->get_row(
+		$db_data = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM $tablename WHERE `userId` = %d", //phpcs:ignore
-				$id
+				"SELECT * FROM $tablename WHERE `user_id` = %d", //phpcs:ignore
+				$userId
 			),
 			ARRAY_A
 		);
 		if ( ! isset( $db_data ) ) {
-			return null;
+			return [];
 		}
 
 		return array_map( array( $this, 'connection_from_row' ), $db_data );
