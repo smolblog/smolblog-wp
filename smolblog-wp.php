@@ -24,8 +24,8 @@ namespace Smolblog\WP;
 require_once 'env.php';
 require_once 'vendor/autoload.php';
 require_once 'class-endpoint-registrar.php';
-require_once 'class-connection-credential-helper.php';
-require_once 'class-auth-request-state-helper.php';
+require_once 'entity-repos/class-connection-credential-helper.php';
+require_once 'entity-repos/class-auth-request-state-helper.php';
 
 use Smolblog\Core\{App, Environment};
 use Smolblog\Core\Connector\{AuthRequestStateReader, AuthRequestStateWriter, ConnectionReader, ConnectionWriter};
