@@ -34,6 +34,7 @@ use Smolblog\Twitter\TwitterConnector;
 use Smolblog\OAuth2\Client\Provider\Twitter as TwitterOAuth;
 
 Connection_Credential_Helper::update_schema();
+Channel_Helper::update_schema();
 
 // All of Smolblog Core is through REST endpoints, so load it on rest_api_init.
 add_action(

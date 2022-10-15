@@ -1298,12 +1298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "6d6d24a33011dd762317e422ebd3ffd59e6cf9e4"
+                "reference": "97731cb6a4006bfb458c92a653297cc9acb440b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/6d6d24a33011dd762317e422ebd3ffd59e6cf9e4",
-                "reference": "6d6d24a33011dd762317e422ebd3ffd59e6cf9e4",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/97731cb6a4006bfb458c92a653297cc9acb440b3",
+                "reference": "97731cb6a4006bfb458c92a653297cc9acb440b3",
                 "shasum": ""
             },
             "require": {
@@ -1358,7 +1358,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2022-10-09T01:51:29+00:00"
+            "time": "2022-10-15T02:48:11+00:00"
         },
         {
             "name": "smolblog/smolblog-twitter",
@@ -1366,12 +1366,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-twitter.git",
-                "reference": "977ce1a18c06356502a6f357a74ec2b5962c45a0"
+                "reference": "045dc4152a3e1cf4368a1af210f42b3b4d51d4ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-twitter/zipball/977ce1a18c06356502a6f357a74ec2b5962c45a0",
-                "reference": "977ce1a18c06356502a6f357a74ec2b5962c45a0",
+                "url": "https://api.github.com/repos/smolblog/smolblog-twitter/zipball/045dc4152a3e1cf4368a1af210f42b3b4d51d4ef",
+                "reference": "045dc4152a3e1cf4368a1af210f42b3b4d51d4ef",
                 "shasum": ""
             },
             "require": {
@@ -1426,7 +1426,7 @@
                 "source": "https://github.com/smolblog/smolblog-twitter/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-twitter/issues"
             },
-            "time": "2022-10-12T22:02:19+00:00"
+            "time": "2022-10-15T14:06:37+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -1697,12 +1697,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCompatibility/PHPCompatibilityWP.git",
-                "reference": "dbb88b4f397fe2d52af984cae7714d7cd28d5bc3"
+                "reference": "ed2685318d3af3cd9a1676bea8e3ffc3a972b3b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibilityWP/zipball/dbb88b4f397fe2d52af984cae7714d7cd28d5bc3",
-                "reference": "dbb88b4f397fe2d52af984cae7714d7cd28d5bc3",
+                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibilityWP/zipball/ed2685318d3af3cd9a1676bea8e3ffc3a972b3b1",
+                "reference": "ed2685318d3af3cd9a1676bea8e3ffc3a972b3b1",
                 "shasum": ""
             },
             "require": {
@@ -1745,7 +1745,7 @@
                 "issues": "https://github.com/PHPCompatibility/PHPCompatibilityWP/issues",
                 "source": "https://github.com/PHPCompatibility/PHPCompatibilityWP"
             },
-            "time": "2022-09-04T21:13:10+00:00"
+            "time": "2022-10-14T18:57:24+00:00"
         },
         {
             "name": "phpcsstandards/phpcsextra",
@@ -1753,19 +1753,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "b67f494d6705bba323498f8dcacee84a76f06e60"
+                "reference": "c92a2c7e41f01ec19a7193731a6f68adccccd9dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/b67f494d6705bba323498f8dcacee84a76f06e60",
-                "reference": "b67f494d6705bba323498f8dcacee84a76f06e60",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/c92a2c7e41f01ec19a7193731a6f68adccccd9dd",
+                "reference": "c92a2c7e41f01ec19a7193731a6f68adccccd9dd",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7",
                 "php": ">=5.4",
                 "phpcsstandards/phpcsutils": "^1.0 || dev-develop",
-                "squizlabs/php_codesniffer": "^3.7.0"
+                "squizlabs/php_codesniffer": "^3.7.1"
             },
             "require-dev": {
                 "php-parallel-lint/php-console-highlighter": "^1.0",
@@ -1809,7 +1809,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSExtra/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSExtra"
             },
-            "time": "2022-09-23T12:57:51+00:00"
+            "time": "2022-10-14T19:53:56+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -1817,26 +1817,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "6242122151eb7ecbe22a33cd260b0ab1db8501a5"
+                "reference": "c2a08c5e491ccdde07c58438c4e99150a2ddc447"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/6242122151eb7ecbe22a33cd260b0ab1db8501a5",
-                "reference": "6242122151eb7ecbe22a33cd260b0ab1db8501a5",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/c2a08c5e491ccdde07c58438c4e99150a2ddc447",
+                "reference": "c2a08c5e491ccdde07c58438c4e99150a2ddc447",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7",
                 "php": ">=5.4",
-                "squizlabs/php_codesniffer": "^2.6.0 || ^3.1.0 || 4.0.x-dev@dev"
-            },
-            "conflict": {
-                "squizlabs/php_codesniffer": "3.5.3"
+                "squizlabs/php_codesniffer": "^3.7.1 || 4.0.x-dev@dev"
             },
             "require-dev": {
                 "ext-filter": "*",
                 "php-parallel-lint/php-console-highlighter": "^1.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
+                "phpcsstandards/phpcsdevcs": "^1.1.3",
                 "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.0 || ^7.0 || ^8.0 || ^9.3",
                 "yoast/phpunit-polyfills": "^1.0.1"
             },
@@ -1887,7 +1885,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2022-10-12T15:44:47+00:00"
+            "time": "2022-10-15T06:47:38+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

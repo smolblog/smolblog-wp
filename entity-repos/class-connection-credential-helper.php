@@ -6,6 +6,7 @@
  */
 
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+// phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 
 namespace Smolblog\WP;
 
@@ -88,13 +89,31 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 			return null;
 		}
 
-		return new Connection(
-			userId: $db_data['user_id'],
-			provider: $db_data['provider'],
-			providerKey: $db_data['provider_key'],
-			displayName: $db_data['display_name'],
-			details: json_decode( $db_data['details'], true ),
+		return $this->connection_from_row( $db_data );
+	}
+
+	/**
+	 * Get the Connections that belong to the given User.
+	 *
+	 * @param string|integer $userId ID of the User to search on.
+	 * @return array
+	 */
+	public function getConnectionsForUser( string|int $userId ): array {
+		global $wpdb;
+		$tablename = $wpdb->prefix . 'smolblog_connection';
+
+		$db_data = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM $tablename WHERE `userId` = %d", //phpcs:ignore
+				$id
+			),
+			ARRAY_A
 		);
+		if ( ! isset( $db_data ) ) {
+			return null;
+		}
+
+		return array_map( array( $this, 'connection_from_row' ), $db_data );
 	}
 
 	/**
@@ -132,5 +151,21 @@ class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter
 		if ( false === $wpdb->replace( $tablename, $data, $formats ) ) {
 			throw new \Exception( "Database error: $wpdb->last_error" );
 		}
+	}
+
+	/**
+	 * Create a Connection object from a database row.
+	 *
+	 * @param array $db_data Associative array of data.
+	 * @return Connection
+	 */
+	private function connection_from_row( array $db_data ): Connection {
+		return new Connection(
+			userId: $db_data['user_id'],
+			provider: $db_data['provider'],
+			providerKey: $db_data['provider_key'],
+			displayName: $db_data['display_name'],
+			details: json_decode( $db_data['details'], true ),
+		);
 	}
 }
