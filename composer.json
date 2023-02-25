@@ -25,8 +25,7 @@
     }
   ],
   "require": {
-    "smolblog/smolblog-core": "dev-main",
-    "smolblog/smolblog-twitter": "dev-main"
+    "smolblog/smolblog-core": "dev-main"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "*",
