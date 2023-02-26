@@ -9,30 +9,22 @@
 
 namespace Smolblog\WP;
 
-use Smolblog\Core\Connector\{AuthRequestState, AuthRequestStateReader, AuthRequestStateWriter};
+use Smolblog\Core\Connector\Entities\AuthRequestState;
+use Smolblog\Core\Connector\Services\AuthRequestStateRepo;
 
 /**
  * Helper class to link WordPress and Smolblog transients.
  */
-class Auth_Request_State_Helper implements AuthRequestStateReader, AuthRequestStateWriter {
-	/**
-	 * Check the repository for the object identified by $id.
-	 *
-	 * @param string|integer $id Unique identifier for the object.
-	 * @return boolean True if the repository contains an object with the given $id.
-	 */
-	public function has( string|int $id ): bool {
-		return get_transient( $id ) !== false;
-	}
+class Auth_Request_State_Helper implements AuthRequestStateRepo {
 
 	/**
 	 * Get the indicated AuthRequestState from the repository. Should return null if not found.
 	 *
-	 * @param string|integer $id Unique identifier for the object.
-	 * @return Entity Object identified by $id; null if it does not exist.
+	 * @param string $id Unique identifier for the object.
+	 * @return AuthRequestState State identified by $id; null if it does not exist.
 	 */
-	public function get( string|int $id ): AuthRequestState {
-		$state = get_transient( $id );
+	public function getAuthRequestState( string $key ): AuthRequestState {
+		$state = get_transient( $key );
 		if ( ! is_array( $state ) ) {
 			return null;
 		}
@@ -46,7 +38,7 @@ class Auth_Request_State_Helper implements AuthRequestStateReader, AuthRequestSt
 	 * @param AuthRequestState $state State to save.
 	 * @return void
 	 */
-	public function save( AuthRequestState $state ): void {
-		set_transient( $state->id, get_object_vars( $state ), 60 * 15 );
+	public function saveAuthRequestState( AuthRequestState $state ): void {
+		set_transient( $state->key, $state->toArray(), 60 * 15 );
 	}
 }

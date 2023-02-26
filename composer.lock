@@ -851,12 +851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "3dd15fc4989d2d1a875fc54fd8e7b2d93048fa3d"
+                "reference": "920d6bed618614b71af158dc76310884b5ed1d07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/3dd15fc4989d2d1a875fc54fd8e7b2d93048fa3d",
-                "reference": "3dd15fc4989d2d1a875fc54fd8e7b2d93048fa3d",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/920d6bed618614b71af158dc76310884b5ed1d07",
+                "reference": "920d6bed618614b71af158dc76310884b5ed1d07",
                 "shasum": ""
             },
             "require": {
@@ -866,7 +866,7 @@
                 "league/event": "^3.0",
                 "league/tactician": "^1.1",
                 "league/tactician-container": "^3.0",
-                "php": "^8.2",
+                "php": "^8.1",
                 "psr/container": "^2.0",
                 "psr/event-dispatcher": "^1.0",
                 "ramsey/uuid": "^4.6"
@@ -925,7 +925,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/main",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2023-02-25T01:16:52+00:00"
+            "time": "2023-02-26T00:20:50+00:00"
         }
     ],
     "packages-dev": [

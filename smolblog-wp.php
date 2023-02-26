@@ -21,22 +21,46 @@
 
 namespace Smolblog\WP;
 
-use Psr\Container\ContainerInterface;
-use Smolblog\Framework\Infrastructure\DefaultMessageBus;
-use Smolblog\Framework\Infrastructure\QueryMemoizationService;
-use Smolblog\Framework\Infrastructure\SecurityCheckService;
-use Smolblog\Framework\Infrastructure\ServiceRegistry;
-use Smolblog\Framework\Messages\MessageBus;
-use Smolblog\Markdown\SmolblogMarkdown;
-use stdClass;
+use Smolblog\Framework\Objects\Identifier;
 
 require_once 'vendor/autoload.php';
 require_once 'class-smolblog.php';
+require_once 'class-endpoint-registrar.php';
 
-// All of Smolblog Core is through REST endpoints, so load it on rest_api_init.
+$smolblog = new Smolblog();
+
 add_action(
 	'rest_api_init',
 	function() {
 		$app = new Smolblog();
+		$endpoints = $app->container->get(Endpoint_Registrar::class);
+
+		$endpoints->init();
 	}
 );
+
+function get_current_user_uuid(): Identifier {
+	$meta_value = get_user_meta( get_current_user_id(), 'smolblog_user_id', true );
+	
+	if (empty($meta_value)) {
+		$new_id = Identifier::createRandom();
+		update_user_meta( get_current_user_id(), 'smolblog_user_id', $new_id->toString() );
+
+		return $new_id;
+	}
+
+	return Identifier::fromString( $meta_value );
+}
+
+function get_current_site_uuid(): Identifier {
+	$meta_value = get_site_meta( get_current_site_id(), 'smolblog_site_id', true );
+	
+	if (empty($meta_value)) {
+		$new_id = Identifier::createRandom();
+		update_site_meta( get_current_site_id(), 'smolblog_site_id', $new_id->toString() );
+
+		return $new_id;
+	}
+
+	return Identifier::fromString( $meta_value );
+}

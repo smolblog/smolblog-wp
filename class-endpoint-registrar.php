@@ -7,31 +7,59 @@
 
 namespace Smolblog\WP;
 
+use Exception;
+use Psr\Container\ContainerInterface;
+use Smolblog\Api\AuthScope;
+use Smolblog\Api\Endpoint;
+use Smolblog\Api\EndpointConfig;
+use Smolblog\Api\Exceptions\ErrorResponse;
+use Smolblog\Api\SuccessResponse;
+use Smolblog\Framework\Infrastructure\Registry;
 use \WP_REST_Request;
 use \WP_REST_Response;
-use Smolblog\Core\Endpoint\{Endpoint, EndpointRegistrar, EndpointRequest, HttpVerb, SecurityLevel};
 
 /**
  * Class to handle registering the Smolblog endpoints with WordPress.
  */
-class Endpoint_Registrar extends EndpointRegistrar {
+class Endpoint_Registrar implements Registry
+{
+	public static function getInterfaceToRegister(): string
+	{
+		return Endpoint::class;
+	}
+
+	public function __construct(
+		private ContainerInterface $container,
+		private array $configuration
+	){
+	}
+
+	public function init(): void {
+		foreach ($this->configuration as $endpoint) {
+			$this->processConfig($endpoint::getConfiguration(), $endpoint);
+		}
+	}
+
 	/**
-	 * Handle the configuration of the endpoint. Should return the string key used to retrieve the class.
+	 * Handle the configuration of the endpoint.
 	 *
-	 * @param mixed $config Configuration array from the class.
-	 * @return string Key to retrieve the class with.
+	 * @param EndpointConfig $config Configuration from the class.
+	 * @param string $endpoint Endpoint class.
+	 * @return void
 	 */
-	protected function processConfig( mixed $config ): string {
+	protected function processConfig(EndpointConfig $config, string $endpoint): void
+	{
 		$route =
-			( $config->route[0] === '/' ? '' : '/' ) .
 			preg_replace_callback(
-				'/\[([a-z]+)\]/',
+			'/\{([a-zA-Z]+)\}/',
 				function( $param ) use ( $config ) {
-					if ( ! isset( $config->params[ $param[1] ] ) ) {
+				if (!isset($config->pathVariables[$param[1]])) {
 						return $param[0];
 					}
 
-					return '(?P<' . $param[1] . '>' . $config->params[ $param[1] ] . ')';
+				$format = $config->pathVariables[$param[1]]->pattern ?? '[a-zA-Z0-9\-]+';
+
+				return '(?P<' . $param[1] . '>' . $format . ')';
 				},
 				$config->route
 			);
@@ -40,62 +68,29 @@ class Endpoint_Registrar extends EndpointRegistrar {
 			'smolblog/v2',
 			$route,
 			array(
-				'methods'             => $this->get_methods( $config->verbs ),
-				'callback'            => $this->get_callback( $config->route ),
-				'permission_callback' => $this->get_permission_callback( $config->security ),
+				'methods'             => [$config->verb->value],
+				'callback'            => $this->get_callback($config, $endpoint),
+				'permission_callback' => $this->get_permission_callback($config->requiredScopes),
 			),
 		);
-
-		return $config->route;
 	}
 
 	/**
-	 * Translate array of Smolblog\Core\HttpVerb into strings.
+	 * Find out if the endpoint is public.
+	 * 
+	 * OAuth scopes do not match cleanly to the permission checks WordPress would handle here. Fine-grained security is
+	 * handled at the Model level (by authorized queries).
 	 *
-	 * @param array $verbs HTTP methods for this endpoint.
-	 * @return array HTTP methods for this endpoint as strings.
-	 */
-	private function get_methods( array $verbs ): array {
-		return array_map(
-			function ( $verb ) {
-				return $verb->value;
-			},
-			$verbs
-		);
-	}
-
-	/**
-	 * Turn the SecurityLevel into a WordPress-friendly callback.
-	 *
-	 * @param SecurityLevel $security Security level for this endpoint.
+	 * @param AuthScope[] $security Security level for this endpoint.
 	 * @return callable Callback that checks for the analogous WordPress role.
 	 */
-	private function get_permission_callback( SecurityLevel $security ): callable {
-		switch ( $security ) {
-			case SecurityLevel::Anonymous:
-				return '__return_true';
-			case SecurityLevel::Registered:
-				return function () {
-					return current_user_can( 'read' );
-				};
-			case SecurityLevel::Contributor:
-				return function () {
-					return current_user_can( 'publish_posts' );
-				};
-			case SecurityLevel::Moderator:
-				return function () {
-					return current_user_can( 'edit_others_posts' );
-				};
-			case SecurityLevel::Admin:
-				return function () {
-					return current_user_can( 'manage_options' );
-				};
-			case SecurityLevel::Root:
-				return function () {
-					return current_user_can( 'manage_sites' );
-				};
+	private function get_permission_callback(array $scopes): callable
+	{
+		if (empty($scopes)) {
+			return '__return_true';
 		}
-		return '__return_false';
+
+		return fn() => current_user_can('read');
 	}
 
 	/**
@@ -104,20 +99,34 @@ class Endpoint_Registrar extends EndpointRegistrar {
 	 * @param string $route Route for the endpoint (to retrieve from library).
 	 * @return callable Callback function that translates WordPress constructs and Smolblog constructs.
 	 */
-	private function get_callback( string $route ): callable {
-		return function( WP_REST_Request $incoming ) use ( $route ) {
-			$request = new EndpointRequest(
-				userId: get_current_user_id(),
-				siteId: get_current_blog_id(),
-				params: $incoming->get_params(),
-				json: $incoming->get_json_params() ?? null,
-			);
+	private function get_callback( EndpointConfig $config, string $endpoint ): callable {
+		return function( WP_REST_Request $incoming ) use ( $config, $endpoint ) {
+			$outgoing = new WP_REST_Response();
 
-			$response = $this->get( key: $route )->run( request: $request );
+			try {
+				$body = null;
+				if (class_exists( $config->bodyClass )) {
+					$body = $config->bodyClass::fromArray($incoming->get_json_params());
+				}
 
-			$outgoing = new WP_REST_Response( $response->body );
-			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			$outgoing->set_status( $response->statusCode );
+				$response = $this->container->get($endpoint)->run(
+					userId: get_current_user_uuid(),
+					params: $incoming->get_params(),
+					body: $body,
+				);
+
+				$outgoing->set_data($response);
+				if (get_class($response) === SuccessResponse::class) {
+					$outgoing->set_status( 204 );
+					$outgoing->set_data( null );
+				}
+			} catch (ErrorResponse $ex) {
+				$outgoing->set_data($ex);
+				$outgoing->set_status($ex->getHttpCode());
+			} catch (Exception $ex) {
+				$outgoing->set_data(['code' => 500, 'error' => $ex->getMessage()]);
+				$outgoing->set_status( 500 );
+			}
 
 			return $outgoing;
 		};
