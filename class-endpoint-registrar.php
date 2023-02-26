@@ -15,6 +15,7 @@ use Smolblog\Api\EndpointConfig;
 use Smolblog\Api\Exceptions\ErrorResponse;
 use Smolblog\Api\SuccessResponse;
 use Smolblog\Framework\Infrastructure\Registry;
+use Throwable;
 use \WP_REST_Request;
 use \WP_REST_Response;
 
@@ -123,7 +124,7 @@ class Endpoint_Registrar implements Registry
 			} catch (ErrorResponse $ex) {
 				$outgoing->set_data($ex);
 				$outgoing->set_status($ex->getHttpCode());
-			} catch (Exception $ex) {
+			} catch (Throwable $ex) {
 				$outgoing->set_data(['code' => 500, 'error' => $ex->getMessage()]);
 				$outgoing->set_status( 500 );
 			}

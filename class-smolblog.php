@@ -34,7 +34,9 @@ class Smolblog {
 					},
 
 					Core\Connector\Services\AuthRequestStateRepo::class => Auth_Request_State_Helper::class,
-
+					
+					Auth_Request_State_Helper::class => [],
+					Doc_Endpoint::class => ['env' => Api\ApiEnvironment::class],
 					Endpoint_Registrar::class => [ 'container' => ContainerInterface::class ],
 				];
 			}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d958655f33ef9d1603fdfc3f96071f0b",
+    "content-hash": "a9b0026f9ef56e2e927ff59ea6a038cb",
     "packages": [
         {
             "name": "brick/math",
@@ -847,16 +847,16 @@
         },
         {
             "name": "smolblog/smolblog-core",
-            "version": "dev-main",
+            "version": "dev-wp-fixes",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "920d6bed618614b71af158dc76310884b5ed1d07"
+                "reference": "928de78291341355999b74b7f5fc880c65f847ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/920d6bed618614b71af158dc76310884b5ed1d07",
-                "reference": "920d6bed618614b71af158dc76310884b5ed1d07",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/928de78291341355999b74b7f5fc880c65f847ef",
+                "reference": "928de78291341355999b74b7f5fc880c65f847ef",
                 "shasum": ""
             },
             "require": {
@@ -875,7 +875,6 @@
                 "phpunit/phpunit": "^9",
                 "squizlabs/php_codesniffer": "^3.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -922,10 +921,10 @@
             ],
             "description": "Core features for Smolblog independent of other frameworks",
             "support": {
-                "source": "https://github.com/smolblog/smolblog-core/tree/main",
+                "source": "https://github.com/smolblog/smolblog-core/tree/wp-fixes",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2023-02-26T00:20:50+00:00"
+            "time": "2023-02-26T21:03:45+00:00"
         }
     ],
     "packages-dev": [
