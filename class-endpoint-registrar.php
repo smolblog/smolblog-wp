@@ -14,6 +14,7 @@ use Smolblog\Api\Endpoint;
 use Smolblog\Api\EndpointConfig;
 use Smolblog\Api\Exceptions\ErrorResponse;
 use Smolblog\Api\SuccessResponse;
+use Smolblog\Framework\Exceptions\MessageNotAuthorizedException;
 use Smolblog\Framework\Infrastructure\Registry;
 use Throwable;
 use \WP_REST_Request;
@@ -124,6 +125,9 @@ class Endpoint_Registrar implements Registry
 			} catch (ErrorResponse $ex) {
 				$outgoing->set_data($ex);
 				$outgoing->set_status($ex->getHttpCode());
+			} catch (MessageNotAuthorizedException $ex) {
+				$outgoing->set_data(['code' => 403, 'error' => $ex->getMessage()]);
+				$outgoing->set_status( 403 );
 			} catch (Throwable $ex) {
 				$outgoing->set_data(['code' => 500, 'error' => $ex->getMessage()]);
 				$outgoing->set_status( 500 );

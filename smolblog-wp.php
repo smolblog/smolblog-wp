@@ -24,7 +24,6 @@ namespace Smolblog\WP;
 use Smolblog\Framework\Objects\Identifier;
 
 require_once 'vendor/autoload.php';
-require_once 'class-doc-endpoint.php';
 require_once 'class-smolblog.php';
 require_once 'class-endpoint-registrar.php';
 

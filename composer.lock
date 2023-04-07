@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9b0026f9ef56e2e927ff59ea6a038cb",
+    "content-hash": "1c90ea6123b330eeb3585ccb58256ce2",
     "packages": [
         {
             "name": "brick/math",
@@ -127,20 +127,86 @@
             "time": "2020-02-26T01:55:18+00:00"
         },
         {
-            "name": "crell/tukio",
-            "version": "1.4.1",
+            "name": "crell/ordered-collection",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Crell/Tukio.git",
-                "reference": "bae551e1f1653a2036bb85f73932964623074e7a"
+                "url": "https://github.com/Crell/OrderedCollection.git",
+                "reference": "cda1a3be96198ad0c9396f9f432ac353870d8ca1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Crell/Tukio/zipball/bae551e1f1653a2036bb85f73932964623074e7a",
-                "reference": "bae551e1f1653a2036bb85f73932964623074e7a",
+                "url": "https://api.github.com/repos/Crell/OrderedCollection/zipball/cda1a3be96198ad0c9396f9f432ac353870d8ca1",
+                "reference": "cda1a3be96198ad0c9396f9f432ac353870d8ca1",
                 "shasum": ""
             },
             "require": {
+                "php": "~7.4 || ~8.0"
+            },
+            "require-dev": {
+                "phpbench/phpbench": "^1.2",
+                "phpstan/phpstan": "^1.5",
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Crell\\OrderedCollection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Larry Garfield",
+                    "email": "larry@garfieldtech.com",
+                    "homepage": "http://www.garfieldtech.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A fast and robust library for priority and topological sorting.",
+            "homepage": "https://github.com/Crell/OrderedCollection",
+            "keywords": [
+                "sorting",
+                "topological sort",
+                "utility"
+            ],
+            "support": {
+                "issues": "https://github.com/Crell/OrderedCollection/issues",
+                "source": "https://github.com/Crell/OrderedCollection/tree/master"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Crell",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-03-26T15:27:10+00:00"
+        },
+        {
+            "name": "crell/tukio",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Crell/Tukio.git",
+                "reference": "7f7441f6e96eee19c7cca9044b296c5ce1bfe6c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Crell/Tukio/zipball/7f7441f6e96eee19c7cca9044b296c5ce1bfe6c7",
+                "reference": "7f7441f6e96eee19c7cca9044b296c5ce1bfe6c7",
+                "shasum": ""
+            },
+            "require": {
+                "crell/ordered-collection": "^1.0",
                 "fig/event-dispatcher-util": "^1.3",
                 "php": "~7.4 || ~8.0",
                 "psr/container": "^1.0 || ^2.0",
@@ -187,7 +253,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Crell/Tukio/issues",
-                "source": "https://github.com/Crell/Tukio/tree/1.4.1"
+                "source": "https://github.com/Crell/Tukio/tree/1.5.0"
             },
             "funding": [
                 {
@@ -195,7 +261,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-02T15:05:49+00:00"
+            "time": "2023-03-25T16:01:32+00:00"
         },
         {
             "name": "fig/event-dispatcher-util",
@@ -758,12 +824,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "bf2bee216a4379eaf62162307d62bb7850405fec"
+                "reference": "8e955307d32dc9b6992440ff81321d3cb09db75a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/bf2bee216a4379eaf62162307d62bb7850405fec",
-                "reference": "bf2bee216a4379eaf62162307d62bb7850405fec",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/8e955307d32dc9b6992440ff81321d3cb09db75a",
+                "reference": "8e955307d32dc9b6992440ff81321d3cb09db75a",
                 "shasum": ""
             },
             "require": {
@@ -843,20 +909,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-07T16:14:23+00:00"
+            "time": "2023-03-27T22:05:11+00:00"
         },
         {
             "name": "smolblog/smolblog-core",
-            "version": "dev-wp-fixes",
+            "version": "dev-feature/api-buildout",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "928de78291341355999b74b7f5fc880c65f847ef"
+                "reference": "4ad8783a3f71257b449e03600c5e02e040e47681"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/928de78291341355999b74b7f5fc880c65f847ef",
-                "reference": "928de78291341355999b74b7f5fc880c65f847ef",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/4ad8783a3f71257b449e03600c5e02e040e47681",
+                "reference": "4ad8783a3f71257b449e03600c5e02e040e47681",
                 "shasum": ""
             },
             "require": {
@@ -903,7 +969,7 @@
                     "./vendor/squizlabs/php_codesniffer/bin/phpcbf"
                 ],
                 "swagger": [
-                    "Smolblog\\Api\\Model::generateOpenApiSpec"
+                    "Smolblog\\Api\\Model::printSpec"
                 ]
             },
             "license": [
@@ -921,10 +987,10 @@
             ],
             "description": "Core features for Smolblog independent of other frameworks",
             "support": {
-                "source": "https://github.com/smolblog/smolblog-core/tree/wp-fixes",
+                "source": "https://github.com/smolblog/smolblog-core/tree/feature/api-buildout",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2023-02-26T21:03:45+00:00"
+            "time": "2023-04-07T18:39:01+00:00"
         }
     ],
     "packages-dev": [
@@ -1187,12 +1253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "a077c4ad65b906768ed2f820701958b57f605be0"
+                "reference": "d24e897319108cdbbf42d247e0c17a095c935f20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/a077c4ad65b906768ed2f820701958b57f605be0",
-                "reference": "a077c4ad65b906768ed2f820701958b57f605be0",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/d24e897319108cdbbf42d247e0c17a095c935f20",
+                "reference": "d24e897319108cdbbf42d247e0c17a095c935f20",
                 "shasum": ""
             },
             "require": {
@@ -1243,7 +1309,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSExtra/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSExtra"
             },
-            "time": "2023-01-09T22:15:31+00:00"
+            "time": "2023-03-28T17:59:21+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -1251,12 +1317,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "01769ef66211572031ce488ae65e523f10dfc3ab"
+                "reference": "e74812ac026d9f9f18a936d29880b2db3211f89d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/01769ef66211572031ce488ae65e523f10dfc3ab",
-                "reference": "01769ef66211572031ce488ae65e523f10dfc3ab",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/e74812ac026d9f9f18a936d29880b2db3211f89d",
+                "reference": "e74812ac026d9f9f18a936d29880b2db3211f89d",
                 "shasum": ""
             },
             "require": {
@@ -1318,7 +1384,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2023-02-23T09:34:26+00:00"
+            "time": "2023-03-28T16:57:37+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1384,12 +1450,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "546f59c67854589bb8f6b49a30e642e75ff419ad"
+                "reference": "2e76b2061246fbee2ea8461c57b67b6b0c010223"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/546f59c67854589bb8f6b49a30e642e75ff419ad",
-                "reference": "546f59c67854589bb8f6b49a30e642e75ff419ad",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/2e76b2061246fbee2ea8461c57b67b6b0c010223",
+                "reference": "2e76b2061246fbee2ea8461c57b67b6b0c010223",
                 "shasum": ""
             },
             "require": {
@@ -1397,7 +1463,7 @@
                 "php": ">=5.4",
                 "phpcsstandards/phpcsextra": "^1.0",
                 "phpcsstandards/phpcsutils": "^1.0",
-                "squizlabs/php_codesniffer": "^3.7.1"
+                "squizlabs/php_codesniffer": "^3.7.2"
             },
             "require-dev": {
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
@@ -1433,7 +1499,7 @@
                 "source": "https://github.com/WordPress/WordPress-Coding-Standards",
                 "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
             },
-            "time": "2023-01-13T13:37:27+00:00"
+            "time": "2023-03-27T21:12:05+00:00"
         }
     ],
     "aliases": [],
