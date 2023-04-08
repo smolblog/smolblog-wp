@@ -8,9 +8,7 @@ use Smolblog\Framework\Messages\Attributes\EventStoreLayerListener;
 use Smolblog\Framework\Messages\Listener;
 use Smolblog\WP\Table_Backed;
 
-class Content_Event_Stream implements Listener {
-	use Table_Backed;
-
+class Content_Event_Stream extends Table_Backed implements Listener {
 	const TABLE  = 'content_events';
 	const FIELDS = <<<EOF
 		`id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -32,9 +30,7 @@ class Content_Event_Stream implements Listener {
 	 */
 	#[EventStoreLayerListener()]
 	public function onContentEvent(ContentEvent $event) {
-		global $wpdb;
-
-		$wpdb->insert(
+		$this->db->insert(
 			$this->table_name(),
 			[
 				'event_id' => $event->id->toByteString(),

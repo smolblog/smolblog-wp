@@ -2,10 +2,17 @@
 
 namespace Smolblog\WP;
 
-trait Table_Backed {
+use wpdb;
+
+class Table_Backed {
+	/**
+	 * Get the full table name for this class.
+	 *
+	 * @return string
+	 */
 	protected static function table_name(): string {
 		global $wpdb;
-		return $wpdb->prefix . self::TABLE;
+		return $wpdb->prefix . 'sb_' . self::TABLE;
 	}
 
 	/**
@@ -16,19 +23,22 @@ trait Table_Backed {
 	public static function update_schema(): void {
 		global $wpdb;
 
-		$table_name      = self::table_name();
-		$table_fields    = self::FIELDS;
+		$table_name      = static::table_name();
+		$table_fields    = static::FIELDS;
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE $table_name ($table_fields) $charset_collate;";
 
-		if ( md5( $sql ) === get_option( self::TABLE . '_schemaver', '' ) ) {
+		if ( md5( $sql ) === get_option( static::TABLE . '_schemaver', '' ) ) {
 			return;
 		}
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 
-		update_option( self::TABLE . '_schemaver', md5( $sql ) );
+		update_option( static::TABLE . '_schemaver', md5( $sql ) );
+	}
+
+	public function __construct(protected wpdb $db) {
 	}
 }
