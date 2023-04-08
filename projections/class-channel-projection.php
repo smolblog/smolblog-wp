@@ -3,8 +3,8 @@
 namespace	Smolblog\WP\Projections;
 
 use Smolblog\Core\Connector\Entities\Channel;
-use Smolblog\Core\Connector\Events\{ChannelDeleted, ChannelSaved, ChannelSiteLinkSet};
-use Smolblog\Core\Connector\Queries\{ChannelById, ChannelsForConnection, ChannelsForSite, SiteHasPermissionForChannel, UserCanLinkChannelAndSite};
+use Smolblog\Core\Connector\Events\{ChannelDeleted, ChannelSaved};
+use Smolblog\Core\Connector\Queries\{ChannelById, ChannelsForConnection};
 use Smolblog\WP\Table_Backed;
 use Smolblog\Framework\Messages\Projection;
 use Smolblog\Framework\Objects\Identifier;
@@ -31,7 +31,7 @@ class Channel_Projection extends Table_Backed implements Projection {
 
 		$values = array_filter( [
 			'id' => $dbid,
-			'channel_id' => $channel_id,
+			'channel_id' => $channel_id->toByteString(),
 			'connection_id' => $event->connectionId->toByteString(),
 			'channel_key' => $event->channelKey,
 			'display_name' => $event->displayName,
@@ -95,7 +95,7 @@ class Channel_Projection extends Table_Backed implements Projection {
 		);
 	}
 
-	private function channel_from_row(array $data): Channel {
+	public function channel_from_row(array $data): Channel {
 		return new Channel(
 			connectionId: $data['connection_id'],
 			channelKey: $data['channel_key'],

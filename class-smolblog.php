@@ -7,6 +7,7 @@ use Smolblog\Api;
 use Smolblog\Core;
 use Smolblog\Framework\Infrastructure\AppKit;
 use Smolblog\Framework\Infrastructure\ServiceRegistry;
+use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Objects\DomainModel;
 
 require_once __DIR__ . '/projections/class-channel-projection.php';
@@ -48,6 +49,11 @@ class Smolblog {
 					EventStreams\Content_Event_Stream::class => ['db' => wpdb::class],
 
 					Projections\Channel_Projection::class => ['db' => wpdb::class],
+					Projections\Channel_Site_Link_Projection::class => [
+						'db' => wpdb::class,
+						'channel_proj' => Projections\Channel_Projection::class,
+						'bus' => MessageBus::class,
+					],
 					Projections\Connection_Projection::class => ['db' => wpdb::class],
 					
 					Auth_Request_State_Helper::class => [],
