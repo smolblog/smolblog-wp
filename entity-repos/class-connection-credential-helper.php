@@ -11,42 +11,26 @@
 namespace Smolblog\WP;
 
 use Smolblog\Core\Connector\{Connection, ConnectionReader, ConnectionWriter};
+use Smolblog\Framework\Messages\Listener;
 
 /**
  * Helper class for Connection Credentials
  */
-class Connection_Credential_Helper implements ConnectionReader, ConnectionWriter {
-	/**
-	 * Check the schema version and update if needed.
-	 *
-	 * @return void
-	 */
-	public static function update_schema(): void {
-		global $wpdb;
+class Connection_Credential_Helper implements Listener {
+	use Table_Backed;
 
-		$table_name      = $wpdb->prefix . 'smolblog_connection';
-		$charset_collate = $wpdb->get_charset_collate();
+	const TABLE = 'smolblog_connections';
 
-		$sql = "CREATE TABLE $table_name (
-			`id` bigint(20) NOT NULL AUTO_INCREMENT,
-			`guid` varchar(101) NOT NULL UNIQUE,
-			`user_id` bigint(20) NOT NULL,
-			`provider` varchar(50) NOT NULL,
-			`provider_key` varchar(50) NOT NULL,
-			`display_name` varchar(100) NOT NULL,
-			`details` text NOT NULL, 
-			PRIMARY KEY  (id)
-		) $charset_collate;";
-
-		if ( md5( $sql ) === get_option( 'smolblog_schemaver_connection', '' ) ) {
-			return;
-		}
-
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta( $sql );
-
-		update_option( 'smolblog_schemaver_connection', md5( $sql ) );
-	}
+	const FIELDS = <<<EOF
+		`id` bigint(20) NOT NULL AUTO_INCREMENT,
+		`guid` char(16) NOT NULL UNIQUE,
+		`user_id` bigint(20) NOT NULL,
+		`provider` varchar(50) NOT NULL,
+		`provider_key` varchar(50) NOT NULL,
+		`display_name` varchar(100) NOT NULL,
+		`details` text NOT NULL, 
+		PRIMARY KEY  (id)
+	EOF;
 
 	/**
 	 * Check the repository for the object identified by $id.
