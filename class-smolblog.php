@@ -56,7 +56,7 @@ class Smolblog {
 					],
 					Projections\Connection_Projection::class => ['db' => wpdb::class],
 					
-					Auth_Request_State_Helper::class => [],
+					Helpers\Auth_Request_State_Helper::class => [],
 					Endpoint_Registrar::class => [ 'container' => ContainerInterface::class ],
 				];
 			}

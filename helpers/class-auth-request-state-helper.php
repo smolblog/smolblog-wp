@@ -7,7 +7,7 @@
 
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 
-namespace Smolblog\WP;
+namespace Smolblog\WP\Helpers;
 
 use Smolblog\Core\Connector\Entities\AuthRequestState;
 use Smolblog\Core\Connector\Services\AuthRequestStateRepo;
