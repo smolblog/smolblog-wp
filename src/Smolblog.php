@@ -10,12 +10,6 @@ use Smolblog\Framework\Infrastructure\ServiceRegistry;
 use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Objects\DomainModel;
 
-require_once __DIR__ . '/projections/class-channel-projection.php';
-require_once __DIR__ . '/projections/class-connection-projection.php';
-
-require_once __DIR__ . '/event-streams/class-connector-event-stream.php';
-require_once __DIR__ . '/event-streams/class-content-event-stream.php';
-
 class Smolblog {
 	use AppKit;
 
@@ -41,23 +35,23 @@ class Smolblog {
 							return get_rest_url( null, '/smolblog/v2' . $endpoint );
 						}
 					},
+					EndpointRegistrar::class => [ 'container' => ContainerInterface::class ],
 					wpdb::class => fn() => $wpdb,
 
-					Core\Connector\Services\AuthRequestStateRepo::class => Auth_Request_State_Helper::class,
+					Core\Connector\Services\AuthRequestStateRepo::class => Helpers\AuthRequestStateHelper::class,
 
-					EventStreams\Connector_Event_Stream::class => ['db' => wpdb::class],
-					EventStreams\Content_Event_Stream::class => ['db' => wpdb::class],
+					EventStreams\ConnectorEventStream::class => ['db' => wpdb::class],
+					EventStreams\ContentEventStream::class => ['db' => wpdb::class],
 
-					Projections\Channel_Projection::class => ['db' => wpdb::class],
-					Projections\Channel_Site_Link_Projection::class => [
+					Projections\ChannelProjection::class => ['db' => wpdb::class],
+					Projections\ChannelSiteLinkProjection::class => [
 						'db' => wpdb::class,
-						'channel_proj' => Projections\Channel_Projection::class,
+						'channel_proj' => Projections\ChannelProjection::class,
 						'bus' => MessageBus::class,
 					],
-					Projections\Connection_Projection::class => ['db' => wpdb::class],
+					Projections\ConnectionProjection::class => ['db' => wpdb::class],
 					
-					Helpers\Auth_Request_State_Helper::class => [],
-					Endpoint_Registrar::class => [ 'container' => ContainerInterface::class ],
+					Helpers\AuthRequestStateHelper::class => [],
 				];
 			}
 		};

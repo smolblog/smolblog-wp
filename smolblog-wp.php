@@ -24,10 +24,6 @@ namespace Smolblog\WP;
 use Smolblog\Framework\Objects\Identifier;
 
 require_once 'vendor/autoload.php';
-require_once 'class-smolblog.php';
-require_once 'class-endpoint-registrar.php';
-
-require_once 'entity-repos/class-auth-request-state-helper.php';
 
 $smolblog = new Smolblog();
 
@@ -35,7 +31,7 @@ add_action(
 	'rest_api_init',
 	function() {
 		$app = new Smolblog();
-		$endpoints = $app->container->get(Endpoint_Registrar::class);
+		$endpoints = $app->container->get(EndpointRegistrar::class);
 
 		$endpoints->init();
 	}

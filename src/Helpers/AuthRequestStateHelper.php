@@ -15,7 +15,7 @@ use Smolblog\Core\Connector\Services\AuthRequestStateRepo;
 /**
  * Helper class to link WordPress and Smolblog transients.
  */
-class Auth_Request_State_Helper implements AuthRequestStateRepo {
+class AuthRequestStateHelper implements AuthRequestStateRepo {
 
 	/**
 	 * Get the indicated AuthRequestState from the repository. Should return null if not found.

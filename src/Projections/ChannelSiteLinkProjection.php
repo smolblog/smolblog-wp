@@ -10,9 +10,9 @@ use Smolblog\Core\Site\UserHasPermissionForSite;
 use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Messages\Projection;
 use Smolblog\Framework\Objects\Identifier;
-use Smolblog\WP\Table_Backed;
+use Smolblog\WP\TableBacked;
 
-class Channel_Site_Link_Projection extends Table_Backed implements Projection {
+class ChannelSiteLinkProjection extends TableBacked implements Projection {
 	const TABLE = 'channel_site_links';
 	const FIELDS = <<<EOF
 		`id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -26,7 +26,7 @@ class Channel_Site_Link_Projection extends Table_Backed implements Projection {
 
 	public function __construct(
 		wpdb $db,
-		private Channel_Projection $channel_proj,
+		private ChannelProjection $channel_proj,
 		private MessageBus $bus,
 	) {
 		parent::__construct(db: $db);
@@ -61,7 +61,7 @@ class Channel_Site_Link_Projection extends Table_Backed implements Projection {
 
 	public function onChannelsForSite(ChannelsForSite $query) {
 		$link_table    = static::table_name();
-		$channel_table = Channel_Projection::table_name();
+		$channel_table = ChannelProjection::table_name();
 		$db_results    = $this->db->get_results(
 			$this->db->prepare(
 				"SELECT `channels`.*
@@ -94,8 +94,8 @@ class Channel_Site_Link_Projection extends Table_Backed implements Projection {
 	}
 
 	public function onUserCanLinkChannelAndSite(UserCanLinkChannelAndSite $query) {
-		$channel_table = Channel_Projection::table_name();
-		$connect_table = Connection_Projection::table_name();
+		$channel_table = ChannelProjection::table_name();
+		$connect_table = ConnectionProjection::table_name();
 		$owns_channel  = $this->db->get_var(
 			$this->db->prepare(
 				"SELECT `link`.`id`

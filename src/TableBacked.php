@@ -4,7 +4,7 @@ namespace Smolblog\WP;
 
 use wpdb;
 
-class Table_Backed {
+class TableBacked {
 	/**
 	 * Get the full table name for this class.
 	 *

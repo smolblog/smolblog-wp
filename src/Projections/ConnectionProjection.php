@@ -7,9 +7,9 @@ use Smolblog\Core\Connector\Events\{ConnectionEstablished, ConnectionRefreshed, 
 use Smolblog\Core\Connector\Queries\{ConnectionById, ConnectionBelongsToUser, ConnectionsForUser};
 use Smolblog\Framework\Messages\Projection;
 use Smolblog\Framework\Objects\Identifier;
-use Smolblog\WP\Table_Backed;
+use Smolblog\WP\TableBacked;
 
-class Connection_Projection extends Table_Backed implements Projection {
+class ConnectionProjection extends TableBacked implements Projection {
 	const TABLE = 'connections';
 	const FIELDS = <<<EOF
 		`id` bigint(20) NOT NULL AUTO_INCREMENT,

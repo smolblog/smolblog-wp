@@ -5,11 +5,11 @@ namespace	Smolblog\WP\Projections;
 use Smolblog\Core\Connector\Entities\Channel;
 use Smolblog\Core\Connector\Events\{ChannelDeleted, ChannelSaved};
 use Smolblog\Core\Connector\Queries\{ChannelById, ChannelsForConnection};
-use Smolblog\WP\Table_Backed;
+use Smolblog\WP\TableBacked;
 use Smolblog\Framework\Messages\Projection;
 use Smolblog\Framework\Objects\Identifier;
 
-class Channel_Projection extends Table_Backed implements Projection {
+class ChannelProjection extends TableBacked implements Projection {
 	const TABLE = 'channels';
 	const FIELDS = <<<EOF
 		`id` bigint(20) NOT NULL AUTO_INCREMENT,

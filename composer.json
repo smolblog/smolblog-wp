@@ -24,6 +24,11 @@
       "url": "https://github.com/smolblog/smolblog-twitter"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "Smolblog\\WP\\": "src/"
+    }
+  },
   "require": {
     "smolblog/smolblog-core": "dev-feature/api-buildout"
   },

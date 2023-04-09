@@ -23,7 +23,7 @@ use \WP_REST_Response;
 /**
  * Class to handle registering the Smolblog endpoints with WordPress.
  */
-class Endpoint_Registrar implements Registry
+class EndpointRegistrar implements Registry
 {
 	public static function getInterfaceToRegister(): string
 	{
