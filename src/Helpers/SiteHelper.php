@@ -1,0 +1,91 @@
+<?php
+
+namespace Smolblog\WP\Helpers;
+
+use WP_Site_Query;
+use Smolblog\Core\Site\{GetSiteSettings, LinkSiteAndUser, Site, SiteById, SiteSettings, SiteUsers, UpdateSettings, UserHasPermissionForSite};
+use Smolblog\Core\User\User;
+use Smolblog\Framework\Messages\Listener;
+use Smolblog\Framework\Objects\Identifier;
+
+class SiteHelper implements Listener {
+	public function onGetSiteSettings(GetSiteSettings $query) {
+		$site_id = self::UuidToInt($query->siteId);
+		$query->results = new SiteSettings(
+			siteId: $query->siteId,
+			title: get_blog_option( $site_id, 'blogname', '' ),
+			tagline: get_blog_option( $site_id, 'blogdescription', '' ),
+		);
+	}
+
+	public function onLinkSiteAndUser(LinkSiteAndUser $command) {
+
+	}
+
+	public function onSiteById(SiteById $query) {
+		$site_id = self::UuidToInt($query->siteId);
+		$details = get_blog_details( $site_id );
+
+		$query->results = new Site(
+			id: $query->siteId,
+			handle: $details->siteurl,
+			displayName: $details->blogname,
+			baseUrl: $details->home,
+		);
+	}
+
+	public function onSiteUsers(SiteUsers $query) {
+		$site_id = self::UuidToInt($query->siteId);
+
+		$query->results = array_map(
+			fn($user) => UserHelper::UserFromWpUser($user),
+			get_users( [ 'blog_id' => $site_id ] )
+		);
+	}
+
+	public function onUpdateSettings(UpdateSettings $command) {
+		$site_id = self::UuidToInt($command->siteId);
+		update_blog_option( $site_id, 'blogname', $command->siteName );
+		update_blog_option( $site_id, 'blogdescription', $command->siteTagline );
+	}
+
+	public function onUserHasPermissionForSite(UserHasPermissionForSite $query) {
+		$site_id = self::UuidToInt($query->siteId);
+		$user_id = UserHelper::UuidToInt($query->userId);
+		switch_to_blog( $site_id );
+
+		$query->results = (
+			(!$query->mustBeAuthor || user_can( $user_id, 'edit_posts' )) &&
+			(!$query->mustBeAdmin || user_can( $user_id, 'activate_plugins'))
+		);
+	}
+
+	public static function UuidToInt(Identifier $uuid) {
+		// https://ilikekillnerds.com/2021/10/querying-wordpress-multisite-sites-with-meta-queries/
+		$site_query = new WP_Site_Query( [
+			'fields' => 'ids',
+			'meta_query' => [
+				'key' => 'smolblog_site_id',
+				'value' => $uuid->toString(),
+			],
+		] );
+
+		$ids = $site_query->get_sites();
+		return $ids[0];
+	}
+
+	public static function IntToUuid(int $dbid) {
+		$meta_value = get_site_meta( $dbid, 'smolblog_site_id', true );
+	
+		if (empty($meta_value)) {
+			// If the site does not have an ID, give it one.
+			$new_id = Identifier::createRandom();
+			update_site_meta( $dbid, 'smolblog_site_id', $new_id->toString() );
+
+			return $new_id;
+		}
+
+		return Identifier::fromString( $meta_value );
+	}
+
+}

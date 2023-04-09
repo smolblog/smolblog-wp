@@ -22,6 +22,8 @@
 namespace Smolblog\WP;
 
 use Smolblog\Framework\Objects\Identifier;
+use Smolblog\WP\Helpers\SiteHelper;
+use Smolblog\WP\Helpers\UserHelper;
 
 require_once 'vendor/autoload.php';
 
@@ -38,27 +40,9 @@ add_action(
 );
 
 function get_current_user_uuid(): Identifier {
-	$meta_value = get_user_meta( get_current_user_id(), 'smolblog_user_id', true );
-	
-	if (empty($meta_value)) {
-		$new_id = Identifier::createRandom();
-		update_user_meta( get_current_user_id(), 'smolblog_user_id', $new_id->toString() );
-
-		return $new_id;
-	}
-
-	return Identifier::fromString( $meta_value );
+	return UserHelper::IntToUuid(get_current_user_id());
 }
 
 function get_current_site_uuid(): Identifier {
-	$meta_value = get_site_meta( get_current_site_id(), 'smolblog_site_id', true );
-	
-	if (empty($meta_value)) {
-		$new_id = Identifier::createRandom();
-		update_site_meta( get_current_site_id(), 'smolblog_site_id', $new_id->toString() );
-
-		return $new_id;
-	}
-
-	return Identifier::fromString( $meta_value );
+	return SiteHelper::IntToUuid(get_current_site_id());
 }
