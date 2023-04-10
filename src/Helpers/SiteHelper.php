@@ -19,19 +19,23 @@ class SiteHelper implements Listener {
 	}
 
 	public function onLinkSiteAndUser(LinkSiteAndUser $command) {
+		$user_id = UserHelper::UuidToInt($command->linkedUserId);
+		$site_id = self::UuidToInt($command->siteId);
+		
+		$wp_role = 'subscriber';
+		if ($command->isAuthor) {
+			$wp_role = 'author';
+		}
+		if ($command->isAdmin) {
+			$wp_role = 'administrator';
+		}
 
+		add_user_to_blog( $site_id, $user_id, $wp_role );
 	}
 
 	public function onSiteById(SiteById $query) {
 		$site_id = self::UuidToInt($query->siteId);
-		$details = get_blog_details( $site_id );
-
-		$query->results = new Site(
-			id: $query->siteId,
-			handle: $details->siteurl,
-			displayName: $details->blogname,
-			baseUrl: $details->home,
-		);
+		$query->results = self::SiteFromWpId($site_id, $query->siteId);
 	}
 
 	public function onSiteUsers(SiteUsers $query) {
@@ -39,7 +43,7 @@ class SiteHelper implements Listener {
 
 		$query->results = array_map(
 			fn($user) => UserHelper::UserFromWpUser($user),
-			get_users( [ 'blog_id' => $site_id ] )
+			get_users( [ 'blog_id' => $site_id, 'role__not_in' => ['subscriber'] ] ),
 		);
 	}
 
@@ -57,6 +61,20 @@ class SiteHelper implements Listener {
 		$query->results = (
 			(!$query->mustBeAuthor || user_can( $user_id, 'edit_posts' )) &&
 			(!$query->mustBeAdmin || user_can( $user_id, 'activate_plugins'))
+		);
+
+		restore_current_blog();
+	}
+
+	public static function SiteFromWpId(int $site_id, ?Identifier $site_uuid = null): Site {
+		$site_uuid ??= self::IntToUuid($site_id);
+		$details   = get_blog_details( $site_id );
+
+		return new Site(
+			id: $site_uuid,
+			handle: $details->siteurl,
+			displayName: $details->blogname,
+			baseUrl: $details->home,
 		);
 	}
 

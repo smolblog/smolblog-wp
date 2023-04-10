@@ -52,6 +52,8 @@ class Smolblog {
 					Projections\ConnectionProjection::class => ['db' => wpdb::class],
 					
 					Helpers\AuthRequestStateHelper::class => [],
+					Helpers\SiteHelper::class => [],
+					Helpers\UserHelper::class => [],
 				];
 			}
 		};

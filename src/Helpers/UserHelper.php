@@ -15,19 +15,34 @@ use Smolblog\Framework\Objects\Identifier;
 class UserHelper implements Listener {
 
 	public function onUpdateProfile(UpdateProfile $command) {
+		$user_id = self::UuidToInt($command->profileId);
+		$user = get_user_by( 'id', $user_id );
 
+		$user->user_login = $command->handle;
+		$user->display_name = $command->displayName;
+		$user->smolblog_pronouns = $command->pronouns;
 	}
 
 	public function onUserById(UserById $query) {
-
+		$user_id = self::UuidToInt($query->userId);
+		$query->results = self::UserFromWpUser(get_userdata( $user_id ));
 	}
 
 	public function onUserCanEditProfile(UserCanEditProfile $query) {
+		if ($query->profileId == $query->userId) {
+			$query->results = true;
+		}
 
+		$query->results = user_can( self::UuidToInt($query->userId), 'edit_users' );
 	}
 
 	public function onUserSites(UserSites $query) {
+		$user_id = self::UuidToInt($query->userId);
 
+		$query->results = array_map(
+			fn($site_id) => SiteHelper::SiteFromWpId($site_id),
+			get_blogs_of_user( $user_id )
+		);
 	}
 
 	public static function UserFromWpUser(WP_User $wp_user): User {
