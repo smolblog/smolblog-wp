@@ -25,7 +25,7 @@ use Smolblog\Framework\Objects\Identifier;
 use Smolblog\WP\Helpers\SiteHelper;
 use Smolblog\WP\Helpers\UserHelper;
 
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $smolblog = new Smolblog();
 

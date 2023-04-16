@@ -16,6 +16,7 @@ use Smolblog\Api\Exceptions\ErrorResponse;
 use Smolblog\Api\SuccessResponse;
 use Smolblog\Framework\Exceptions\MessageNotAuthorizedException;
 use Smolblog\Framework\Infrastructure\Registry;
+use Smolblog\WP\Helpers\UserHelper;
 use Throwable;
 use \WP_REST_Request;
 use \WP_REST_Response;
@@ -104,15 +105,17 @@ class EndpointRegistrar implements Registry
 	private function get_callback( EndpointConfig $config, string $endpoint ): callable {
 		return function( WP_REST_Request $incoming ) use ( $config, $endpoint ) {
 			$outgoing = new WP_REST_Response();
+			$wp_user_id = get_current_user_id();
+			$smolblog_user_id = UserHelper::IntToUuid($wp_user_id);
 
 			try {
 				$body = null;
 				if (class_exists( $config->bodyClass )) {
-					$body = $config->bodyClass::fromArray($incoming->get_json_params());
+					$body = $config->bodyClass::jsonDeserialize($incoming->get_json_params());
 				}
 
 				$response = $this->container->get($endpoint)->run(
-					userId: get_current_user_uuid(),
+					userId: $smolblog_user_id,
 					params: $incoming->get_params(),
 					body: $body,
 				);
@@ -129,7 +132,14 @@ class EndpointRegistrar implements Registry
 				$outgoing->set_data(['code' => 403, 'error' => $ex->getMessage()]);
 				$outgoing->set_status( 403 );
 			} catch (Throwable $ex) {
-				$outgoing->set_data(['code' => 500, 'error' => $ex->getMessage()]);
+				$outgoing->set_data(['code' => 500, 'error' => $ex->getMessage(), 'debug' => [
+					'user' => [
+						'wpid' => $wp_user_id,
+						'uuid' => $smolblog_user_id,
+					],
+					'params' => $incoming->get_params(),
+					'body' => $incoming->get_json_params(),
+				]]);
 				$outgoing->set_status( 500 );
 			}
 

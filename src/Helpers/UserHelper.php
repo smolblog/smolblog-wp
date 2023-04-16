@@ -2,6 +2,7 @@
 
 namespace Smolblog\WP\Helpers;
 
+use Exception;
 use Smolblog\Core\User\UpdateProfile;
 use WP_User;
 use WP_User_Query;
@@ -16,11 +17,26 @@ class UserHelper implements Listener {
 
 	public function onUpdateProfile(UpdateProfile $command) {
 		$user_id = self::UuidToInt($command->profileId);
-		$user = get_user_by( 'id', $user_id );
 
-		$user->user_login = $command->handle;
-		$user->display_name = $command->displayName;
-		$user->smolblog_pronouns = $command->pronouns;
+		$update_params = array_filter([
+			'user_login' => $command->handle,
+			'display_name' => $command->displayName,
+		]);
+
+		if ($update_params) {
+			$response = wp_update_user( [
+				'ID' => $user_id,
+				...$update_params
+			] );
+
+			if ($response != $user_id) {
+				throw new Exception($response->get_error_message());
+			}
+		}
+
+		if (isset($command->pronouns)) {
+			update_user_meta( $user_id, 'smolblog_pronouns', $command->pronouns );
+		}
 	}
 
 	public function onUserById(UserById $query) {
@@ -58,16 +74,15 @@ class UserHelper implements Listener {
 	}
 
 	public static function UuidToInt(Identifier $uuid) {
-		$user_query = new WP_User_Query( [
-			'fields' => 'ids',
+		$user_query = get_users( [
+			'fields' => 'id',
 			'meta_query' => [
 				'key' => 'smolblog_user_id',
 				'value' => $uuid->toString(),
 			],
 		] );
 
-		$ids = $user_query->get_users();
-		return $ids[0];
+		return $user_query[0];
 	}
 
 	public static function IntToUuid(int $dbid) {

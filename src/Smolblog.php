@@ -2,6 +2,7 @@
 
 namespace Smolblog\WP;
 
+use wpdb;
 use Psr\Container\ContainerInterface;
 use Smolblog\Api;
 use Smolblog\Core;
