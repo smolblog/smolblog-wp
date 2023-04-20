@@ -6,6 +6,7 @@ use wpdb;
 use Psr\Container\ContainerInterface;
 use Smolblog\Api;
 use Smolblog\Core;
+use Smolblog\MicroBlog;
 use Smolblog\Framework\Infrastructure\AppKit;
 use Smolblog\Framework\Infrastructure\ServiceRegistry;
 use Smolblog\Framework\Messages\MessageBus;
@@ -20,6 +21,7 @@ class Smolblog {
 		$this->container = $this->buildDefaultContainer( [
 			Core\Model::class,
 			Api\Model::class,
+			MicroBlog\Model::class,
 			$this->wordpress_model(),
 			...$plugin_models,
 		] );
@@ -29,6 +31,9 @@ class Smolblog {
 		$model = new class extends DomainModel {
 			public static function getDependencyMap(): array {
 				global $wpdb;
+
+				$wpdb->show_errors();
+				define( 'DIEONDBERROR', true );
 
 				return [
 					Api\ApiEnvironment::class => fn() => new class implements Api\ApiEnvironment {

@@ -12,14 +12,14 @@ use Smolblog\WP\TableBacked;
 class ConnectionProjection extends TableBacked implements Projection {
 	const TABLE = 'connections';
 	const FIELDS = <<<EOF
-		`id` bigint(20) NOT NULL AUTO_INCREMENT,
-		`connection_id` char(16) NOT NULL UNIQUE,
-		`user_id` char(16) NOT NULL,
-		`provider` varchar(50) NOT NULL,
-		`provider_key` varchar(50) NOT NULL,
-		`display_name` varchar(50) NOT NULL,
-		`details` text,
-		PRIMARY KEY (id)
+		id bigint(20) NOT NULL AUTO_INCREMENT,
+		connection_id varchar(40) NOT NULL UNIQUE,
+		user_id varchar(40) NOT NULL,
+		provider varchar(50) NOT NULL,
+		provider_key varchar(50) NOT NULL,
+		display_name varchar(50) NOT NULL,
+		details text,
+		PRIMARY KEY  (id)
 	EOF;
 
 	public function onConnectionEstablished(ConnectionEstablished $event) {
@@ -27,8 +27,8 @@ class ConnectionProjection extends TableBacked implements Projection {
 
 		$values = array_filter( [
 			'id' => $dbid,
-			'connection_id' => $event->connectionId->toByteString(),
-			'user_id' => $event->userId->toByteString(),
+			'connection_id' => $event->connectionId->toString(),
+			'user_id' => $event->userId->toString(),
 			'provider' => $event->provider,
 			'provider_key' => $event->providerKey,
 			'display_name' => $event->displayName,
@@ -52,14 +52,14 @@ class ConnectionProjection extends TableBacked implements Projection {
 		$this->db->update(
 			static::table_name(),
 			[ 'details' => wp_json_encode( $event->details ) ],
-			[ 'connection_id' => $event->connectionId->toByteString() ]
+			[ 'connection_id' => $event->connectionId->toString() ]
 		);
 	}
 
 	public function onConnectionDeleted(ConnectionDeleted $event) {
 		$this->db->delete(
 			static::table_name(),
-			[ 'connection_id' => $event->connectionId->toByteString() ]
+			[ 'connection_id' => $event->connectionId->toString() ]
 		);
 	}
 
@@ -68,7 +68,7 @@ class ConnectionProjection extends TableBacked implements Projection {
 		$db_results = $this->db->get_row(
 			$this->db->prepare(
 				"SELECT * FROM $table WHERE `connection_id` = %s",
-				$query->connectionId->toByteString()
+				$query->connectionId->toString()
 			),
 			ARRAY_A
 		);
@@ -81,7 +81,7 @@ class ConnectionProjection extends TableBacked implements Projection {
 		$db_results = $this->db->get_results(
 			$this->db->prepare(
 				"SELECT * FROM $table WHERE `user_id` = %s",
-				$query->userId->toByteString()
+				$query->userId->toString()
 			),
 			ARRAY_A
 		);
@@ -95,8 +95,8 @@ class ConnectionProjection extends TableBacked implements Projection {
 		$query->results = $this->db->get_var(
 			$this->db->prepare(
 				"SELECT `id` FROM $table WHERE `connection_id` = %s AND `user_id` = %s",
-				$query->connectionId->toByteString(),
-				$query->userId->toByteString()
+				$query->connectionId->toString(),
+				$query->userId->toString()
 			)
 		);
 	}
@@ -105,13 +105,13 @@ class ConnectionProjection extends TableBacked implements Projection {
 		$table = static::table_name();
 
 		return $this->db->get_var(
-			$this->db->prepare("SELECT `id` FROM $table WHERE `connection_id` = %s", $uuid->toByteString())
+			$this->db->prepare("SELECT `id` FROM $table WHERE `connection_id` = %s", $uuid->toString())
 		);
 	}
 
 	private function connection_from_row(array $data): Connection {
 		return new Connection(
-			userId: $data['user_id'],
+			userId: Identifier::fromString($data['user_id']),
 			provider: $data['provider'],
 			providerKey: $data['provider_key'],
 			displayName: $data['display_name'],

@@ -11,15 +11,13 @@ use Smolblog\WP\TableBacked;
 class ContentEventStream extends TableBacked implements Listener {
 	const TABLE  = 'content_events';
 	const FIELDS = <<<EOF
-		`id` bigint(20) NOT NULL AUTO_INCREMENT,
-		`event_id` char(16) NOT NULL UNIQUE,
-		`event_time` varchar(30) NOT NULL,
-		`content_id` char(16) NOT NULL,
-		`site_id` char(16) NOT NULL,
-		`user_id` char(16) NOT NULL,
-		`event_type` varchar(50) NOT NULL,
-		`payload` text,
-		PRIMARY KEY (id)
+		event_id varchar(40) NOT NULL UNIQUE,
+		event_time varchar(30) NOT NULL,
+		content_id varchar(40) NOT NULL,
+		site_id varchar(40) NOT NULL,
+		user_id varchar(40) NOT NULL,
+		event_type varchar(50) NOT NULL,
+		payload text,
 	EOF;
 
 	/**
@@ -33,11 +31,11 @@ class ContentEventStream extends TableBacked implements Listener {
 		$this->db->insert(
 			$this->table_name(),
 			[
-				'event_id' => $event->id->toByteString(),
+				'event_id' => $event->id->toString(),
 				'event_time' => $event->timestamp->format(DateTimeInterface::RFC3339_EXTENDED),
-				'content_id' => $event->contentId->toByteString(),
-				'site_id' => $event->siteId->toByteString(),
-				'user_id' => $event->userId->toByteString(),
+				'content_id' => $event->contentId->toString(),
+				'site_id' => $event->siteId->toString(),
+				'user_id' => $event->userId->toString(),
 				'event_type' => get_class($event),
 				'payload' => wp_json_encode($event->getPayload()),
 			]

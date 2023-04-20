@@ -27,7 +27,15 @@ use Smolblog\WP\Helpers\UserHelper;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$smolblog = new Smolblog();
+foreach ([
+	EventStreams\ConnectorEventStream::class,
+	EventStreams\ContentEventStream::class,
+	Projections\ChannelProjection::class,
+	Projections\ChannelSiteLinkProjection::class,
+	Projections\ConnectionProjection::class,
+] as $proj) {
+	$proj::update_schema();
+}
 
 add_action(
 	'rest_api_init',

@@ -12,7 +12,7 @@ class TableBacked {
 	 */
 	protected static function table_name(): string {
 		global $wpdb;
-		return $wpdb->prefix . 'sb_' . self::TABLE;
+		return $wpdb->prefix . 'sb_' . static::TABLE;
 	}
 
 	/**
@@ -27,7 +27,11 @@ class TableBacked {
 		$table_fields    = static::FIELDS;
 		$charset_collate = $wpdb->get_charset_collate();
 
-		$sql = "CREATE TABLE $table_name ($table_fields) $charset_collate;";
+		$sql = "CREATE TABLE $table_name (
+			id bigint(20) NOT NULL AUTO_INCREMENT,
+			$table_fields
+			PRIMARY KEY (id)
+		) $charset_collate;";
 
 		if ( md5( $sql ) === get_option( static::TABLE . '_schemaver', '' ) ) {
 			return;

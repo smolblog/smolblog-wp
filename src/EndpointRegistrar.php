@@ -14,6 +14,7 @@ use Smolblog\Api\Endpoint;
 use Smolblog\Api\EndpointConfig;
 use Smolblog\Api\Exceptions\ErrorResponse;
 use Smolblog\Api\SuccessResponse;
+use Smolblog\Api\RedirectResponse;
 use Smolblog\Framework\Exceptions\MessageNotAuthorizedException;
 use Smolblog\Framework\Infrastructure\Registry;
 use Smolblog\WP\Helpers\UserHelper;
@@ -60,7 +61,7 @@ class EndpointRegistrar implements Registry
 						return $param[0];
 					}
 
-				$format = $config->pathVariables[$param[1]]->pattern ?? '[a-zA-Z0-9\-]+';
+				$format = $this->process_pattern($config->pathVariables[$param[1]]->pattern) ?? '[a-zA-Z0-9-]+';
 
 				return '(?P<' . $param[1] . '>' . $format . ')';
 				},
@@ -76,6 +77,23 @@ class EndpointRegistrar implements Registry
 				'permission_callback' => $this->get_permission_callback($config->requiredScopes),
 			),
 		);
+	}
+
+	/**
+	 * Remove terminators from the parameter pattern.
+	 * 
+	 * OpenAPI calls for ^ and $ to ensure that the regular expression matches the entire string. WordPress doesn't need
+	 * this or even like it all that much.
+	 *
+	 * @param string|null $pattern Pattern value from the parameter.
+	 * @return string|null Processed pattern value.
+	 */
+	private function process_pattern(?string $pattern): ?string {
+		if (!isset($pattern)) {
+			return null;
+		}
+
+		return ltrim(rtrim($pattern, '$'), '^');
 	}
 
 	/**
@@ -120,10 +138,21 @@ class EndpointRegistrar implements Registry
 					body: $body,
 				);
 
-				$outgoing->set_data($response);
-				if (get_class($response) === SuccessResponse::class) {
-					$outgoing->set_status( 204 );
-					$outgoing->set_data( null );
+				switch (get_class($response)) {
+					case SuccessResponse::class:
+						$outgoing->set_status( 204 );
+						$outgoing->set_data( null );
+						break;
+					
+					// case RedirectResponse::class:
+					// 	$outgoing->set_status( $response->permanent ? 301 : 302 );
+					// 	$outgoing->header( 'Location', $response->url );
+					// 	$outgoing->set_data( null );
+					// 	break;
+
+					default:
+						$outgoing->set_data($response);
+						break;
 				}
 			} catch (ErrorResponse $ex) {
 				$outgoing->set_data($ex);

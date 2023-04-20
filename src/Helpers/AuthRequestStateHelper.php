@@ -29,7 +29,7 @@ class AuthRequestStateHelper implements AuthRequestStateRepo {
 			return null;
 		}
 
-		return new AuthRequestState( ...$state );
+		return AuthRequestState::fromArray($state);
 	}
 
 	/**

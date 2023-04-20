@@ -15,13 +15,13 @@ use Smolblog\WP\TableBacked;
 class ChannelSiteLinkProjection extends TableBacked implements Projection {
 	const TABLE = 'channel_site_links';
 	const FIELDS = <<<EOF
-		`id` bigint(20) NOT NULL AUTO_INCREMENT,
-		`link_id` char(16) NOT NULL UNIQUE,
-		`channel_id` char(16) NOT NULL,
-		`site_id` char(16) NOT NULL,
-		`can_push` bool NOT NULL,
-		`can_pull` bool NOT NULL,
-		PRIMARY KEY (id)
+		id bigint(20) NOT NULL AUTO_INCREMENT,
+		link_id varchar(40) NOT NULL UNIQUE,
+		channel_id varchar(40) NOT NULL,
+		site_id varchar(40) NOT NULL,
+		can_push bool NOT NULL,
+		can_pull bool NOT NULL,
+		PRIMARY KEY  (id)
 	EOF;
 
 	public function __construct(
@@ -39,9 +39,9 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 
 		$values = array_filter( [
 			'id' => $dbid,
-			'link_id' => $link_id->toByteString(),
-			'channel_id' => $event->channelId->toByteString(),
-			'site_id' => $event->siteId->toByteString(),
+			'link_id' => $link_id->toString(),
+			'channel_id' => $event->channelId->toString(),
+			'site_id' => $event->siteId->toString(),
 			'can_push' => $event->canPush,
 			'can_pull' => $event->canPull,
 		] );
@@ -68,7 +68,7 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 				FROM $link_table `links`
 					INNER JOIN $channel_table `channels` ON `links`.`channel_id` = `channels`.`channel_id`
 				WHERE `links`.`site_id` = %s",
-				$query->siteId->toByteString()
+				$query->siteId->toString()
 			),
 			ARRAY_A
 		);
@@ -82,8 +82,8 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 		$link = $this->db->get_row(
 			$this->db->prepare(
 				"SELECT `id` FROM $table WHERE `site_id` = %s AND `channel_id` = %s",
-				$query->siteId->toByteString(),
-				$query->channelId->toByteString(),
+				$query->siteId->toString(),
+				$query->channelId->toString(),
 			)
 		);
 
@@ -103,8 +103,8 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 					INNER JOIN $connect_table `connection` ON `channel`.`connection_id` = `connection`.`connection_id`
 				WHERE `link`.`channel_id` = %s AND `connection`.`user_id` = %s"
 			),
-			$query->channelId->toByteString(),
-			$query->userId->toByteString(),
+			$query->channelId->toString(),
+			$query->userId->toString(),
 		);
 
 		if (!$owns_channel) {
@@ -125,7 +125,7 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 		$table = static::table_name();
 
 		return $this->db->get_var(
-			$this->db->prepare("SELECT `id` FROM $table WHERE `channel_id` = %s", $uuid->toByteString())
+			$this->db->prepare("SELECT `id` FROM $table WHERE `channel_id` = %s", $uuid->toString())
 		);
 	}
 

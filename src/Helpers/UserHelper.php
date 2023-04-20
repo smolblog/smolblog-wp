@@ -3,6 +3,7 @@
 namespace Smolblog\WP\Helpers;
 
 use Exception;
+use Smolblog\Api\Exceptions\BadRequest;
 use Smolblog\Core\User\UpdateProfile;
 use WP_User;
 use WP_User_Query;
@@ -55,10 +56,10 @@ class UserHelper implements Listener {
 	public function onUserSites(UserSites $query) {
 		$user_id = self::UuidToInt($query->userId);
 
-		$query->results = array_map(
-			fn($site_id) => SiteHelper::SiteFromWpId($site_id),
+		$query->results = array_values(array_map(
+			fn($site) => SiteHelper::SiteFromWpId($site->userblog_id),
 			get_blogs_of_user( $user_id )
-		);
+		));
 	}
 
 	public static function UserFromWpUser(WP_User $wp_user): User {
