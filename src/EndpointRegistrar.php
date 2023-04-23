@@ -17,6 +17,7 @@ use Smolblog\Api\SuccessResponse;
 use Smolblog\Api\RedirectResponse;
 use Smolblog\Framework\Exceptions\MessageNotAuthorizedException;
 use Smolblog\Framework\Infrastructure\Registry;
+use Smolblog\Framework\Objects\Identifier;
 use Smolblog\WP\Helpers\UserHelper;
 use Throwable;
 use \WP_REST_Request;
@@ -129,12 +130,32 @@ class EndpointRegistrar implements Registry
 			try {
 				$body = null;
 				if (class_exists( $config->bodyClass )) {
-					$body = $config->bodyClass::jsonDeserialize($incoming->get_json_params());
+					$body = $config->bodyClass::fromArray($incoming->get_json_params());
 				}
+
+				$params = [];
+				foreach ($incoming->get_params() as $key => $val) {
+					$type = $config->pathVariables[$key] ?? $config->queryVariables[$key] ?? null;
+					if (!isset($type)) {
+						continue;
+					}
+
+					if ($type->type == 'string' && $type->format == 'uuid') {
+						$params[$key] = Identifier::fromString($val);
+						continue;
+					}
+					if ($type->type == 'boolean') {
+						$params[$key] = $val ? true : false;
+						continue;
+					}
+
+					$params[$key] = $val;
+				}
+
 
 				$response = $this->container->get($endpoint)->run(
 					userId: $smolblog_user_id,
-					params: $incoming->get_params(),
+					params: $params,
 					body: $body,
 				);
 
@@ -144,11 +165,11 @@ class EndpointRegistrar implements Registry
 						$outgoing->set_data( null );
 						break;
 					
-					// case RedirectResponse::class:
-					// 	$outgoing->set_status( $response->permanent ? 301 : 302 );
-					// 	$outgoing->header( 'Location', $response->url );
-					// 	$outgoing->set_data( null );
-					// 	break;
+					case RedirectResponse::class:
+						$outgoing->set_status( $response->permanent ? 301 : 302 );
+						$outgoing->header( 'Location', $response->url );
+						$outgoing->set_data( null );
+						break;
 
 					default:
 						$outgoing->set_data($response);

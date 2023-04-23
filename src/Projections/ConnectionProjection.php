@@ -109,7 +109,7 @@ class ConnectionProjection extends TableBacked implements Projection {
 		);
 	}
 
-	private function connection_from_row(array $data): Connection {
+	public function connection_from_row(array $data): Connection {
 		return new Connection(
 			userId: Identifier::fromString($data['user_id']),
 			provider: $data['provider'],

@@ -53,6 +53,7 @@ class Smolblog {
 					Projections\ChannelSiteLinkProjection::class => [
 						'db' => wpdb::class,
 						'channel_proj' => Projections\ChannelProjection::class,
+						'connection_proj' => Projections\ConnectionProjection::class,
 						'bus' => MessageBus::class,
 					],
 					Projections\ConnectionProjection::class => ['db' => wpdb::class],
