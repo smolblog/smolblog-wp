@@ -11,10 +11,12 @@ use Smolblog\Framework\Objects\Identifier;
 class SiteHelper implements Listener {
 	public function onGetSiteSettings(GetSiteSettings $query) {
 		$site_id = self::UuidToInt($query->siteId);
+		$site_info = get_site( $site_id );
+
 		$query->results = new SiteSettings(
 			siteId: $query->siteId,
 			title: get_blog_option( $site_id, 'blogname', '' ),
-			tagline: get_blog_option( $site_id, 'blogdescription', '' ),
+			tagline: get_blog_option( $site_id, 'blogdescription', '' ) . $site_info->domain,
 		);
 	}
 
@@ -72,24 +74,21 @@ class SiteHelper implements Listener {
 
 		return new Site(
 			id: $site_uuid,
-			handle: $details->siteurl,
+			handle: self::slugFromDomain($details->domain),
 			displayName: $details->blogname,
 			baseUrl: $details->home,
 		);
 	}
 
 	public static function UuidToInt(Identifier $uuid) {
-		// https://ilikekillnerds.com/2021/10/querying-wordpress-multisite-sites-with-meta-queries/
-		$site_query = new WP_Site_Query( [
-			'fields' => 'ids',
-			'meta_query' => [
-				'key' => 'smolblog_site_id',
-				'value' => $uuid->toString(),
-			],
-		] );
+		global $wpdb;
 
-		$ids = $site_query->get_sites();
-		return $ids[0];
+		return $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT blog_id FROM $wpdb->blogmeta WHERE meta_key = 'smolblog_site_id' AND meta_value = %s",
+				$uuid->toString()
+			)
+		);
 	}
 
 	public static function IntToUuid(int $dbid) {
@@ -106,4 +105,13 @@ class SiteHelper implements Listener {
 		return Identifier::fromString( $meta_value );
 	}
 
+	private static function slugFromDomain(string $domain) {
+		$base = get_site( 1 )->domain;
+
+		if ($domain === $base) {
+			return 'root';
+		}
+
+		return str_replace(".$base", '', $domain);
+	}
 }

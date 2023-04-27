@@ -69,6 +69,10 @@ class EndpointRegistrar implements Registry
 				$config->route
 			);
 
+		if ($route === '/') {
+			$route = '/hello';
+		}
+
 		register_rest_route(
 			'smolblog/v2',
 			$route,
