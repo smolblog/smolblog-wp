@@ -16,7 +16,7 @@ class SiteHelper implements Listener {
 		$query->results = new SiteSettings(
 			siteId: $query->siteId,
 			title: get_blog_option( $site_id, 'blogname', '' ),
-			tagline: get_blog_option( $site_id, 'blogdescription', '' ) . $site_info->domain,
+			tagline: get_blog_option( $site_id, 'blogdescription', '' ),
 		);
 	}
 

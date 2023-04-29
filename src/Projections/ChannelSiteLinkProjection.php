@@ -15,13 +15,11 @@ use Smolblog\WP\TableBacked;
 class ChannelSiteLinkProjection extends TableBacked implements Projection {
 	const TABLE = 'channel_site_links';
 	const FIELDS = <<<EOF
-		id bigint(20) NOT NULL AUTO_INCREMENT,
 		link_id varchar(40) NOT NULL UNIQUE,
 		channel_id varchar(40) NOT NULL,
 		site_id varchar(40) NOT NULL,
 		can_push bool NOT NULL,
 		can_pull bool NOT NULL,
-		PRIMARY KEY  (id)
 	EOF;
 
 	public function __construct(

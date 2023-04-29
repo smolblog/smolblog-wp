@@ -12,14 +12,12 @@ use Smolblog\WP\TableBacked;
 class ConnectionProjection extends TableBacked implements Projection {
 	const TABLE = 'connections';
 	const FIELDS = <<<EOF
-		id bigint(20) NOT NULL AUTO_INCREMENT,
 		connection_id varchar(40) NOT NULL UNIQUE,
 		user_id varchar(40) NOT NULL,
 		provider varchar(50) NOT NULL,
 		provider_key varchar(50) NOT NULL,
 		display_name varchar(50) NOT NULL,
 		details text,
-		PRIMARY KEY  (id)
 	EOF;
 
 	public function onConnectionEstablished(ConnectionEstablished $event) {

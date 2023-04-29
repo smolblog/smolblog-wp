@@ -30,7 +30,7 @@ class TableBacked {
 		$sql = "CREATE TABLE $table_name (
 			id bigint(20) NOT NULL AUTO_INCREMENT,
 			$table_fields
-			PRIMARY KEY (id)
+			PRIMARY KEY  (id)
 		) $charset_collate;";
 
 		if ( md5( $sql ) === get_option( static::TABLE . '_schemaver', '' ) ) {

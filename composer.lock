@@ -571,12 +571,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "2916d00d2c063cf528d267a60774ada0dfaf20c8"
+                "reference": "0f81d9b76543a9d641d1fe54969cd4bd630c2b36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/2916d00d2c063cf528d267a60774ada0dfaf20c8",
-                "reference": "2916d00d2c063cf528d267a60774ada0dfaf20c8",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0f81d9b76543a9d641d1fe54969cd4bd630c2b36",
+                "reference": "0f81d9b76543a9d641d1fe54969cd4bd630c2b36",
                 "shasum": ""
             },
             "require": {
@@ -656,7 +656,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-17T22:02:26+00:00"
+            "time": "2023-04-24T22:03:19+00:00"
         },
         {
             "name": "smolblog/smolblog-core",
@@ -1192,19 +1192,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "a07b1ea1fcaa4386b62e4b607d3b514709d1b30f"
+                "reference": "781a4c3076fd293ed01f53c313f2fac2e04b3fcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/a07b1ea1fcaa4386b62e4b607d3b514709d1b30f",
-                "reference": "a07b1ea1fcaa4386b62e4b607d3b514709d1b30f",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/781a4c3076fd293ed01f53c313f2fac2e04b3fcb",
+                "reference": "781a4c3076fd293ed01f53c313f2fac2e04b3fcb",
                 "shasum": ""
             },
             "require": {
                 "ext-filter": "*",
                 "php": ">=5.4",
                 "phpcsstandards/phpcsextra": "^1.0",
-                "phpcsstandards/phpcsutils": "^1.0",
+                "phpcsstandards/phpcsutils": "^1.0.5",
                 "squizlabs/php_codesniffer": "^3.7.2"
             },
             "require-dev": {
@@ -1241,7 +1241,7 @@
                 "source": "https://github.com/WordPress/WordPress-Coding-Standards",
                 "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
             },
-            "time": "2023-04-21T10:38:17+00:00"
+            "time": "2023-04-25T14:58:55+00:00"
         }
     ],
     "aliases": [],

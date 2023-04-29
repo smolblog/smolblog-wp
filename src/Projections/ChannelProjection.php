@@ -12,13 +12,11 @@ use Smolblog\Framework\Objects\Identifier;
 class ChannelProjection extends TableBacked implements Projection {
 	const TABLE = 'channels';
 	const FIELDS = <<<EOF
-		id bigint(20) NOT NULL AUTO_INCREMENT,
 		channel_id varchar(40) NOT NULL UNIQUE,
 		connection_id varchar(40) NOT NULL,
 		channel_key varchar(50) NOT NULL,
 		display_name varchar(100) NOT NULL,
 		details text NOT NULL,
-		PRIMARY KEY  (id)
 	EOF;
 
 	public function onChannelSaved(ChannelSaved $event) {
