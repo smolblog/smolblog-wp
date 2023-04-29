@@ -44,7 +44,11 @@ class SiteHelper implements Listener {
 		$site_id = self::UuidToInt($query->siteId);
 
 		$query->results = array_map(
-			fn($user) => UserHelper::UserFromWpUser($user),
+			fn($user) => [
+				'user' => UserHelper::UserFromWpUser($user),
+				'isAdmin' => user_can( $user->ID, 'activate_plugins'),
+				'isAuthor' => user_can( $user->ID, 'edit_posts' ),
+			],
 			get_users( [ 'blog_id' => $site_id, 'role__not_in' => ['subscriber'] ] ),
 		);
 	}
