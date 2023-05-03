@@ -45,6 +45,7 @@ class Smolblog {
 					wpdb::class => fn() => $wpdb,
 
 					Core\Connector\Services\AuthRequestStateRepo::class => Helpers\AuthRequestStateHelper::class,
+					Core\Content\Types\Reblog\ExternalContentService::class => Helpers\EmbedHelper::class,
 
 					EventStreams\ConnectorEventStream::class => ['db' => wpdb::class],
 					EventStreams\ContentEventStream::class => ['db' => wpdb::class],
@@ -62,6 +63,7 @@ class Smolblog {
 					Helpers\AuthRequestStateHelper::class => [],
 					Helpers\SiteHelper::class => [],
 					Helpers\UserHelper::class => [],
+					Helpers\EmbedHelper::class => [],
 				];
 			}
 		};

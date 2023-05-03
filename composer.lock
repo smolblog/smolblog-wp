@@ -571,12 +571,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "0f81d9b76543a9d641d1fe54969cd4bd630c2b36"
+                "reference": "c2feb4cd9e5331f388cb33a50b75c1ee8f1ac618"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0f81d9b76543a9d641d1fe54969cd4bd630c2b36",
-                "reference": "0f81d9b76543a9d641d1fe54969cd4bd630c2b36",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/c2feb4cd9e5331f388cb33a50b75c1ee8f1ac618",
+                "reference": "c2feb4cd9e5331f388cb33a50b75c1ee8f1ac618",
                 "shasum": ""
             },
             "require": {
@@ -656,7 +656,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-24T22:03:19+00:00"
+            "time": "2023-05-01T22:03:25+00:00"
         },
         {
             "name": "smolblog/smolblog-core",
@@ -664,12 +664,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "9456ee29259b2856abc5ba9f7b8f3a45e1233b0c"
+                "reference": "e02ef05b9ed233a468bd77d587000b1a159e5259"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/9456ee29259b2856abc5ba9f7b8f3a45e1233b0c",
-                "reference": "9456ee29259b2856abc5ba9f7b8f3a45e1233b0c",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/e02ef05b9ed233a468bd77d587000b1a159e5259",
+                "reference": "e02ef05b9ed233a468bd77d587000b1a159e5259",
                 "shasum": ""
             },
             "require": {
@@ -733,7 +733,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/feature/api-buildout",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2023-04-30T17:30:37+00:00"
+            "time": "2023-05-03T16:53:52+00:00"
         }
     ],
     "packages-dev": [
@@ -996,12 +996,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "e46d5072b53d130316ccd94c2954a1b96fc1a941"
+                "reference": "b62cdf02730515ff7503f1a42af53354be5b1582"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/e46d5072b53d130316ccd94c2954a1b96fc1a941",
-                "reference": "e46d5072b53d130316ccd94c2954a1b96fc1a941",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/b62cdf02730515ff7503f1a42af53354be5b1582",
+                "reference": "b62cdf02730515ff7503f1a42af53354be5b1582",
                 "shasum": ""
             },
             "require": {
@@ -1052,7 +1052,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSExtra/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSExtra"
             },
-            "time": "2023-04-21T14:10:08+00:00"
+            "time": "2023-05-03T09:50:48+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -1060,12 +1060,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "13d50f0e10b614049b91aadd5c48190ef3be8b17"
+                "reference": "eb1b8d3cd82f50adcdcf0af29a8135d7aa2ef52f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/13d50f0e10b614049b91aadd5c48190ef3be8b17",
-                "reference": "13d50f0e10b614049b91aadd5c48190ef3be8b17",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/eb1b8d3cd82f50adcdcf0af29a8135d7aa2ef52f",
+                "reference": "eb1b8d3cd82f50adcdcf0af29a8135d7aa2ef52f",
                 "shasum": ""
             },
             "require": {
@@ -1126,7 +1126,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2023-04-29T12:47:18+00:00"
+            "time": "2023-05-03T09:49:38+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1192,12 +1192,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "781a4c3076fd293ed01f53c313f2fac2e04b3fcb"
+                "reference": "fca9d9ef2dcd042658ccb9df16552f5048e7bb04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/781a4c3076fd293ed01f53c313f2fac2e04b3fcb",
-                "reference": "781a4c3076fd293ed01f53c313f2fac2e04b3fcb",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/fca9d9ef2dcd042658ccb9df16552f5048e7bb04",
+                "reference": "fca9d9ef2dcd042658ccb9df16552f5048e7bb04",
                 "shasum": ""
             },
             "require": {
@@ -1241,7 +1241,7 @@
                 "source": "https://github.com/WordPress/WordPress-Coding-Standards",
                 "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
             },
-            "time": "2023-04-25T14:58:55+00:00"
+            "time": "2023-05-01T08:34:06+00:00"
         }
     ],
     "aliases": [],
