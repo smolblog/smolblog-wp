@@ -57,6 +57,7 @@ class Smolblog {
 						'bus' => MessageBus::class,
 					],
 					Projections\ConnectionProjection::class => ['db' => wpdb::class],
+					Projections\PostProjection::class => [],
 					
 					Helpers\AuthRequestStateHelper::class => [],
 					Helpers\SiteHelper::class => [],
