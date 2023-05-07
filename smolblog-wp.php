@@ -27,6 +27,12 @@ use Smolblog\WP\Helpers\UserHelper;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+// Load Action Scheduler.
+$smolblog_action_scheduler = __DIR__ . '/vendor/plugins/action-scheduler/action-scheduler.php';
+if ( is_readable( $smolblog_action_scheduler ) ) {
+	require_once $smolblog_action_scheduler;
+}
+
 foreach ([
 	EventStreams\ConnectorEventStream::class,
 	EventStreams\ContentEventStream::class,

@@ -30,7 +30,8 @@
     }
   },
   "require": {
-    "smolblog/smolblog-core": "dev-feature/api-buildout"
+    "smolblog/smolblog-core": "dev-feature/api-buildout",
+    "woocommerce/action-scheduler": "^3.1"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "*",
