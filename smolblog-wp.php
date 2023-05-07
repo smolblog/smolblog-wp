@@ -21,6 +21,7 @@
 
 namespace Smolblog\WP;
 
+use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Objects\Identifier;
 use Smolblog\WP\Helpers\SiteHelper;
 use Smolblog\WP\Helpers\UserHelper;
@@ -43,15 +44,17 @@ foreach ([
 	$proj::update_schema();
 }
 
-add_action(
-	'rest_api_init',
-	function() {
-		$app = new Smolblog();
-		$endpoints = $app->container->get(EndpointRegistrar::class);
+$app = new Smolblog();
 
-		$endpoints->init();
-	}
+// Ensure the async hook is in place
+add_action(
+	'smolblog_async_dispatch',
+	fn($msg) => $app->container->get(MessageBus::class)->dispatch($msg),
+	10,
+	1
 );
+
+add_action( 'rest_api_init', fn() => $app->container->get(EndpointRegistrar::class)->init() );
 
 function get_current_user_uuid(): Identifier {
 	return UserHelper::IntToUuid(get_current_user_id());
