@@ -3,23 +3,29 @@
 namespace Smolblog\WP\Projections;
 
 use DateTimeInterface;
+use Smolblog\Core\Content\Content;
 use Smolblog\Core\Content\ContentVisibility;
 use Smolblog\Core\Content\Events\{
-	ContentBaseAttributeEdited,
-	ContentBodyEdited,
 	ContentCreated,
-	ContentDeleted,
-	ContentVisibilityChanged
+	PermalinkAssigned,
+	PublicContentAdded,
+	PublicContentChanged,
+    PublicContentEvent,
+    PublicContentRemoved
 };
 use Smolblog\Core\Content\Types\Reblog\Reblog;
 use Smolblog\Core\Content\Types\Status\Status;
 use Smolblog\Framework\Messages\Attributes\ExecutionLayerListener;
+use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Messages\Projection;
 use Smolblog\Framework\Objects\Identifier;
 use Smolblog\WP\Helpers\SiteHelper;
 
 class PostProjection implements Projection {
-	#[ExecutionLayerListener(later: 5)]
+	public function __construct(private MessageBus $bus) {
+	}
+
+	#[ExecutionLayerListener]
 	public function onContentCreated(ContentCreated $event) {
 		$wp_site_id = SiteHelper::UuidToInt( $event->siteId );
 		switch_to_blog( $wp_site_id );
@@ -27,10 +33,8 @@ class PostProjection implements Projection {
 		$wp_author_id = SiteHelper::UuidToInt( $event->authorId );
 		$wp_post_id = wp_insert_post( [
 			'post_author' => $wp_author_id,
-			'post_date' => $event->publishTimestamp?->format( DateTimeInterface::ATOM ),
-			'post_content' => $event->getNewBody(),
 			'post_title' => $event->getNewTitle(),
-			'post_status' => $this->visibilityToStatus( $event->visibility ),
+			'post_status' => $this->visibilityToStatus( ContentVisibility::Draft ),
 			'post_type' => $this->typeToPostType( $event->getContentType() ),
 			'meta_input' => [ 'smolblog_uuid' => $event->contentId->toString() ],
 		], true );
@@ -39,21 +43,35 @@ class PostProjection implements Projection {
 			wp_die($wp_post_id);
 		}
 
+		$permalink_parts = parse_url( get_permalink( $wp_post_id ) );
+		$permalink = $permalink_parts['path'] .
+			(isset($permalink_parts['query']) ? '?' . $permalink_parts['query'] : '') .
+			(isset($permalink_parts['fragment']) ? '#' . $permalink_parts['fragment'] : '');
+		
+		$this->bus->dispatch(new PermalinkAssigned(
+			contentId: $event->contentId,
+			userId: $event->userId,
+			siteId: $event->siteId,
+			permalink: $permalink,
+		));
+
 		restore_current_blog();
 	}
 
-	#[ExecutionLayerListener(later: 5)]
-	public function onContentBodyEdited(ContentBodyEdited $event) {
-		$wp_site_id = SiteHelper::UuidToInt( $event->siteId );
+	#[ExecutionLayerListener]
+	public function onPublicContentEvent(PublicContentEvent $event) {
+		$content = $event->getContent();
+
+		$wp_site_id = SiteHelper::UuidToInt( $content->siteId );
 		switch_to_blog( $wp_site_id );
 
-		$args = [ 'ID' => self::UuidToInt($event->contentId) ];
-		if ($event->getNewBody()) {
-			$args['post_content'] = $event->getNewBody();
-		}
-		if ($event->getNewTitle()) {
-			$args['post_title'] = $event->getNewTitle();
-		}
+		$args = [
+			'ID' => self::UuidToInt($content->id),
+			'post_content' => $content->type->getBodyContent(),
+			'post_title' => $this->showTitle(get_class($content->type)) ? $content->type->getTitle() : '',
+			'post_date' => $content->publishTimestamp->format( DateTimeInterface::ATOM ),
+			'post_status' => $this->visibilityToStatus($content->visibility),
+		];
 
 		$results = wp_update_post( $args );
 		if (is_wp_error( $results )) {
@@ -62,18 +80,6 @@ class PostProjection implements Projection {
 
 		restore_current_blog();
 	}
-
-	#[ExecutionLayerListener(later: 5)]
-	public function onContentVisibilityChanged(ContentVisibilityChanged $event){}
-
-	#[ExecutionLayerListener(later: 5)]
-	public function onContentDeleted(ContentDeleted $event){}
-
-	#[ExecutionLayerListener(later: 5)]
-	public function onContentBaseAttributeEdited(ContentBaseAttributeEdited $event){}
-
-	#[ExecutionLayerListener(later: 5)]
-	public function onContentExtensionEdited(ContentBaseAttributeEdited $event){}
 
 	/**
 	 * Convert an Identifier to a WordPress Post ID. *Must be called within the blog the post belongs to!*
@@ -103,7 +109,7 @@ class PostProjection implements Projection {
 		}
 	}
 
-	private function typeToPostType(string $contentType) {
+	private function typeToPostType(string $contentType): string {
 		switch ($contentType) {
 			case Status::class:
 				return 'status';
@@ -112,5 +118,10 @@ class PostProjection implements Projection {
 			default:
 				return 'post';
 		}
+	}
+
+	private function showTitle(string $contentType): bool {
+		// Right now we only have Status and Reblog, neither of which have true 'title's.
+		return false;
 	}
 }

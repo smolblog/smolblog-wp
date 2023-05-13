@@ -113,7 +113,7 @@ class SiteHelper implements Listener {
 		$base = get_site( 1 )->domain;
 
 		if ($domain === $base) {
-			return 'root';
+			return 'smolblog';
 		}
 
 		return str_replace(".$base", '', $domain);
