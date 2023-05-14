@@ -40,6 +40,7 @@ foreach ([
 	Projections\ChannelProjection::class,
 	Projections\ChannelSiteLinkProjection::class,
 	Projections\ConnectionProjection::class,
+	Projections\StandardContentProjection::class,
 ] as $proj) {
 	$proj::update_schema();
 }

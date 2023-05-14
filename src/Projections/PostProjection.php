@@ -3,6 +3,7 @@
 namespace Smolblog\WP\Projections;
 
 use DateTimeInterface;
+use Exception;
 use Smolblog\Core\Content\Content;
 use Smolblog\Core\Content\ContentVisibility;
 use Smolblog\Core\Content\Events\{
@@ -40,7 +41,7 @@ class PostProjection implements Projection {
 		], true );
 
 		if (is_wp_error( $wp_post_id )) {
-			wp_die($wp_post_id);
+			throw new Exception($wp_post_id);
 		}
 
 		$permalink_parts = parse_url( get_permalink( $wp_post_id ) );
@@ -75,7 +76,7 @@ class PostProjection implements Projection {
 
 		$results = wp_update_post( $args );
 		if (is_wp_error( $results )) {
-			wp_die($results);
+			throw new Exception($results);
 		}
 
 		restore_current_blog();

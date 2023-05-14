@@ -30,7 +30,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		type_class varchar(100) NOT NULL,
 		title varchar(255),
 		body text,
-		site_id varchar(40) NOT NULL,
+		site_uuid varchar(40) NOT NULL,
 		author_id varchar(40) NOT NULL,
 		permalink varchar(255),
 		publish_timestamp varchar(50),
@@ -45,7 +45,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 			'type_class' => $event->getContentType(),
 			'title' => $event->getNewTitle(),
 			'body' => $event->getNewBody(),
-			'site_id' => $event->siteId->toString(),
+			'site_uuid' => $event->siteId->toString(),
 			'author_id' => $event->authorId->toString(),
 			'publish_timestamp' => $event->publishTimestamp?->format(DateTimeInterface::RFC3339_EXTENDED),
 			'visibility' => ContentVisibility::Draft->value,
@@ -170,7 +170,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 
 		$message->setContentProperty(
 			id: $message->getContentId(),
-			siteId: isset($db_results['site_id']) ? Identifier::fromString($db_results['site_id']) : null,
+			siteId: isset($db_results['site_uuid']) ? Identifier::fromString($db_results['site_uuid']) : null,
 			authorId: isset($db_results['author_id']) ? Identifier::fromString($db_results['author_id']) : null,
 			permalink: $db_results['permalink'] ?? null,
 			publishTimestamp: isset($db_results['publish_timestamp']) ?

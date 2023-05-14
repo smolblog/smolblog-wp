@@ -138,8 +138,14 @@ class EndpointRegistrar implements Registry
 				}
 
 				$params = [];
+				$debug = [];
 				foreach ($incoming->get_params() as $key => $val) {
 					$type = $config->pathVariables[$key] ?? $config->queryVariables[$key] ?? null;
+					$debug[$key] = [
+						'type' => $type->type,
+						'format' => $type->format,
+						'value' => $val,
+					];
 					if (!isset($type)) {
 						continue;
 					}
@@ -155,7 +161,6 @@ class EndpointRegistrar implements Registry
 
 					$params[$key] = $val;
 				}
-
 
 				$response = $this->container->get($endpoint)->run(
 					userId: $smolblog_user_id,
@@ -189,11 +194,11 @@ class EndpointRegistrar implements Registry
 				$outgoing->set_data(['code' => 500, 'error' => $ex->getMessage(), 'debug' => [
 					'user' => [
 						'wpid' => $wp_user_id,
-						'uuid' => $smolblog_user_id,
+						'uuid' => $smolblog_user_id->toString(),
 					],
 					'params' => $incoming->get_params(),
 					'body' => $incoming->get_json_params(),
-				]]);
+				], 'file' => $ex->getFile(), 'line' => $ex->getLine(), 'trace' => $ex->getTraceAsString()]);
 				$outgoing->set_status( 500 );
 			}
 
