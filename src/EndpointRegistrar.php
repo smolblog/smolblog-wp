@@ -198,7 +198,8 @@ class EndpointRegistrar implements Registry
 					],
 					'params' => $incoming->get_params(),
 					'body' => $incoming->get_json_params(),
-				], 'file' => $ex->getFile(), 'line' => $ex->getLine(), 'trace' => $ex->getTraceAsString()]);
+				], 'file' => $ex->getFile(), 'line' => $ex->getLine(), 'trace' => $ex->getTraceAsString(),
+			'previous' => $ex->getPrevious()?->getMessage()]);
 				$outgoing->set_status( 500 );
 			}
 

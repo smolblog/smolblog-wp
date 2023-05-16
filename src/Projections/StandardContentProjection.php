@@ -4,6 +4,7 @@ namespace Smolblog\WP\Projections;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use Exception;
 use Smolblog\Core\Content\ContentVisibility;
 use Smolblog\Core\Content\ContentBuilder;
 use Smolblog\Core\Content\Events\{
@@ -18,6 +19,7 @@ use Smolblog\Core\Content\Events\{
 	PublicContentRemoved,
 };
 use Smolblog\Framework\Messages\Attributes\ContentBuildLayerListener;
+use Smolblog\Framework\Messages\Attributes\ExecutionLayerListener;
 use Smolblog\Framework\Messages\Projection;
 use Smolblog\Framework\Objects\Identifier;
 use Smolblog\WP\Helpers\SiteHelper;
@@ -38,7 +40,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		extensions text NOT NULL,
 	EOF;
 
-	#[ContentBuildLayerListener]
+	#[ExecutionLayerListener]
 	public function onContentCreated(ContentCreated $event) {
 		$data = array_filter([
 			'content_id' => $event->contentId->toString(),
@@ -63,7 +65,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		}
 	}
 
-	#[ContentBuildLayerListener]
+	#[ExecutionLayerListener]
 	public function onContentBodyEdited(ContentBodyEdited $event) {
 		$this->db->update(
 			static::table_name(),
@@ -72,7 +74,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		);
 	}
 
-	#[ContentBuildLayerListener]
+	#[ExecutionLayerListener]
 	public function onContentDeleted(ContentDeleted $event) {
 		$this->db->delete(
 			static::table_name(),
@@ -80,7 +82,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		);
 	}
 
-	#[ContentBuildLayerListener]
+	#[ExecutionLayerListener]
 	public function onContentBaseAttributeEdited(ContentBaseAttributeEdited $event) {
 		$this->db->update(
 			static::table_name(),
@@ -92,7 +94,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		);
 	}
 
-	#[ContentBuildLayerListener]
+	#[ExecutionLayerListener]
 	public function onContentExtensionEdited(ContentExtensionEdited $event) {
 		$table = static::table_name();
 
@@ -113,7 +115,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		);
 	}
 
-	#[ContentBuildLayerListener]
+	#[ExecutionLayerListener]
 	public function onPermalinkAssigned(PermalinkAssigned $event) {
 		$this->db->update(
 			static::table_name(),
@@ -125,7 +127,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 	// #[ContentBuildLayerListener]
 	// public function onPublicContentChanged(PublicContentChanged $event) {}
 
-	#[ContentBuildLayerListener]
+	#[ContentBuildLayerListener(earlier: 5)]
 	public function onPublicContentAdded(PublicContentAdded $event) {
 		$table = static::table_name();
 
@@ -148,7 +150,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		);
 	}
 
-	#[ContentBuildLayerListener]
+	#[ContentBuildLayerListener(earlier: 5)]
 	public function onPublicContentRemoved(PublicContentRemoved $event) {
 		$this->db->update(
 			static::table_name(),
@@ -157,7 +159,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		);
 	}
 
-	#[ContentBuildLayerListener(later:1)]
+	#[ContentBuildLayerListener(later:5)]
 	public function onContentBuilder(ContentBuilder $message) {
 		$table      = static::table_name();
 		$db_results = $this->db->get_row(

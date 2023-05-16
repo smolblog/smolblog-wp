@@ -26,17 +26,20 @@ class PostProjection implements Projection {
 	public function __construct(private MessageBus $bus) {
 	}
 
-	#[ExecutionLayerListener]
-	public function onContentCreated(ContentCreated $event) {
-		$wp_site_id = SiteHelper::UuidToInt( $event->siteId );
+	#[ExecutionLayerListener(earlier: 3)]
+	public function onPublicContentAdded(PublicContentAdded $event) {
+		$content = $event->getContent();
+
+		$wp_site_id = SiteHelper::UuidToInt( $content->siteId );
 		switch_to_blog( $wp_site_id );
 		
-		$wp_author_id = SiteHelper::UuidToInt( $event->authorId );
+		$wp_author_id = SiteHelper::UuidToInt( $content->authorId );
 		$wp_post_id = wp_insert_post( [
 			'post_author' => $wp_author_id,
-			'post_title' => $event->getNewTitle(),
-			'post_status' => $this->visibilityToStatus( ContentVisibility::Draft ),
-			'post_type' => $this->typeToPostType( $event->getContentType() ),
+			'post_title' => $this->showTitle(get_class($content->type)) ? $content->type->getTitle() : '',
+			'post_content' => $content->type->getBodyContent(),
+			'post_status' => $this->visibilityToStatus( ContentVisibility::Published ),
+			'post_type' => $this->typeToPostType( get_class($content->type) ),
 			'meta_input' => [ 'smolblog_uuid' => $event->contentId->toString() ],
 		], true );
 
@@ -55,12 +58,13 @@ class PostProjection implements Projection {
 			siteId: $event->siteId,
 			permalink: $permalink,
 		));
+		$event->setContentProperty(permalink: $permalink);
 
 		restore_current_blog();
 	}
 
 	#[ExecutionLayerListener]
-	public function onPublicContentEvent(PublicContentEvent $event) {
+	public function onPublicContentChanged(PublicContentChanged $event) {
 		$content = $event->getContent();
 
 		$wp_site_id = SiteHelper::UuidToInt( $content->siteId );
@@ -71,7 +75,26 @@ class PostProjection implements Projection {
 			'post_content' => $content->type->getBodyContent(),
 			'post_title' => $this->showTitle(get_class($content->type)) ? $content->type->getTitle() : '',
 			'post_date' => $content->publishTimestamp->format( DateTimeInterface::ATOM ),
-			'post_status' => $this->visibilityToStatus($content->visibility),
+		];
+
+		$results = wp_update_post( $args );
+		if (is_wp_error( $results )) {
+			throw new Exception($results);
+		}
+
+		restore_current_blog();
+	}
+
+	#[ExecutionLayerListener]
+	public function onPublicContentRemoved(PublicContentRemoved $event) {
+		$content = $event->getContent();
+
+		$wp_site_id = SiteHelper::UuidToInt( $content->siteId );
+		switch_to_blog( $wp_site_id );
+
+		$args = [
+			'ID' => self::UuidToInt($content->id),
+			'post_status' => $this->visibilityToStatus( ContentVisibility::Draft ),
 		];
 
 		$results = wp_update_post( $args );
