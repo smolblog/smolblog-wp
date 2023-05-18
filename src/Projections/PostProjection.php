@@ -36,7 +36,7 @@ class PostProjection implements Projection {
 		$wp_author_id = SiteHelper::UuidToInt( $content->authorId );
 		$wp_post_id = wp_insert_post( [
 			'post_author' => $wp_author_id,
-			'post_title' => $this->showTitle(get_class($content->type)) ? $content->type->getTitle() : '',
+			'post_title' => $content->type->getTitle(),
 			'post_content' => $content->type->getBodyContent(),
 			'post_status' => $this->visibilityToStatus( ContentVisibility::Published ),
 			'post_type' => $this->typeToPostType( get_class($content->type) ),
@@ -142,10 +142,5 @@ class PostProjection implements Projection {
 			default:
 				return 'post';
 		}
-	}
-
-	private function showTitle(string $contentType): bool {
-		// Right now we only have Status and Reblog, neither of which have true 'title's.
-		return false;
 	}
 }

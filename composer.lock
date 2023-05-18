@@ -664,12 +664,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "faf1b02fb83ef93b4db40fe2b3f80d6864218374"
+                "reference": "da43ab5253c837e29eb32570ff32fd22e6809ccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/faf1b02fb83ef93b4db40fe2b3f80d6864218374",
-                "reference": "faf1b02fb83ef93b4db40fe2b3f80d6864218374",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/da43ab5253c837e29eb32570ff32fd22e6809ccd",
+                "reference": "da43ab5253c837e29eb32570ff32fd22e6809ccd",
                 "shasum": ""
             },
             "require": {
@@ -733,7 +733,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/feature/api-buildout",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2023-05-16T13:21:23+00:00"
+            "time": "2023-05-18T01:29:40+00:00"
         },
         {
             "name": "woocommerce/action-scheduler",

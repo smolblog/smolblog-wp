@@ -2,7 +2,7 @@
 
 namespace Smolblog\WP\Projections;
 
-use Smolblog\Core\Content\ContentBuilder;
+use Smolblog\Core\Content\Status\StatusBuilder;
 use Smolblog\Core\Content\Types\Status\Status;
 use Smolblog\Core\Content\Types\Status\StatusBodyEdited;
 use Smolblog\Core\Content\Types\Status\StatusCreated;
@@ -56,7 +56,7 @@ class StatusProjection extends TableBacked implements Projection {
 	}
 
 	#[ContentBuildLayerListener]
-	public function buildStatus(ContentBuilder $message) {
+	public function buildStatus(StatusBuilder $message) {
 		$table      = static::table_name();
 		$db_results = $this->db->get_row(
 			$this->db->prepare(

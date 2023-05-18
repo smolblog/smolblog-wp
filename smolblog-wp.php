@@ -40,6 +40,7 @@ foreach ([
 	Projections\ChannelProjection::class,
 	Projections\ChannelSiteLinkProjection::class,
 	Projections\ConnectionProjection::class,
+	Projections\ReblogProjection::class,
 	Projections\StandardContentProjection::class,
 	Projections\StatusProjection::class,
 ] as $proj) {
@@ -67,7 +68,7 @@ function get_current_site_uuid(): Identifier {
 }
 
 $default_cpt_args = [
-	'supports'              => array( 'title', 'editor', 'thumbnail', 'comments', 'custom-fields', 'page-attributes', 'post-formats' ),
+	'supports'              => array( 'editor', 'thumbnail', 'comments', 'custom-fields', 'page-attributes', 'post-formats' ),
 	'taxonomies'            => array( 'category', 'post_tag' ),
 	'public'                => true,
 	'menu_position'         => 5,
@@ -86,3 +87,18 @@ add_action( 'init', fn() => register_post_type( 'reblog', [
 	'description'           => __( 'A webpage from off-site', 'smolblog' ),
 	...$default_cpt_args,
 ] ), 0 );
+
+add_action( 'pre_get_posts', function($query) {
+	if ( ! is_admin() && $query->is_main_query() ) {
+		$query->set( 'post_type', array( 'post', 'page', 'status', 'reblog' ) );
+	}
+});
+
+add_filter( 'the_title_rss', function($title) {
+	global $wp_query;
+	$type = $wp_query->post->post_type;
+	if (in_array($type, [ 'status', 'reblog' ])) {
+		return null;
+	}
+	return $title;
+});
