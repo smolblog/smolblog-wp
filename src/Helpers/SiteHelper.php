@@ -2,6 +2,7 @@
 
 namespace Smolblog\WP\Helpers;
 
+use Exception;
 use WP_Site_Query;
 use Smolblog\Core\Site\{GetSiteSettings, LinkSiteAndUser, Site, SiteById, SiteSettings, SiteUsers, UpdateSettings, UserHasPermissionForSite};
 use Smolblog\Core\User\User;
@@ -60,6 +61,8 @@ class SiteHelper implements Listener {
 	}
 
 	public function onUserHasPermissionForSite(UserHasPermissionForSite $query) {
+		//throw new Exception('Hello!');
+
 		$site_id = self::UuidToInt($query->siteId);
 		$user_id = UserHelper::UuidToInt($query->userId);
 		switch_to_blog( $site_id );

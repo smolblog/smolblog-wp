@@ -664,12 +664,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "da43ab5253c837e29eb32570ff32fd22e6809ccd"
+                "reference": "bba7c99e79d9b1e33880d2821f5890f489308d8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/da43ab5253c837e29eb32570ff32fd22e6809ccd",
-                "reference": "da43ab5253c837e29eb32570ff32fd22e6809ccd",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/bba7c99e79d9b1e33880d2821f5890f489308d8c",
+                "reference": "bba7c99e79d9b1e33880d2821f5890f489308d8c",
                 "shasum": ""
             },
             "require": {
@@ -733,7 +733,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/feature/api-buildout",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2023-05-18T01:29:40+00:00"
+            "time": "2023-05-20T16:00:02+00:00"
         },
         {
             "name": "woocommerce/action-scheduler",
@@ -1036,12 +1036,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "410c1355284b6e24b51e2f3babe05873ee3b44f8"
+                "reference": "056ac4d6ba120e4fa905b7fe43f098dfb21b812d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/410c1355284b6e24b51e2f3babe05873ee3b44f8",
-                "reference": "410c1355284b6e24b51e2f3babe05873ee3b44f8",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/056ac4d6ba120e4fa905b7fe43f098dfb21b812d",
+                "reference": "056ac4d6ba120e4fa905b7fe43f098dfb21b812d",
                 "shasum": ""
             },
             "require": {
@@ -1092,7 +1092,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSExtra/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSExtra"
             },
-            "time": "2023-05-15T12:32:47+00:00"
+            "time": "2023-05-19T06:11:13+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -1100,12 +1100,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "2eecb1308b49061457c2957e774d577f971c9597"
+                "reference": "437df50ff796f8317da1a24ff53828fd816ef51e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/2eecb1308b49061457c2957e774d577f971c9597",
-                "reference": "2eecb1308b49061457c2957e774d577f971c9597",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/437df50ff796f8317da1a24ff53828fd816ef51e",
+                "reference": "437df50ff796f8317da1a24ff53828fd816ef51e",
                 "shasum": ""
             },
             "require": {
@@ -1166,7 +1166,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2023-05-15T12:34:00+00:00"
+            "time": "2023-05-19T06:56:30+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1174,12 +1174,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "a26c071d00b415bba26cedd8f835fca6288cf6b9"
+                "reference": "2dc7b5981488502fed92df99c1460530d741e666"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/a26c071d00b415bba26cedd8f835fca6288cf6b9",
-                "reference": "a26c071d00b415bba26cedd8f835fca6288cf6b9",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/2dc7b5981488502fed92df99c1460530d741e666",
+                "reference": "2dc7b5981488502fed92df99c1460530d741e666",
                 "shasum": ""
             },
             "require": {
@@ -1224,7 +1224,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2023-05-07T04:45:11+00:00"
+            "time": "2023-05-18T08:37:09+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

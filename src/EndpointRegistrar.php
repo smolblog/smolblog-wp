@@ -188,7 +188,14 @@ class EndpointRegistrar implements Registry
 				$outgoing->set_data($ex);
 				$outgoing->set_status($ex->getHttpCode());
 			} catch (MessageNotAuthorizedException $ex) {
-				$outgoing->set_data(['code' => 403, 'error' => $ex->getMessage()]);
+				$outgoing->set_data(['code' => 403, 'error' => $ex->getMessage(), 'trace' => $ex->getTraceAsString(), 'debug' => [
+					'user' => [
+						'wpid' => $wp_user_id,
+						'uuid' => $smolblog_user_id->toString(),
+					],
+					'params' => $incoming->get_params(),
+					'body' => $incoming->get_json_params(),
+				]]);
 				$outgoing->set_status( 403 );
 			} catch (Throwable $ex) {
 				$outgoing->set_data(['code' => 500, 'error' => $ex->getMessage(), 'debug' => [

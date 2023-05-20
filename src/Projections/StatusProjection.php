@@ -2,9 +2,9 @@
 
 namespace Smolblog\WP\Projections;
 
-use Smolblog\Core\Content\Status\StatusBuilder;
 use Smolblog\Core\Content\Types\Status\Status;
 use Smolblog\Core\Content\Types\Status\StatusBodyEdited;
+use Smolblog\Core\Content\Types\Status\StatusBuilder;
 use Smolblog\Core\Content\Types\Status\StatusCreated;
 use Smolblog\Core\Content\Types\Status\StatusDeleted;
 use Smolblog\Framework\Messages\Attributes\ContentBuildLayerListener;

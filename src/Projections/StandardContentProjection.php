@@ -2,6 +2,7 @@
 
 namespace Smolblog\WP\Projections;
 
+use wpdb;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Exception;
@@ -18,8 +19,15 @@ use Smolblog\Core\Content\Events\{
 	PublicContentAdded,
 	PublicContentRemoved,
 };
+use Smolblog\Core\Content\GenericContent;
+use Smolblog\Core\Content\Queries\ContentList;
+use Smolblog\Core\Content\Queries\ContentVisibleToUser;
+use Smolblog\Core\Content\Queries\GenericContentById;
+use Smolblog\Core\Content\Queries\UserCanEditContent;
+use Smolblog\Core\Site\UserHasPermissionForSite;
 use Smolblog\Framework\Messages\Attributes\ContentBuildLayerListener;
 use Smolblog\Framework\Messages\Attributes\ExecutionLayerListener;
+use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Messages\Projection;
 use Smolblog\Framework\Objects\Identifier;
 use Smolblog\WP\Helpers\SiteHelper;
@@ -124,9 +132,6 @@ class StandardContentProjection extends TableBacked implements Projection {
 		);
 	}
 
-	// #[ContentBuildLayerListener]
-	// public function onPublicContentChanged(PublicContentChanged $event) {}
-
 	#[ContentBuildLayerListener(earlier: 5)]
 	public function onPublicContentAdded(PublicContentAdded $event) {
 		$table = static::table_name();
@@ -185,6 +190,21 @@ class StandardContentProjection extends TableBacked implements Projection {
 			$ext = $ext_class::fromArray($ext_array);
 			$message->addContentExtension($ext);
 		}
+	}
+
+	public function onGenericContentById(GenericContentById $query) {
+		$table      = static::table_name();
+		$db_results = $this->db->get_row(
+			$this->db->prepare(
+				"SELECT title, body FROM $table WHERE `content_id` = %s",
+				$query->contentId->toString()
+			),
+			ARRAY_A
+		);
+
+		$query->setContentType(new GenericContent(title: $db_results['title'], body: $db_results['body']));
+
+		$query->results = $query->getContent();
 	}
 }
 

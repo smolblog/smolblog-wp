@@ -10,7 +10,7 @@ class TableBacked {
 	 *
 	 * @return string
 	 */
-	protected static function table_name(): string {
+	public static function table_name(): string {
 		global $wpdb;
 		return $wpdb->prefix . 'sb_' . static::TABLE;
 	}
