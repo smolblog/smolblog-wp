@@ -20,11 +20,11 @@ class ContentQueryHandler implements Listener {
 	}
 
 	public function onContentVisibleToUser(ContentVisibleToUser $query) {
-		$query = $this->checkContentPerm(contentId: $query->contentId, siteId: $query->siteId, userId: $query->userId);
+		$query->results = $this->checkContentPerm(contentId: $query->contentId, siteId: $query->siteId, userId: $query->userId);
 	}
 
 	public function onUserCanEditContent(UserCanEditContent $query) {
-		$query = $this->checkContentPerm(contentId: $query->contentId, siteId: $query->siteId, userId: $query->userId);
+		$query->results = $this->checkContentPerm(contentId: $query->contentId, siteId: $query->siteId, userId: $query->userId);
 	}
 
 	public function onContentList(ContentList $query) {
@@ -63,7 +63,7 @@ class ContentQueryHandler implements Listener {
 		$query->results = array_map(
 			fn($row) => new Content(
 				id: Identifier::fromString($row['content_id']),
-				type: new GenericContent(title: $row['title'], body: $row['body']),
+				type: new GenericContent(title: $row['title'], body: $row['body'], typeClass: $row['type_class']),
 				siteId: Identifier::fromString($row['site_uuid']),
 				authorId: Identifier::fromString($row['author_id']),
 				permalink: $row['permalink'] ?? null,

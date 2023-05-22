@@ -192,6 +192,7 @@ class StandardContentProjection extends TableBacked implements Projection {
 		}
 	}
 
+	#[ContentBuildLayerListener]
 	public function onGenericContentById(GenericContentById $query) {
 		$table      = static::table_name();
 		$db_results = $this->db->get_row(
@@ -203,8 +204,6 @@ class StandardContentProjection extends TableBacked implements Projection {
 		);
 
 		$query->setContentType(new GenericContent(title: $db_results['title'], body: $db_results['body']));
-
-		$query->results = $query->getContent();
 	}
 }
 

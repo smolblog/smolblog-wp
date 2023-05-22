@@ -664,12 +664,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "bba7c99e79d9b1e33880d2821f5890f489308d8c"
+                "reference": "464a528e3195d7a168855db754ef05c301c913a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/bba7c99e79d9b1e33880d2821f5890f489308d8c",
-                "reference": "bba7c99e79d9b1e33880d2821f5890f489308d8c",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/464a528e3195d7a168855db754ef05c301c913a9",
+                "reference": "464a528e3195d7a168855db754ef05c301c913a9",
                 "shasum": ""
             },
             "require": {
@@ -733,7 +733,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/feature/api-buildout",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2023-05-20T16:00:02+00:00"
+            "time": "2023-05-22T02:44:14+00:00"
         },
         {
             "name": "woocommerce/action-scheduler",
@@ -1100,12 +1100,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "437df50ff796f8317da1a24ff53828fd816ef51e"
+                "reference": "9fe6c2fcbff9e2974219b9672dc4fdc7b88037a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/437df50ff796f8317da1a24ff53828fd816ef51e",
-                "reference": "437df50ff796f8317da1a24ff53828fd816ef51e",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/9fe6c2fcbff9e2974219b9672dc4fdc7b88037a3",
+                "reference": "9fe6c2fcbff9e2974219b9672dc4fdc7b88037a3",
                 "shasum": ""
             },
             "require": {
@@ -1166,7 +1166,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2023-05-19T06:56:30+00:00"
+            "time": "2023-05-21T11:54:38+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
