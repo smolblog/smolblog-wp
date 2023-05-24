@@ -4,7 +4,7 @@ namespace Smolblog\WP\Helpers;
 
 use Exception;
 use WP_Site_Query;
-use Smolblog\Core\Site\{GetSiteSettings, LinkSiteAndUser, Site, SiteById, SiteSettings, SiteUsers, UpdateSettings, UserHasPermissionForSite};
+use Smolblog\Core\Site\{GetSiteSettings, LinkSiteAndUser, Site, SiteById, SiteByResourceUri, SiteSettings, SiteUsers, UpdateSettings, UserHasPermissionForSite};
 use Smolblog\Core\User\User;
 use Smolblog\Framework\Messages\Listener;
 use Smolblog\Framework\Objects\Identifier;
@@ -73,6 +73,22 @@ class SiteHelper implements Listener {
 		);
 
 		restore_current_blog();
+	}
+
+	public function onSiteByResourceUri(SiteByResourceUri $query) {
+		global $wpdb;
+
+		$matches = [];
+		preg_match('^acct:([\w\d\-]+)@', $query->resource, $matches);
+
+		$wpid = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT blog_id FROM $wpdb->blogs WHERE domain LIKE %s",
+				$matches[1] . '.%',
+			)
+		);
+
+		$query->results = self::SiteFromWpId($wpid);
 	}
 
 	public static function SiteFromWpId(int $site_id, ?Identifier $site_uuid = null): Site {

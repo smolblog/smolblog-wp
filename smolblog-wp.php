@@ -102,3 +102,11 @@ add_filter( 'the_title_rss', function($title) {
 	}
 	return $title;
 });
+
+add_action( 'init',  function() {
+	add_rewrite_rule(
+		'^\.well-known\/webfinger',
+		'index.php?rest_route=/smolblog/v2/webfinger',
+		'top'
+	);
+} );

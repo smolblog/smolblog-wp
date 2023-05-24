@@ -141,14 +141,14 @@ class EndpointRegistrar implements Registry
 				$debug = [];
 				foreach ($incoming->get_params() as $key => $val) {
 					$type = $config->pathVariables[$key] ?? $config->queryVariables[$key] ?? null;
+					if (!isset($type)) {
+						continue;
+					}
 					$debug[$key] = [
 						'type' => $type->type,
 						'format' => $type->format,
 						'value' => $val,
 					];
-					if (!isset($type)) {
-						continue;
-					}
 
 					if ($type->type == 'string' && $type->format == 'uuid') {
 						$params[$key] = Identifier::fromString($val);

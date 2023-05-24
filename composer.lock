@@ -664,12 +664,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/smolblog/smolblog-core.git",
-                "reference": "464a528e3195d7a168855db754ef05c301c913a9"
+                "reference": "ce715da417b0f174ec9cffa9f6852e7cea09df9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/464a528e3195d7a168855db754ef05c301c913a9",
-                "reference": "464a528e3195d7a168855db754ef05c301c913a9",
+                "url": "https://api.github.com/repos/smolblog/smolblog-core/zipball/ce715da417b0f174ec9cffa9f6852e7cea09df9e",
+                "reference": "ce715da417b0f174ec9cffa9f6852e7cea09df9e",
                 "shasum": ""
             },
             "require": {
@@ -733,7 +733,7 @@
                 "source": "https://github.com/smolblog/smolblog-core/tree/feature/api-buildout",
                 "issues": "https://github.com/smolblog/smolblog-core/issues"
             },
-            "time": "2023-05-22T02:44:14+00:00"
+            "time": "2023-05-24T02:02:20+00:00"
         },
         {
             "name": "woocommerce/action-scheduler",
@@ -1174,12 +1174,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "2dc7b5981488502fed92df99c1460530d741e666"
+                "reference": "2e59060b93b3720ff3aab2b57efda0c3ada069b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/2dc7b5981488502fed92df99c1460530d741e666",
-                "reference": "2dc7b5981488502fed92df99c1460530d741e666",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/2e59060b93b3720ff3aab2b57efda0c3ada069b0",
+                "reference": "2e59060b93b3720ff3aab2b57efda0c3ada069b0",
                 "shasum": ""
             },
             "require": {
@@ -1224,7 +1224,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2023-05-18T08:37:09+00:00"
+            "time": "2023-05-22T23:17:44+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -1232,12 +1232,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "fca9d9ef2dcd042658ccb9df16552f5048e7bb04"
+                "reference": "203b168d7d107cf9c5b878947bf15c2945b297a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/fca9d9ef2dcd042658ccb9df16552f5048e7bb04",
-                "reference": "fca9d9ef2dcd042658ccb9df16552f5048e7bb04",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/203b168d7d107cf9c5b878947bf15c2945b297a3",
+                "reference": "203b168d7d107cf9c5b878947bf15c2945b297a3",
                 "shasum": ""
             },
             "require": {
@@ -1281,7 +1281,7 @@
                 "source": "https://github.com/WordPress/WordPress-Coding-Standards",
                 "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
             },
-            "time": "2023-05-01T08:34:06+00:00"
+            "time": "2023-05-23T06:36:37+00:00"
         }
     ],
     "aliases": [],
