@@ -2,12 +2,12 @@
 
 namespace Smolblog\WP\Helpers;
 
-use Exception;
-use WP_Site_Query;
-use Smolblog\Core\Site\{GetSiteSettings, LinkSiteAndUser, Site, SiteById, SiteByResourceUri, SiteSettings, SiteUsers, UpdateSettings, UserHasPermissionForSite};
+use Smolblog\Core\Federation\SiteByResourceUri;
+use Smolblog\Core\Site\{GetSiteSettings, LinkSiteAndUser, Site, SiteById, SiteSettings, SiteUsers, UpdateSettings, UserHasPermissionForSite};
 use Smolblog\Core\User\User;
+use Smolblog\Framework\Infrastructure\KeypairGenerator;
 use Smolblog\Framework\Messages\Listener;
-use Smolblog\Framework\Objects\Identifier;
+use Smolblog\Framework\Objects\{Identifier, Keypair, RandomIdentifier};
 
 class SiteHelper implements Listener {
 	public function onGetSiteSettings(GetSiteSettings $query) {
@@ -79,7 +79,9 @@ class SiteHelper implements Listener {
 		global $wpdb;
 
 		$matches = [];
-		preg_match('^acct:([\w\d\-]+)@', $query->resource, $matches);
+		preg_match('/^acct:([\w\d\-]+)@[\w\-\.]+$/', $query->resource, $matches);
+
+		// throw new \Exception(json_encode($matches, JSON_PRETTY_PRINT));
 
 		$wpid = $wpdb->get_var(
 			$wpdb->prepare(
@@ -100,6 +102,7 @@ class SiteHelper implements Listener {
 			handle: self::slugFromDomain($details->domain),
 			displayName: $details->blogname,
 			baseUrl: $details->home,
+			publicKey: self::getSiteKeypair($site_id)->publicKey,
 		);
 	}
 
@@ -119,13 +122,27 @@ class SiteHelper implements Listener {
 	
 		if (empty($meta_value)) {
 			// If the site does not have an ID, give it one.
-			$new_id = Identifier::createRandom();
+			$new_id = new RandomIdentifier();
 			update_site_meta( $dbid, 'smolblog_site_id', $new_id->toString() );
 
 			return $new_id;
 		}
 
 		return Identifier::fromString( $meta_value );
+	}
+
+	private static function getSiteKeypair(int $dbid): Keypair {
+		$meta_value = get_site_meta( $dbid, 'smolblog_keypair', true );
+	
+		if (empty($meta_value)) {
+			// If the site does not have a keypair, give it one.
+			$new_key = (new KeypairGenerator())->generate();
+			update_site_meta( $dbid, 'smolblog_keypair', $new_key->toArray() );
+
+			return $new_key;
+		}
+
+		return Keypair::fromArray( $meta_value );
 	}
 
 	private static function slugFromDomain(string $domain) {

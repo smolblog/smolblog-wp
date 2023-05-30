@@ -13,6 +13,7 @@ use Smolblog\Core\User\UserCanEditProfile;
 use Smolblog\Core\User\UserSites;
 use Smolblog\Framework\Messages\Listener;
 use Smolblog\Framework\Objects\Identifier;
+use Smolblog\Framework\Objects\RandomIdentifier;
 
 class UserHelper implements Listener {
 
@@ -90,7 +91,7 @@ class UserHelper implements Listener {
 		$meta_value = get_user_meta( $dbid, 'smolblog_user_id', true );
 	
 		if (empty($meta_value)) {
-			$new_id = Identifier::createRandom();
+			$new_id = new RandomIdentifier();
 			update_user_meta( $dbid, 'smolblog_user_id', $new_id->toString() );
 
 			return $new_id;
