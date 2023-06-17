@@ -16,12 +16,16 @@
   ],
   "repositories": [
     {
-      "type": "vcs",
-      "url": "https://github.com/smolblog/smolblog-core"
+      "type": "path",
+      "url": "/Users/eph/Dev/smolblog-core"
     },
     {
       "type": "vcs",
-      "url": "https://github.com/smolblog/smolblog-twitter"
+      "url": "https://github.com/oddevan/http-signatures-php"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/smolblog/activitypub-types"
     }
   ],
   "autoload": {
@@ -30,7 +34,7 @@
     }
   },
   "require": {
-    "smolblog/smolblog-core": "dev-feature/api-buildout",
+    "smolblog/smolblog-core": "dev-feature/CU-86782e803-store-followers",
     "woocommerce/action-scheduler": "^3.1"
   },
   "require-dev": {

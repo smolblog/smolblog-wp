@@ -85,7 +85,7 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 			ARRAY_A
 		);
 
-		$query->results = array_map(fn($cha) => $this->channel_proj->channel_from_row($cha), $db_results);
+		$query->setResults(array_map(fn($cha) => $this->channel_proj->channel_from_row($cha), $db_results));
 	}
 
 	public function onSiteHasPermissionForChannel(SiteHasPermissionForChannel $query) {
@@ -99,7 +99,7 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 			)
 		);
 
-		$query->results = (
+		$query->setResults(
 			(!$query->mustPull || $link['can_pull']) &&
 			(!$query->mustPush || $link['can_push'])
 		);
@@ -120,17 +120,17 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 		);
 
 		if (!$owns_channel) {
-			$query->results = false;
+			$query->setResults(false);
 			return;
 		}
 
 		// It's not great form to dispatch another query to answer a query, but this *currently* prevents duplicate code
 		// in checking user capabilities.
-		$query->results = $this->bus->fetch(new UserHasPermissionForSite(
+		$query->setResults($this->bus->fetch(new UserHasPermissionForSite(
 			userId: $query->userId,
 			siteId: $query->siteId,
 			mustBeAdmin: true,
-		));
+		)));
 	}
 
 	public function onChannelsForAdmin(ChannelsForAdmin $query) {
@@ -194,11 +194,11 @@ class ChannelSiteLinkProjection extends TableBacked implements Projection {
 			}
 		}
 
-		$query->results = [
+		$query->setResults([
 			'connections' => $connections,
 			'channels' => $channels,
 			'links' => $links,
-		];
+		]);
 	}
 
 	private function dbid_for_uuid(Identifier $uuid): ?int {

@@ -43,24 +43,24 @@ class UserHelper implements Listener {
 
 	public function onUserById(UserById $query) {
 		$user_id = self::UuidToInt($query->userId);
-		$query->results = self::UserFromWpUser(get_userdata( $user_id ));
+		$query->setResults(self::UserFromWpUser(get_userdata( $user_id )));
 	}
 
 	public function onUserCanEditProfile(UserCanEditProfile $query) {
 		if ($query->profileId == $query->userId) {
-			$query->results = true;
+			$query->setResults(true);
 		}
 
-		$query->results = user_can( self::UuidToInt($query->userId), 'edit_users' );
+		$query->setResults(user_can( self::UuidToInt($query->userId), 'edit_users' ));
 	}
 
 	public function onUserSites(UserSites $query) {
 		$user_id = self::UuidToInt($query->userId);
 
-		$query->results = array_values(array_map(
+		$query->setResults(array_values(array_map(
 			fn($site) => SiteHelper::SiteFromWpId($site->userblog_id),
 			get_blogs_of_user( $user_id )
-		));
+		)));
 	}
 
 	public static function UserFromWpUser(WP_User $wp_user): User {

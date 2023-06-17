@@ -20,11 +20,11 @@ class ContentQueryHandler implements Listener {
 	}
 
 	public function onContentVisibleToUser(ContentVisibleToUser $query) {
-		$query->results = $this->checkContentPerm(contentId: $query->contentId, siteId: $query->siteId, userId: $query->userId);
+		$query->setResults($this->checkContentPerm(contentId: $query->contentId, siteId: $query->siteId, userId: $query->userId));
 	}
 
 	public function onUserCanEditContent(UserCanEditContent $query) {
-		$query->results = $this->checkContentPerm(contentId: $query->contentId, siteId: $query->siteId, userId: $query->userId);
+		$query->setResults($this->checkContentPerm(contentId: $query->contentId, siteId: $query->siteId, userId: $query->userId));
 	}
 
 	public function onContentList(ContentList $query) {
@@ -60,7 +60,7 @@ class ContentQueryHandler implements Listener {
 			ARRAY_A
 		);
 
-		$query->results = array_map(
+		$query->setResults(array_map(
 			fn($row) => new Content(
 				id: Identifier::fromString($row['content_id']),
 				type: new GenericContent(title: $row['title'], body: $row['body'], typeClass: $row['type_class']),
@@ -70,7 +70,7 @@ class ContentQueryHandler implements Listener {
 				publishTimestamp: isset($row['publish_timestamp']) ? new DateTimeImmutable($row['publish_timestamp']) : null,
 				visibility: ContentVisibility::tryFrom($row['visibility']),
 			), $db_results
-		);
+		));
 	}
 
 	private function checkContentPerm(Identifier $contentId, Identifier $siteId, Identifier $userId): bool {

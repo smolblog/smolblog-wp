@@ -71,7 +71,7 @@ class ConnectionProjection extends TableBacked implements Projection {
 			ARRAY_A
 		);
 
-		$query->results = $this->connection_from_row($db_results);
+		$query->setResults($this->connection_from_row($db_results));
 	}
 
 	public function onConnectionsForUser(ConnectionsForUser $query) {
@@ -84,19 +84,19 @@ class ConnectionProjection extends TableBacked implements Projection {
 			ARRAY_A
 		);
 
-		$query->results = array_map( fn( $con ) => $this->connection_from_row( $con ), $db_results );
+		$query->setResults(array_map( fn( $con ) => $this->connection_from_row( $con ), $db_results ));
 	}
 
 	public function onConnectionBelongsToUser(ConnectionBelongsToUser $query) {
 		$table = static::table_name();
 
-		$query->results = $this->db->get_var(
+		$query->setResults($this->db->get_var(
 			$this->db->prepare(
 				"SELECT `id` FROM $table WHERE `connection_id` = %s AND `user_id` = %s",
 				$query->connectionId->toString(),
 				$query->userId->toString()
 			)
-		);
+		));
 	}
 
 	private function dbid_for_uuid(Identifier $uuid): ?int {

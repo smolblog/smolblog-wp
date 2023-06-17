@@ -137,7 +137,7 @@ class EndpointRegistrar implements Registry
 					$body = $config->bodyClass::fromArray($incoming->get_json_params());
 				}
 
-				$params = [];
+				$params = ['Accept' => $incoming->get_header( 'Accept' )];
 				$debug = [];
 				foreach ($incoming->get_params() as $key => $val) {
 					$type = $config->pathVariables[$key] ?? $config->queryVariables[$key] ?? null;

@@ -69,7 +69,7 @@ class ChannelProjection extends TableBacked implements Projection {
 			ARRAY_A
 		);
 
-		$query->results = $this->channel_from_row($db_results);
+		$query->setResults($this->channel_from_row($db_results));
 	}
 
 	public function onChannelsForConnection(ChannelsForConnection $query) {
@@ -82,7 +82,7 @@ class ChannelProjection extends TableBacked implements Projection {
 			ARRAY_A
 		);
 
-		$query->results = array_map( fn( $con ) => $this->channel_from_row( $con ), $db_results );
+		$query->setResults(array_map( fn( $con ) => $this->channel_from_row( $con ), $db_results ));
 	}
 
 	private function dbid_for_uuid(Identifier $uuid): ?int {

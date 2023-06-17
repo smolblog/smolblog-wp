@@ -7,6 +7,7 @@ use Psr\Container\ContainerInterface;
 use Smolblog\Api;
 use Smolblog\Core;
 use Smolblog\MicroBlog;
+use Smolblog\ActivityPub;
 use Smolblog\Framework\Infrastructure\AppKit;
 use Smolblog\Framework\Infrastructure\ServiceRegistry;
 use Smolblog\Framework\Messages\MessageBus;
@@ -22,6 +23,7 @@ class Smolblog {
 			Core\Model::class,
 			Api\Model::class,
 			MicroBlog\Model::class,
+			ActivityPub\Model::class,
 			$this->wordpress_model(),
 			...$plugin_models,
 		] );

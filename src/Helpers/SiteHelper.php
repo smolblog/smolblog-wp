@@ -14,11 +14,11 @@ class SiteHelper implements Listener {
 		$site_id = self::UuidToInt($query->siteId);
 		$site_info = get_site( $site_id );
 
-		$query->results = new SiteSettings(
+		$query->setResults(new SiteSettings(
 			siteId: $query->siteId,
 			title: get_blog_option( $site_id, 'blogname', '' ),
 			tagline: get_blog_option( $site_id, 'blogdescription', '' ),
-		);
+		));
 	}
 
 	public function onLinkSiteAndUser(LinkSiteAndUser $command) {
@@ -38,20 +38,20 @@ class SiteHelper implements Listener {
 
 	public function onSiteById(SiteById $query) {
 		$site_id = self::UuidToInt($query->siteId);
-		$query->results = self::SiteFromWpId($site_id, $query->siteId);
+		$query->setResults(self::SiteFromWpId($site_id, $query->siteId));
 	}
 
 	public function onSiteUsers(SiteUsers $query) {
 		$site_id = self::UuidToInt($query->siteId);
 
-		$query->results = array_map(
+		$query->setResults(array_map(
 			fn($user) => [
 				'user' => UserHelper::UserFromWpUser($user),
 				'isAdmin' => user_can( $user->ID, 'activate_plugins'),
 				'isAuthor' => user_can( $user->ID, 'edit_posts' ),
 			],
 			get_users( [ 'blog_id' => $site_id, 'role__not_in' => ['subscriber'] ] ),
-		);
+		));
 	}
 
 	public function onUpdateSettings(UpdateSettings $command) {
@@ -67,7 +67,7 @@ class SiteHelper implements Listener {
 		$user_id = UserHelper::UuidToInt($query->userId);
 		switch_to_blog( $site_id );
 
-		$query->results = (
+		$query->setResults(
 			(!$query->mustBeAuthor || user_can( $user_id, 'edit_posts' )) &&
 			(!$query->mustBeAdmin || user_can( $user_id, 'activate_plugins'))
 		);
@@ -90,7 +90,7 @@ class SiteHelper implements Listener {
 			)
 		);
 
-		$query->results = self::SiteFromWpId($wpid);
+		$query->setResults(self::SiteFromWpId($wpid));
 	}
 
 	public static function SiteFromWpId(int $site_id, ?Identifier $site_uuid = null): Site {
