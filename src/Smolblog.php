@@ -4,29 +4,46 @@ namespace Smolblog\WP;
 
 use wpdb;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Client\ClientInterface;
 use Smolblog\Api;
 use Smolblog\Core;
 use Smolblog\MicroBlog;
 use Smolblog\ActivityPub;
 use Smolblog\Framework\Infrastructure\AppKit;
+use Smolblog\Framework\Infrastructure\DefaultModel;
 use Smolblog\Framework\Infrastructure\ServiceRegistry;
 use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Objects\DomainModel;
+use Smolblog\WP\Helpers\DebugEndpoint;
 
 class Smolblog {
 	use AppKit;
 
 	public readonly ServiceRegistry $container;
+	private array $depMap = [];
 
 	public function __construct( array $plugin_models = [] ) {
-		$this->container = $this->buildDefaultContainer( [
+		// $this->container = $this->buildDefaultContainer( [
+		// 	Core\Model::class,
+		// 	Api\Model::class,
+		// 	MicroBlog\Model::class,
+		// 	ActivityPub\Model::class,
+		// 	$this->wordpress_model(),
+		// 	...$plugin_models,
+		// ] );
+
+		$this->depMap = $this->buildDependencyMap([
+			DefaultModel::class,
 			Core\Model::class,
 			Api\Model::class,
 			MicroBlog\Model::class,
 			ActivityPub\Model::class,
 			$this->wordpress_model(),
 			...$plugin_models,
-		] );
+		]);
+		$this->depMap[DebugEndpoint::class]['depMap'] = fn() => $this->depMap;
+
+		$this->container = new ServiceRegistry($this->depMap);
 	}
 
 	private function wordpress_model(): string {
@@ -45,6 +62,9 @@ class Smolblog {
 					},
 					EndpointRegistrar::class => [ 'container' => ContainerInterface::class ],
 					wpdb::class => fn() => $wpdb,
+
+					ClientInterface::class => \GuzzleHttp\Client::class,
+					\GuzzleHttp\Client::class => fn() => new \GuzzleHttp\Client(['verify' => false]),
 
 					Core\Connector\Services\AuthRequestStateRepo::class => Helpers\AuthRequestStateHelper::class,
 					Core\Content\Types\Reblog\ExternalContentService::class => Helpers\EmbedHelper::class,
@@ -66,10 +86,12 @@ class Smolblog {
 					Projections\StandardContentProjection::class => ['db' => wpdb::class],
 					Projections\StatusProjection::class => ['db' => wpdb::class],
 					
+					Helpers\AsyncHelper::class => [],
 					Helpers\AuthRequestStateHelper::class => [],
 					Helpers\SiteHelper::class => [],
 					Helpers\UserHelper::class => [],
 					Helpers\EmbedHelper::class => [],
+					DebugEndpoint::class => ['depMap' => null],
 				];
 			}
 		};

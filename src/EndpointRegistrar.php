@@ -15,6 +15,7 @@ use Smolblog\Api\EndpointConfig;
 use Smolblog\Api\Exceptions\ErrorResponse;
 use Smolblog\Api\SuccessResponse;
 use Smolblog\Api\RedirectResponse;
+use Smolblog\Api\Server\Spec;
 use Smolblog\Framework\Exceptions\MessageNotAuthorizedException;
 use Smolblog\Framework\Infrastructure\Registry;
 use Smolblog\Framework\Objects\Identifier;
@@ -162,6 +163,10 @@ class EndpointRegistrar implements Registry
 					$params[$key] = $val;
 				}
 
+				if ($endpoint === Spec::class) {
+					$params['endpoints'] = $this->configuration;
+				}
+
 				$response = $this->container->get($endpoint)->run(
 					userId: $smolblog_user_id,
 					params: $params,
@@ -181,7 +186,7 @@ class EndpointRegistrar implements Registry
 						break;
 
 					default:
-						$outgoing->set_data($response);
+						$outgoing->set_data(method_exists($response, 'toArray') ? $response->toArray() : $response);
 						break;
 				}
 			} catch (ErrorResponse $ex) {

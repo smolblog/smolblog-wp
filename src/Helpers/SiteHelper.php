@@ -137,12 +137,12 @@ class SiteHelper implements Listener {
 		if (empty($meta_value)) {
 			// If the site does not have a keypair, give it one.
 			$new_key = (new KeypairGenerator())->generate();
-			update_site_meta( $dbid, 'smolblog_keypair', $new_key->toArray() );
+			update_site_meta( $dbid, 'smolblog_keypair', base64_encode( wp_json_encode( $new_key ) ) );
 
 			return $new_key;
 		}
 
-		return Keypair::fromArray( $meta_value );
+		return Keypair::jsonDeserialize( base64_decode( $meta_value ) );
 	}
 
 	private static function slugFromDomain(string $domain) {

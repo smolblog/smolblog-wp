@@ -29,7 +29,7 @@ use Smolblog\WP\Helpers\UserHelper;
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Load Action Scheduler.
-$smolblog_action_scheduler = __DIR__ . '/vendor/plugins/action-scheduler/action-scheduler.php';
+$smolblog_action_scheduler = __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php';
 if ( is_readable( $smolblog_action_scheduler ) ) {
 	require_once $smolblog_action_scheduler;
 }
@@ -52,9 +52,9 @@ $app = new Smolblog();
 // Ensure the async hook is in place
 add_action(
 	'smolblog_async_dispatch',
-	fn($msg) => $app->container->get(MessageBus::class)->dispatch($msg),
+	fn($class, $message) => $app->container->get(MessageBus::class)->dispatch($class::fromArray($message)),
 	10,
-	1
+	2
 );
 
 add_action( 'rest_api_init', fn() => $app->container->get(EndpointRegistrar::class)->init() );
