@@ -71,6 +71,7 @@ class Smolblog {
 
 					EventStreams\ConnectorEventStream::class => ['db' => wpdb::class],
 					EventStreams\ContentEventStream::class => ['db' => wpdb::class],
+					EventStreams\SiteEventStream::class => ['db' => wpdb::class],
 
 					Projections\ChannelProjection::class => ['db' => wpdb::class],
 					Projections\ChannelSiteLinkProjection::class => [
@@ -81,6 +82,7 @@ class Smolblog {
 					],
 					Projections\ConnectionProjection::class => ['db' => wpdb::class],
 					Projections\ContentQueryHandler::class => ['db' => wpdb::class, 'bus' => MessageBus::class],
+					Projections\FollowerProjection::class => ['db' => wpdb::class],
 					Projections\PostProjection::class => ['bus' => MessageBus::class],
 					Projections\ReblogProjection::class => ['db' => wpdb::class],
 					Projections\StandardContentProjection::class => ['db' => wpdb::class],

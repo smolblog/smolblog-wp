@@ -37,9 +37,11 @@ if ( is_readable( $smolblog_action_scheduler ) ) {
 foreach ([
 	EventStreams\ConnectorEventStream::class,
 	EventStreams\ContentEventStream::class,
+	EventStreams\SiteEventStream::class,
 	Projections\ChannelProjection::class,
 	Projections\ChannelSiteLinkProjection::class,
 	Projections\ConnectionProjection::class,
+	Projections\FollowerProjection::class,
 	Projections\ReblogProjection::class,
 	Projections\StandardContentProjection::class,
 	Projections\StatusProjection::class,
