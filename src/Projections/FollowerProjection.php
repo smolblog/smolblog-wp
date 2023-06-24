@@ -2,9 +2,6 @@
 
 namespace	Smolblog\WP\Projections;
 
-use Smolblog\Core\Connector\Entities\Channel;
-use Smolblog\Core\Connector\Events\{ChannelDeleted, ChannelSaved};
-use Smolblog\Core\Connector\Queries\{ChannelById, ChannelsForConnection};
 use Smolblog\Core\Federation\Follower;
 use Smolblog\Core\Federation\FollowerAdded;
 use Smolblog\WP\TableBacked;
@@ -18,7 +15,7 @@ class FollowerProjection extends TableBacked implements Projection {
 		site_id varchar(40) NOT NULL,
 		provider varchar(50) NOT NULL,
 		provider_key varchar(50) NOT NULL,
-		display_name varchar(50) NOT NULL,
+		display_name varchar(100) NOT NULL,
 		details text,
 	EOF;
 
@@ -42,11 +39,15 @@ class FollowerProjection extends TableBacked implements Projection {
 			unset($formats[0]);
 		}
 
-		$this->db->replace(
+		$res = $this->db->replace(
 			static::table_name(),
 			$values,
 			$formats,
 		);
+
+		if (false === $res) {
+			throw new \Exception($this->db->last_error . ' Event: ' . print_r([$event, $follower], true));
+		}
 	}
 
 	private function dbid_for_uuid(Identifier $uuid): ?int {

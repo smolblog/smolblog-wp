@@ -13,9 +13,9 @@ class SiteEventStream extends TableBacked implements Listener {
 	const FIELDS = <<<EOF
 		event_id varchar(40) NOT NULL UNIQUE,
 		event_time varchar(30) NOT NULL,
-		site_id varchar(40) NOT NULL,
-		user_id varchar(40) NOT NULL,
-		event_type varchar(50) NOT NULL,
+		site_uuid varchar(40) NOT NULL,
+		user_uuid varchar(40) NOT NULL,
+		event_type varchar(255) NOT NULL,
 		payload text,
 	EOF;
 
@@ -27,16 +27,20 @@ class SiteEventStream extends TableBacked implements Listener {
 	 */
 	#[EventStoreLayerListener()]
 	public function onContentEvent(SiteEvent $event) {
-		$this->db->insert(
+		$res = $this->db->insert(
 			$this->table_name(),
 			[
 				'event_id' => $event->id->toString(),
 				'event_time' => $event->timestamp->format(DateTimeInterface::RFC3339_EXTENDED),
-				'site_id' => $event->siteId->toString(),
-				'user_id' => $event->userId->toString(),
+				'site_uuid' => $event->siteId->toString(),
+				'user_uuid' => $event->userId->toString(),
 				'event_type' => get_class($event),
 				'payload' => wp_json_encode($event->getPayload()),
 			]
 		);
+
+		if (false === $res) {
+			throw new \Exception($this->db->last_error . ' Event: ' . print_r($event, true));
+		}
 	}
 }

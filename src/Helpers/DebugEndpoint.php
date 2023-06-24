@@ -23,6 +23,14 @@ class DebugEndpoint implements Endpoint {
 
 	public function run(?Identifier $userId, ?array $params, ?object $body): GenericResponse
 	{
-		return new GenericResponse(map: $this->depMap);
+		$map = $this->depMap;
+		unset($map[self::class]);
+		return new GenericResponse(map: array_map(
+			fn($da) => is_array($da) ? array_map(
+				fn($di) => is_callable($di) ? $di() : $di,
+				$da
+			) : $da,
+			$map
+		));
 	}
 }
