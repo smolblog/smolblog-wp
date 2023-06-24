@@ -3,6 +3,7 @@
 namespace	Smolblog\WP\Projections;
 
 use Smolblog\Core\Federation\Follower;
+use Smolblog\Core\Federation\GetFollowersForSite;
 use Smolblog\Core\Federation\FollowerAdded;
 use Smolblog\WP\TableBacked;
 use Smolblog\Framework\Messages\Projection;
@@ -48,6 +49,20 @@ class FollowerProjection extends TableBacked implements Projection {
 		if (false === $res) {
 			throw new \Exception($this->db->last_error . ' Event: ' . print_r([$event, $follower], true));
 		}
+	}
+
+	public function onFollowersForSite(GetFollowersForSite $query) {
+		$table = static::table_name();
+
+		$results = $this->db->get_results(
+			$this->db->prepare(
+				"SELECT * FROM $table WHERE `site_id` = %s",
+				$query->siteId->toString()
+			),
+			ARRAY_A
+		);
+
+		return array_map(fn($row) => $this->follower_from_row($row), $results);
 	}
 
 	private function dbid_for_uuid(Identifier $uuid): ?int {
