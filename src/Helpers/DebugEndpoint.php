@@ -2,12 +2,13 @@
 
 namespace Smolblog\WP\Helpers;
 
+use Smolblog\Api\BasicEndpoint;
 use Smolblog\Api\Endpoint;
 use Smolblog\Api\EndpointConfig;
 use Smolblog\Api\GenericResponse;
 use Smolblog\Framework\Objects\Identifier;
 
-class DebugEndpoint implements Endpoint {
+class DebugEndpoint extends BasicEndpoint {
 	public static function getConfiguration(): EndpointConfig
 	{
 		return new EndpointConfig(

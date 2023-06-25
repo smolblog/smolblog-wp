@@ -7,22 +7,18 @@
 
 namespace Smolblog\WP;
 
-use Exception;
 use Psr\Container\ContainerInterface;
 use Smolblog\Api\AuthScope;
 use Smolblog\Api\Endpoint;
 use Smolblog\Api\EndpointConfig;
-use Smolblog\Api\Exceptions\ErrorResponse;
-use Smolblog\Api\SuccessResponse;
-use Smolblog\Api\RedirectResponse;
-use Smolblog\Api\Server\Spec;
-use Smolblog\Framework\Exceptions\MessageNotAuthorizedException;
 use Smolblog\Framework\Infrastructure\Registry;
-use Smolblog\Framework\Objects\Identifier;
 use Smolblog\WP\Helpers\UserHelper;
 use Throwable;
 use \WP_REST_Request;
 use \WP_REST_Response;
+use Inpsyde\WPSR7\REST\Request;
+use JsonException;
+use Smolblog\Framework\Objects\HttpResponse;
 
 /**
  * Class to handle registering the Smolblog endpoints with WordPress.
@@ -133,75 +129,26 @@ class EndpointRegistrar implements Registry
 			$smolblog_user_id = UserHelper::IntToUuid($wp_user_id);
 
 			try {
-				$body = null;
-				if (class_exists( $config->bodyClass )) {
-					$body = $config->bodyClass::fromArray($incoming->get_json_params());
-				}
+				$request = Request::from_wp_rest_request( $incoming );
+				$request->set_attributes([
+					'smolblogUserId' => $smolblog_user_id,
+					'smolblogPathVars' => $incoming->get_url_params(),
+				]);
 
-				$params = ['Accept' => $incoming->get_header( 'Accept' )];
-				$debug = [];
-				foreach ($incoming->get_params() as $key => $val) {
-					$type = $config->pathVariables[$key] ?? $config->queryVariables[$key] ?? null;
-					if (!isset($type)) {
-						continue;
-					}
-					$debug[$key] = [
-						'type' => $type->type,
-						'format' => $type->format,
-						'value' => $val,
-					];
+				$response = $this->container->get($endpoint)->handle($request);
 
-					if ($type->type == 'string' && $type->format == 'uuid') {
-						$params[$key] = Identifier::fromString($val);
-						continue;
-					}
-					if ($type->type == 'boolean') {
-						$params[$key] = $val ? true : false;
-						continue;
-					}
-
-					$params[$key] = $val;
-				}
-
-				if ($endpoint === Spec::class) {
-					$params['endpoints'] = $this->configuration;
-				}
-
-				$response = $this->container->get($endpoint)->run(
-					userId: $smolblog_user_id,
-					params: $params,
-					body: $body,
+				$outgoing->set_status($response->getStatusCode());
+				$outgoing->set_headers(
+					array_map(
+						fn($hdr) => implode(", ", $hdr),
+						$response->getHeaders()
+					)
 				);
-
-				switch (get_class($response)) {
-					case SuccessResponse::class:
-						$outgoing->set_status( 204 );
-						$outgoing->set_data( null );
-						break;
-					
-					case RedirectResponse::class:
-						$outgoing->set_status( $response->permanent ? 301 : 302 );
-						$outgoing->header( 'Location', $response->url );
-						$outgoing->set_data( null );
-						break;
-
-					default:
-						$outgoing->set_data(method_exists($response, 'toArray') ? $response->toArray() : $response);
-						break;
+				try {
+					$outgoing->set_data(json_decode($response->getBody()->getContents(), true));
+				} catch (JsonException $ex) {
+					$outgoing->set_data($response->getBody()->getContents());
 				}
-			} catch (ErrorResponse $ex) {
-				$outgoing->set_data($ex);
-				$outgoing->set_status($ex->getHttpCode());
-			} catch (MessageNotAuthorizedException $ex) {
-				$outgoing->set_data(['code' => 403, 'error' => $ex->getMessage(), 'trace' => $ex->getTraceAsString(), 'debug' => [
-					'user' => [
-						'wpid' => $wp_user_id,
-						'uuid' => $smolblog_user_id->toString(),
-					],
-					'params' => $incoming->get_params(),
-					'body' => $incoming->get_json_params(),
-				]]);
-				$outgoing->set_status( 403 );
 			} catch (Throwable $ex) {
 				$outgoing->set_data(['code' => 500, 'error' => $ex->getMessage(), 'debug' => [
 					'user' => [

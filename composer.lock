@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4bf8bdc217d1caa5d8e4c8a2fbfe934b",
+    "content-hash": "13b013238cc2fd24748478f7afee847d",
     "packages": [
         {
             "name": "brick/math",
@@ -646,6 +646,89 @@
             "time": "2023-04-17T16:11:26+00:00"
         },
         {
+            "name": "inpsyde/wpsr7",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oddevan/WPSR7.git",
+                "reference": "54d616033124cbef13cfaa6140f236ba717c696f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oddevan/WPSR7/zipball/54d616033124cbef13cfaa6140f236ba717c696f",
+                "reference": "54d616033124cbef13cfaa6140f236ba717c696f",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/psr7": "~1.0||^2.5",
+                "php": "^7.0||^8.0",
+                "psr/http-message": "~1.0"
+            },
+            "require-dev": {
+                "brain/monkey": "^2.0.0",
+                "johnpbloch/wordpress-core": "^4.7.0",
+                "mockery/mockery": "~0.9.0",
+                "phpunit/phpunit": "^6.0.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Inpsyde\\WPSR7\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "files": [
+                    "vendor/johnpbloch/wordpress-core/wp-includes/class-wp-http-response.php",
+                    "vendor/johnpbloch/wordpress-core/wp-includes/rest-api/class-wp-rest-request.php",
+                    "vendor/johnpbloch/wordpress-core/wp-includes/rest-api/class-wp-rest-response.php"
+                ],
+                "psr-4": {
+                    "Inpsyde\\WPSR7\\Tests\\Integration\\": "tests/php/integration",
+                    "Inpsyde\\WPSR7\\Tests\\Unit\\": "tests/php/unit"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Inpsyde GmbH",
+                    "email": "hello@inpsyde.com",
+                    "homepage": "https://inpsyde.com",
+                    "role": "Company"
+                },
+                {
+                    "name": "Thorsten Frommen",
+                    "email": "t.frommen@inpsyde.com",
+                    "homepage": "https://twitter.com/thorstenfrommen",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PSR-7-compliant HTTP messages for WordPress.",
+            "keywords": [
+                "http",
+                "interop",
+                "middleware",
+                "psr",
+                "psr7",
+                "rest",
+                "standard",
+                "wordpress",
+                "wp"
+            ],
+            "support": {
+                "issues": "https://github.com/inpsyde/WPSR7/issues",
+                "source": "https://github.com/inpsyde/WPSR7"
+            },
+            "time": "2023-06-25T02:12:05+00:00"
+        },
+        {
             "name": "liamdennehy/http-signatures-php",
             "version": "dev-use-upstream-phpseclib",
             "source": {
@@ -716,6 +799,85 @@
                 "source": "https://github.com/oddevan/http-signatures-php/tree/use-upstream-phpseclib"
             },
             "time": "2023-06-16T13:21:21+00:00"
+        },
+        {
+            "name": "nyholm/psr7",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nyholm/psr7.git",
+                "reference": "3cb4d163b58589e47b35103e8e5e6a6a475b47be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nyholm/psr7/zipball/3cb4d163b58589e47b35103e8e5e6a6a475b47be",
+                "reference": "3cb4d163b58589e47b35103e8e5e6a6a475b47be",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0"
+            },
+            "provide": {
+                "php-http/message-factory-implementation": "1.0",
+                "psr/http-factory-implementation": "1.0",
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "http-interop/http-factory-tests": "^0.9",
+                "php-http/message-factory": "^1.0",
+                "php-http/psr7-integration-tests": "^1.0",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.4",
+                "symfony/error-handler": "^4.4"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nyholm\\Psr7\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                },
+                {
+                    "name": "Martijn van der Ven",
+                    "email": "martijn@vanderven.se"
+                }
+            ],
+            "description": "A fast PHP7 implementation of PSR-7",
+            "homepage": "https://tnyholm.se",
+            "keywords": [
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "issues": "https://github.com/Nyholm/psr7/issues",
+                "source": "https://github.com/Nyholm/psr7/tree/1.8.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Zegnat",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nyholm",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-05-02T11:26:24+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -1215,7 +1377,7 @@
         },
         {
             "name": "psr/log",
-            "version": "dev-master",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
@@ -1230,7 +1392,6 @@
             "require": {
                 "php": ">=8.0.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1538,11 +1699,11 @@
         },
         {
             "name": "smolblog/smolblog-core",
-            "version": "dev-feature/CU-86782e803-store-followers",
+            "version": "dev-CU-86786008x-CRUD-via-Micropub",
             "dist": {
                 "type": "path",
                 "url": "/Users/eph/Dev/smolblog-core",
-                "reference": "0ce13a05223628f5ebfc02f0cce7150e1a741fd5"
+                "reference": "d753e5dbc9310c612efd2f128bc0f58600611f46"
             },
             "require": {
                 "cebe/markdown": "^1.2",
@@ -1556,7 +1717,8 @@
                 "psr/http-client": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
                 "ramsey/uuid": "^4.6",
-                "smolblog/activitypub-types": "^1.0"
+                "smolblog/activitypub-types": "^1.0",
+                "taproot/micropub-adapter": "^0.1.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9",
@@ -1678,6 +1840,61 @@
                 }
             ],
             "time": "2023-05-23T14:45:45+00:00"
+        },
+        {
+            "name": "taproot/micropub-adapter",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Taproot/micropub-adapter.git",
+                "reference": "90a646e789486cf10679658f239b6c8dc7cc4d1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Taproot/micropub-adapter/zipball/90a646e789486cf10679658f239b6c8dc7cc4d1e",
+                "reference": "90a646e789486cf10679658f239b6c8dc7cc4d1e",
+                "shasum": ""
+            },
+            "require": {
+                "nyholm/psr7": "^1.4",
+                "php": ">=7.3",
+                "psr/http-message": "^1.0",
+                "psr/log": "^1.1||^2.0||3.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.4.x-dev||^2.0",
+                "monolog/monolog": "2.x-dev||^3.0",
+                "nyholm/psr7-server": "dev-master",
+                "phpunit/phpunit": "^9",
+                "slim/slim": "^4.7",
+                "taproot/indieauth": "dev-main",
+                "vimeo/psalm": "^4.x-dev"
+            },
+            "suggest": {
+                "taproot/indieauth": "An IndieAuth implementation built for use with taproot/micropub-adapter."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Taproot\\Micropub\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barnaby Walters",
+                    "email": "barnaby@waterpigs.co.uk"
+                }
+            ],
+            "description": "The easiest way to add micropub support to existing or new applications.",
+            "support": {
+                "issues": "https://github.com/Taproot/micropub-adapter/issues",
+                "source": "https://github.com/Taproot/micropub-adapter/tree/v0.1.1"
+            },
+            "time": "2022-10-03T21:41:11+00:00"
         },
         {
             "name": "woocommerce/action-scheduler",
@@ -2176,12 +2393,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "cb90f0181b420776c3fa0ea1925f6746b5d1823f"
+                "reference": "e9cfeabc12ed70fe712c3891c07f568616fe98af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/cb90f0181b420776c3fa0ea1925f6746b5d1823f",
-                "reference": "cb90f0181b420776c3fa0ea1925f6746b5d1823f",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/e9cfeabc12ed70fe712c3891c07f568616fe98af",
+                "reference": "e9cfeabc12ed70fe712c3891c07f568616fe98af",
                 "shasum": ""
             },
             "require": {
@@ -2225,13 +2442,13 @@
                 "source": "https://github.com/WordPress/WordPress-Coding-Standards",
                 "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
             },
-            "time": "2023-06-19T15:45:46+00:00"
+            "time": "2023-06-23T16:38:13+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "smolblog/smolblog-core": 20,
+        "inpsyde/wpsr7": 20,
         "wp-coding-standards/wpcs": 20
     },
     "prefer-stable": false,
