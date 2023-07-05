@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13b013238cc2fd24748478f7afee847d",
+    "content-hash": "7cf6e3cba0436825a9c3f1cba2c60859",
     "packages": [
         {
             "name": "brick/math",
@@ -646,89 +646,6 @@
             "time": "2023-04-17T16:11:26+00:00"
         },
         {
-            "name": "inpsyde/wpsr7",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/oddevan/WPSR7.git",
-                "reference": "54d616033124cbef13cfaa6140f236ba717c696f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/oddevan/WPSR7/zipball/54d616033124cbef13cfaa6140f236ba717c696f",
-                "reference": "54d616033124cbef13cfaa6140f236ba717c696f",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/psr7": "~1.0||^2.5",
-                "php": "^7.0||^8.0",
-                "psr/http-message": "~1.0"
-            },
-            "require-dev": {
-                "brain/monkey": "^2.0.0",
-                "johnpbloch/wordpress-core": "^4.7.0",
-                "mockery/mockery": "~0.9.0",
-                "phpunit/phpunit": "^6.0.0"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Inpsyde\\WPSR7\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "files": [
-                    "vendor/johnpbloch/wordpress-core/wp-includes/class-wp-http-response.php",
-                    "vendor/johnpbloch/wordpress-core/wp-includes/rest-api/class-wp-rest-request.php",
-                    "vendor/johnpbloch/wordpress-core/wp-includes/rest-api/class-wp-rest-response.php"
-                ],
-                "psr-4": {
-                    "Inpsyde\\WPSR7\\Tests\\Integration\\": "tests/php/integration",
-                    "Inpsyde\\WPSR7\\Tests\\Unit\\": "tests/php/unit"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Inpsyde GmbH",
-                    "email": "hello@inpsyde.com",
-                    "homepage": "https://inpsyde.com",
-                    "role": "Company"
-                },
-                {
-                    "name": "Thorsten Frommen",
-                    "email": "t.frommen@inpsyde.com",
-                    "homepage": "https://twitter.com/thorstenfrommen",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PSR-7-compliant HTTP messages for WordPress.",
-            "keywords": [
-                "http",
-                "interop",
-                "middleware",
-                "psr",
-                "psr7",
-                "rest",
-                "standard",
-                "wordpress",
-                "wp"
-            ],
-            "support": {
-                "issues": "https://github.com/inpsyde/WPSR7/issues",
-                "source": "https://github.com/inpsyde/WPSR7"
-            },
-            "time": "2023-06-25T02:12:05+00:00"
-        },
-        {
             "name": "liamdennehy/http-signatures-php",
             "version": "dev-use-upstream-phpseclib",
             "source": {
@@ -878,6 +795,52 @@
                 }
             ],
             "time": "2023-05-02T11:26:24+00:00"
+        },
+        {
+            "name": "papertower/wp-rest-api-psr7",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/papertower/WP-REST-API-PSR7.git",
+                "reference": "140ad9913e03d1fc26b2ad6e21912a019f829835"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/papertower/WP-REST-API-PSR7/zipball/140ad9913e03d1fc26b2ad6e21912a019f829835",
+                "reference": "140ad9913e03d1fc26b2ad6e21912a019f829835",
+                "shasum": ""
+            },
+            "require": {
+                "psr/http-message": "^1.0.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WPRestApi\\PSR7\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jason Adams",
+                    "email": "jason@papertower.com"
+                }
+            ],
+            "description": "Provides PSR-7 and WP REST API Response and Request classes",
+            "keywords": [
+                "psr-7",
+                "wordpress",
+                "wp rest api"
+            ],
+            "support": {
+                "issues": "https://github.com/papertower/WP-REST-API-PSR7/issues",
+                "source": "https://github.com/papertower/WP-REST-API-PSR7/tree/master"
+            },
+            "time": "2018-08-29T22:20:54+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -1703,7 +1666,7 @@
             "dist": {
                 "type": "path",
                 "url": "/Users/eph/Dev/smolblog-core",
-                "reference": "d753e5dbc9310c612efd2f128bc0f58600611f46"
+                "reference": "665cf9c3f5afdd144feda4d0b1d13af12c314917"
             },
             "require": {
                 "cebe/markdown": "^1.2",
@@ -2448,7 +2411,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "inpsyde/wpsr7": 20,
         "wp-coding-standards/wpcs": 20
     },
     "prefer-stable": false,

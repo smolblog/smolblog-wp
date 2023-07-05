@@ -16,9 +16,8 @@ use Smolblog\WP\Helpers\UserHelper;
 use Throwable;
 use \WP_REST_Request;
 use \WP_REST_Response;
-use Inpsyde\WPSR7\REST\Request;
 use JsonException;
-use Smolblog\Framework\Objects\HttpResponse;
+use WPRestApi\PSR7\WP_REST_PSR7_ServerRequest;
 
 /**
  * Class to handle registering the Smolblog endpoints with WordPress.
@@ -129,7 +128,8 @@ class EndpointRegistrar implements Registry
 			$smolblog_user_id = UserHelper::IntToUuid($wp_user_id);
 
 			try {
-				$request = Request::from_wp_rest_request( $incoming );
+				$request = WP_REST_PSR7_ServerRequest::fromRequest( $incoming );
+
 				$request->set_attributes([
 					'smolblogUserId' => $smolblog_user_id,
 					'smolblogPathVars' => $incoming->get_url_params(),

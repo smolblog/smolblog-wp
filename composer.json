@@ -26,10 +26,6 @@
     {
       "type": "vcs",
       "url": "https://github.com/smolblog/activitypub-types"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/oddevan/WPSR7"
     }
   ],
   "autoload": {
@@ -41,7 +37,7 @@
     "smolblog/smolblog-core": "*",
     "woocommerce/action-scheduler": "^3.1",
     "guzzlehttp/guzzle": "^7.6",
-    "inpsyde/wpsr7": "dev-master"
+    "papertower/wp-rest-api-psr7": "dev-master"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "*",

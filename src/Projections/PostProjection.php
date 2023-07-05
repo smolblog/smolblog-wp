@@ -51,6 +51,8 @@ class PostProjection implements Projection {
 		$permalink = $permalink_parts['path'] .
 			(isset($permalink_parts['query']) ? '?' . $permalink_parts['query'] : '') .
 			(isset($permalink_parts['fragment']) ? '#' . $permalink_parts['fragment'] : '');
+
+		restore_current_blog();
 		
 		$this->bus->dispatch(new PermalinkAssigned(
 			contentId: $event->contentId,
@@ -59,8 +61,6 @@ class PostProjection implements Projection {
 			permalink: $permalink,
 		));
 		$event->setContentProperty(permalink: $permalink);
-
-		restore_current_blog();
 	}
 
 	#[ExecutionLayerListener]
