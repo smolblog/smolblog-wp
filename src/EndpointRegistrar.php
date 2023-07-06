@@ -17,6 +17,7 @@ use Throwable;
 use \WP_REST_Request;
 use \WP_REST_Response;
 use JsonException;
+use Smolblog\Api\Server\Spec;
 use WPRestApi\PSR7\WP_REST_PSR7_ServerRequest;
 
 /**
@@ -73,7 +74,7 @@ class EndpointRegistrar implements Registry
 			'smolblog/v2',
 			$route,
 			array(
-				'methods'             => [$config->verb->value],
+				'methods'             => array_map(fn($v) => $v->value, $config->verb),
 				'callback'            => $this->get_callback($config, $endpoint),
 				'permission_callback' => $this->get_permission_callback($config->requiredScopes),
 			),
@@ -134,6 +135,10 @@ class EndpointRegistrar implements Registry
 					'smolblogUserId' => $smolblog_user_id,
 					'smolblogPathVars' => $incoming->get_url_params(),
 				]);
+
+				if ($endpoint === Spec::class) {
+					$request = $request->withAttribute('endpoints', $this->configuration);
+				}
 
 				$response = $this->container->get($endpoint)->handle($request);
 

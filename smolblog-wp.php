@@ -112,3 +112,7 @@ add_action( 'init',  function() {
 		'top'
 	);
 } );
+
+add_action( 'wp_head', function() {
+	echo '<link rel="micropub" href="' . get_rest_url( null, '/smolblog/v2/micropub' ) . '">';
+});

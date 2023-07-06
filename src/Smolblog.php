@@ -9,6 +9,7 @@ use Smolblog\Api;
 use Smolblog\Core;
 use Smolblog\MicroBlog;
 use Smolblog\ActivityPub;
+use Smolblog\IndieWeb;
 use Smolblog\Framework\Infrastructure\AppKit;
 use Smolblog\Framework\Infrastructure\DefaultModel;
 use Smolblog\Framework\Infrastructure\ServiceRegistry;
@@ -38,6 +39,7 @@ class Smolblog {
 			Api\Model::class,
 			MicroBlog\Model::class,
 			ActivityPub\Model::class,
+			IndieWeb\Model::class,
 			$this->wordpress_model(),
 			...$plugin_models,
 		]);
