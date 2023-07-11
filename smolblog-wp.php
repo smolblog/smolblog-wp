@@ -23,6 +23,7 @@ namespace Smolblog\WP;
 
 use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Objects\Identifier;
+use Smolblog\WP\Helpers\DatabaseHelper;
 use Smolblog\WP\Helpers\SiteHelper;
 use Smolblog\WP\Helpers\UserHelper;
 
@@ -34,20 +35,7 @@ if ( is_readable( $smolblog_action_scheduler ) ) {
 	require_once $smolblog_action_scheduler;
 }
 
-foreach ([
-	EventStreams\ConnectorEventStream::class,
-	EventStreams\ContentEventStream::class,
-	EventStreams\SiteEventStream::class,
-	Projections\ChannelProjection::class,
-	Projections\ChannelSiteLinkProjection::class,
-	Projections\ConnectionProjection::class,
-	Projections\FollowerProjection::class,
-	Projections\ReblogProjection::class,
-	Projections\StandardContentProjection::class,
-	Projections\StatusProjection::class,
-] as $proj) {
-	$proj::update_schema();
-}
+DatabaseHelper::update_schema();
 
 $app = new Smolblog();
 
