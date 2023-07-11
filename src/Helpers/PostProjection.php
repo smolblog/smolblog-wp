@@ -1,6 +1,6 @@
 <?php
 
-namespace Smolblog\WP\Projections;
+namespace Smolblog\WP\Helpers;
 
 use DateTimeInterface;
 use Exception;
