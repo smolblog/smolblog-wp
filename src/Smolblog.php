@@ -2,6 +2,7 @@
 
 namespace Smolblog\WP;
 
+use Illuminate\Database\ConnectionInterface;
 use wpdb;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface;
@@ -15,6 +16,7 @@ use Smolblog\Framework\Infrastructure\DefaultModel;
 use Smolblog\Framework\Infrastructure\ServiceRegistry;
 use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Objects\DomainModel;
+use Smolblog\WP\Helpers\DatabaseHelper;
 use Smolblog\WP\Helpers\DebugEndpoint;
 
 class Smolblog {
@@ -64,6 +66,7 @@ class Smolblog {
 					},
 					EndpointRegistrar::class => [ 'container' => ContainerInterface::class ],
 					wpdb::class => fn() => $wpdb,
+					ConnectionInterface::class => fn() => DatabaseHelper::getLaravelConnection(),
 
 					ClientInterface::class => \GuzzleHttp\Client::class,
 					\GuzzleHttp\Client::class => fn() => new \GuzzleHttp\Client(['verify' => false]),
@@ -71,31 +74,13 @@ class Smolblog {
 					Core\Connector\Services\AuthRequestStateRepo::class => Helpers\AuthRequestStateHelper::class,
 					Core\Content\Types\Reblog\ExternalContentService::class => Helpers\EmbedHelper::class,
 
-					EventStreams\ConnectorEventStream::class => ['db' => wpdb::class],
-					EventStreams\ContentEventStream::class => ['db' => wpdb::class],
-					EventStreams\SiteEventStream::class => ['db' => wpdb::class],
-
-					Projections\ChannelProjection::class => ['db' => wpdb::class],
-					Projections\ChannelSiteLinkProjection::class => [
-						'db' => wpdb::class,
-						'channel_proj' => Projections\ChannelProjection::class,
-						'connection_proj' => Projections\ConnectionProjection::class,
-						'bus' => MessageBus::class,
-					],
-					Projections\ConnectionProjection::class => ['db' => wpdb::class],
-					Projections\ContentQueryHandler::class => ['db' => wpdb::class, 'bus' => MessageBus::class],
-					Projections\FollowerProjection::class => ['db' => wpdb::class],
-					Projections\PostProjection::class => ['bus' => MessageBus::class],
-					Projections\ReblogProjection::class => ['db' => wpdb::class],
-					Projections\StandardContentProjection::class => ['db' => wpdb::class],
-					Projections\StatusProjection::class => ['db' => wpdb::class],
-					
+					Helpers\PostProjection::class => ['bus' => MessageBus::class],
 					Helpers\AsyncHelper::class => [],
 					Helpers\AuthRequestStateHelper::class => [],
 					Helpers\SiteHelper::class => [],
 					Helpers\UserHelper::class => [],
 					Helpers\EmbedHelper::class => [],
-					DebugEndpoint::class => ['depMap' => null],
+					DebugEndpoint::class => ['depMap' => null, 'db' => ConnectionInterface::class],
 				];
 			}
 		};

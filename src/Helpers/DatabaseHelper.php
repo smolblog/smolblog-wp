@@ -17,7 +17,7 @@ class DatabaseHelper {
 			'username' => DB_USER,
 			'password' => DB_PASSWORD,
 			'charset' => DB_CHARSET,
-			'collation' => $wpdb->get_charset_collate(),
+			// 'collation' => $wpdb->get_charset_collate(),
 			'prefix' => $wpdb->base_prefix . 'sb_',
 		] );
 
@@ -56,12 +56,12 @@ class DatabaseHelper {
 			payload text,
 		EOF,
 		'content_events' => <<<EOF
-			event_id varchar(40) NOT NULL UNIQUE,
+			event_uuid varchar(40) NOT NULL UNIQUE,
 			event_time varchar(30) NOT NULL,
-			content_id varchar(40) NOT NULL,
-			site_id varchar(40) NOT NULL,
-			user_id varchar(40) NOT NULL,
-			event_type varchar(50) NOT NULL,
+			content_uuid varchar(40) NOT NULL,
+			site_uuid varchar(40) NOT NULL,
+			user_uuid varchar(40) NOT NULL,
+			event_type varchar(255) NOT NULL,
 			payload text,
 		EOF,
 		'followers' => <<<EOF
@@ -85,7 +85,7 @@ class DatabaseHelper {
 			url_info text,
 		EOF,
 		'site_events' => <<<EOF
-			event_id varchar(40) NOT NULL UNIQUE,
+			event_uuid varchar(40) NOT NULL UNIQUE,
 			event_time varchar(30) NOT NULL,
 			site_uuid varchar(40) NOT NULL,
 			user_uuid varchar(40) NOT NULL,
@@ -94,7 +94,7 @@ class DatabaseHelper {
 		EOF,
 		'standard_content' => <<<EOF
 			content_uuid varchar(40) NOT NULL UNIQUE,
-			type_class varchar(100) NOT NULL,
+			type varchar(100) NOT NULL,
 			title varchar(255),
 			body text,
 			site_uuid varchar(40) NOT NULL,
