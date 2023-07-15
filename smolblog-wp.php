@@ -21,128 +21,86 @@
 
 namespace Smolblog\WP;
 
-require_once 'env.php';
-require_once 'vendor/autoload.php';
-require_once 'class-endpoint-registrar.php';
-require_once 'entity-repos/class-connection-credential-helper.php';
-require_once 'entity-repos/class-channel-helper.php';
-require_once 'entity-repos/class-auth-request-state-helper.php';
+use Smolblog\Framework\Messages\MessageBus;
+use Smolblog\Framework\Objects\Identifier;
+use Smolblog\WP\Helpers\DatabaseHelper;
+use Smolblog\WP\Helpers\SiteHelper;
+use Smolblog\WP\Helpers\UserHelper;
 
-use Smolblog\Core\{App, Environment};
-use Smolblog\Core\Connector\{AuthRequestStateReader, AuthRequestStateWriter, ConnectionReader, ConnectionWriter, ChannelReader, ChannelWriter};
-use Smolblog\Core\Endpoint\EndpointRegistrar;
-use Smolblog\Twitter\TwitterConnector;
-use Smolblog\OAuth2\Client\Provider\Twitter as TwitterOAuth;
+require_once __DIR__ . '/vendor/autoload.php';
 
-Connection_Credential_Helper::update_schema();
-Channel_Helper::update_schema();
+// Load Action Scheduler.
+$smolblog_action_scheduler = __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php';
+if ( is_readable( $smolblog_action_scheduler ) ) {
+	require_once $smolblog_action_scheduler;
+}
 
-// All of Smolblog Core is through REST endpoints, so load it on rest_api_init.
+DatabaseHelper::update_schema();
+
+$app = new Smolblog();
+
+// Ensure the async hook is in place
 add_action(
-	'rest_api_init',
-	function() {
-		// Load environment variables.
-		$environment = new Environment(
-			apiBase: get_rest_url( null, '/smolblog/v2' ),
-			twitterAppId: SMOLBLOG_TWITTER_APPLICATION_KEY,
-			twitterAppSecret: SMOLBLOG_TWITTER_APPLICATION_SECRET,
-		);
+	'smolblog_async_dispatch',
+	fn($class, $message) => $app->container->get(MessageBus::class)->dispatch($class::fromArray($message)),
+	10,
+	2
+);
 
-		// Create the app.
-		$app = new App(
-			withEnvironment: $environment,
-			pluginClasses: array( \Smolblog\Twitter\Plugin::class )
-		);
+add_action( 'rest_api_init', fn() => $app->container->get(EndpointRegistrar::class)->init() );
 
-		// Create the model helpers and load into the DI container.
-		$state_helper = new Auth_Request_State_Helper();
-		$app->container->addShared( AuthRequestStateReader::class, fn() => $state_helper );
-		$app->container->addShared( AuthRequestStateWriter::class, fn() => $state_helper );
+function get_current_user_uuid(): Identifier {
+	return UserHelper::IntToUuid(get_current_user_id());
+}
 
-		$cred_helper  = new Connection_Credential_Helper();
-		$app->container->addShared( ConnectionReader::class, fn() => $cred_helper );
-		$app->container->addShared( ConnectionWriter::class, fn() => $cred_helper );
+function get_current_site_uuid(): Identifier {
+	return SiteHelper::IntToUuid(get_current_site_id());
+}
 
-		$channel_helper = new Channel_Helper();
-		$app->container->addShared( ChannelReader::class, fn() => $channel_helper );
-		$app->container->addShared( ChannelWriter::class, fn() => $channel_helper );
+$default_cpt_args = [
+	'supports'              => array( 'editor', 'thumbnail', 'comments', 'custom-fields', 'page-attributes', 'post-formats' ),
+	'taxonomies'            => array( 'category', 'post_tag' ),
+	'public'                => true,
+	'menu_position'         => 5,
+	'has_archive'           => true,
+	'show_in_rest'          => true,
+];
 
-		// Create the Endpoint Registrar and load into the DI container.
-		$endpoint_registrar = new Endpoint_Registrar();
-		$app->container->addShared( EndpointRegistrar::class, fn() => $endpoint_registrar );
+add_action( 'init', fn() => register_post_type( 'status', [
+	'label'                 => __( 'Status', 'smolblog' ),
+	'description'           => __( 'A short text post', 'smolblog' ),
+	...$default_cpt_args,
+] ), 0 );
 
-		// Start Smolblog.
-		$app->startup();
+add_action( 'init', fn() => register_post_type( 'reblog', [
+	'label'                 => __( 'Reblog', 'smolblog' ),
+	'description'           => __( 'A webpage from off-site', 'smolblog' ),
+	...$default_cpt_args,
+] ), 0 );
+
+add_action( 'pre_get_posts', function($query) {
+	if ( ! is_admin() && $query->is_main_query() ) {
+		$query->set( 'post_type', array( 'post', 'page', 'status', 'reblog' ) );
 	}
-);
+});
 
-add_action(
-	'admin_enqueue_scripts',
-	function() {
-		// Register our script for enqueuing.
-		$smolblog_asset_info =
-		file_exists( plugin_dir_path( __FILE__ ) . 'build/index.asset.php' ) ?
-		require plugin_dir_path( __FILE__ ) . 'build/index.asset.php' :
-		array(
-			'dependencies' => 'wp-element',
-			'version'      => filemtime( 'js/index.js' ),
-		);
+add_filter( 'the_title_rss', function($title) {
+	global $wp_query;
+	$type = $wp_query->post->post_type;
+	if (in_array($type, [ 'status', 'reblog' ])) {
+		return null;
+	}
+	return $title;
+});
 
-		wp_register_script(
-			'smolblog_admin',
-			plugin_dir_url( __FILE__ ) . 'build/index.js',
-			$smolblog_asset_info['dependencies'],
-			$smolblog_asset_info['version'],
-			true
-		);
-	},
-	1,
-	0
-);
-
-/**
- * Add page to admin
- */
-function add_smolblog_page() {
-	add_menu_page(
-		'Smolblog Dashboard',
-		'Smolblog',
-		'read',
-		'smolblog',
-		__NAMESPACE__ . '\smolblog_admin',
-		'dashicons-controls-repeat',
-		3
+add_action( 'init',  function() {
+	add_rewrite_rule(
+		'^\.well-known\/webfinger',
+		'index.php?rest_route=/smolblog/v2/webfinger',
+		'top'
 	);
-}
-add_action( 'admin_menu', __NAMESPACE__ . '\add_smolblog_page' );
+} );
 
-/**
- * Add the Smolblog admin javascript
- *
- * @param string $admin_page Current page.
- */
-function enqueue_scripts( $admin_page ) {
-	if ( $admin_page !== 'toplevel_page_smolblog' ) {
-		return;
-	}
-
-	wp_enqueue_script( 'smolblog_admin' );
-}
-add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_scripts' );
-
-/**
- * Output the Smolblog dashboard page
- */
-function smolblog_admin() {
-	?>
-	<h1>Smolblog Admin</h1>
-	<div id="smolblog-admin-app"></div>
-
-	<?php
-}
-
-/*
-
-<a href="<?php echo esc_attr( get_rest_url( null, 'smolblog/v2/my/connections' ) ); ?>?_wpnonce=<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>">drink me</a>
-
-*/
+add_action( 'wp_head', function() {
+	echo '<link rel="micropub" href="' . get_rest_url( null, '/smolblog/v2/micropub' ) . '">';
+});

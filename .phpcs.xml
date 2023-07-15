@@ -45,8 +45,8 @@
 		</properties>
 
 		<!-- Exclude these rules since we are using PSR-4 naming -->
-		<!-- <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
-		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/> -->
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 	</rule>
 
 	<!-- Verify that everything in the global namespace is prefixed with a theme specific prefix.
@@ -74,7 +74,7 @@
 	</rule>
 
 	<!-- WordPress Core currently supports PHP 5.6+. -->
-	<config name="testVersion" value="8.1-"/>
+	<config name="testVersion" value="8.2-"/>
 
 	<!-- Only sniff PHP files. -->
 	<arg name="extensions" value="php"/>
