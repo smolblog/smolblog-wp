@@ -14,6 +14,7 @@ use Smolblog\Core\Content\Events\{
     PublicContentEvent,
     PublicContentRemoved
 };
+use Smolblog\Core\Content\Types\Note\Note;
 use Smolblog\Core\Content\Types\Reblog\Reblog;
 use Smolblog\Core\Content\Types\Status\Status;
 use Smolblog\Framework\Messages\Attributes\ExecutionLayerListener;
@@ -135,8 +136,8 @@ class PostProjection implements Projection {
 
 	private function typeToPostType(string $contentType): string {
 		switch ($contentType) {
-			case Status::class:
-				return 'status';
+			case Note::class:
+				return 'note';
 			case Reblog::class:
 				return 'reblog';
 			default:

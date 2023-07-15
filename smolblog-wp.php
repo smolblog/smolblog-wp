@@ -66,8 +66,8 @@ $default_cpt_args = [
 	'show_in_rest'          => true,
 ];
 
-add_action( 'init', fn() => register_post_type( 'status', [
-	'label'                 => __( 'Status', 'smolblog' ),
+add_action( 'init', fn() => register_post_type( 'note', [
+	'label'                 => __( 'Note', 'smolblog' ),
 	'description'           => __( 'A short text post', 'smolblog' ),
 	...$default_cpt_args,
 ] ), 0 );
