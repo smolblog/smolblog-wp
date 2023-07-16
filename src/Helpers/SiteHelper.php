@@ -78,15 +78,26 @@ class SiteHelper implements Listener {
 	public function onSiteByResourceUri(SiteByResourceUri $query) {
 		global $wpdb;
 
-		$matches = [];
-		preg_match('/^acct:([\w\d\-]+)@[\w\-\.]+$/', $query->resource, $matches);
+		$domain = '';
+		$parts = parse_url($query->resource);
 
-		// throw new \Exception(json_encode($matches, JSON_PRETTY_PRINT));
+		switch ($parts['scheme']) {
+			case 'acct':
+				$domain = str_replace('@', '.', $parts['path']);
+				break;
+			
+			case 'http':
+			case 'https':
+				$domain = $parts['host'];
+			
+			default:
+				throw new \Exception("Invalid uri given: $query->resource");
+		}
 
 		$wpid = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT blog_id FROM $wpdb->blogs WHERE domain LIKE %s",
-				$matches[1] . '.%',
+				$domain,
 			)
 		);
 

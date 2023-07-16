@@ -14,6 +14,7 @@ use Smolblog\Core\Content\Events\{
     PublicContentEvent,
     PublicContentRemoved
 };
+use Smolblog\Core\Content\Extensions\Tags\Tags;
 use Smolblog\Core\Content\Types\Note\Note;
 use Smolblog\Core\Content\Types\Reblog\Reblog;
 use Smolblog\Core\Content\Types\Status\Status;
@@ -41,6 +42,9 @@ class PostProjection implements Projection {
 			'post_content' => $content->type->getBodyContent(),
 			'post_status' => $this->visibilityToStatus( ContentVisibility::Published ),
 			'post_type' => $this->typeToPostType( get_class($content->type) ),
+			'tags_input' => isset($content->extensions[Tags::class]) ?
+				array_map(fn($tag) => $tag->text, $content->extensions[Tags::class]->tags) :
+				[],
 			'meta_input' => [ 'smolblog_uuid' => $event->contentId->toString() ],
 		], true );
 
