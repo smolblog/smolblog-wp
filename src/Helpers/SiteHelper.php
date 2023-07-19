@@ -89,9 +89,10 @@ class SiteHelper implements Listener {
 			case 'http':
 			case 'https':
 				$domain = $parts['host'];
+				break;
 			
 			default:
-				throw new \Exception("Invalid uri given: $query->resource");
+				throw new \Exception('Unknown scheme ' . $parts['scheme'] . "; given $query->resource");
 		}
 
 		$wpid = $wpdb->get_var(

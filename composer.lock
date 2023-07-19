@@ -1201,12 +1201,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "7ce9ddcce455910b1d57fc71e9a0ab2255f2f55f"
+                "reference": "eeb761b9a23e00ae4657a085fc138c682b75d6d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/7ce9ddcce455910b1d57fc71e9a0ab2255f2f55f",
-                "reference": "7ce9ddcce455910b1d57fc71e9a0ab2255f2f55f",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/eeb761b9a23e00ae4657a085fc138c682b75d6d8",
+                "reference": "eeb761b9a23e00ae4657a085fc138c682b75d6d8",
                 "shasum": ""
             },
             "require": {
@@ -1300,7 +1300,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-11T15:00:20+00:00"
+            "time": "2023-07-12T11:08:39+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -2351,7 +2351,7 @@
             "dist": {
                 "type": "path",
                 "url": "/Users/eph/Dev/smolblog-core",
-                "reference": "646df3641fc2f217770af7eac7f2ec4c7b65974d"
+                "reference": "cbe777e6432d3b47df67d6183477544cdd512799"
             },
             "require": {
                 "cebe/markdown": "^1.2",
@@ -3770,17 +3770,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "843a9d65ad6c36fb049f55d3cc3129372e47ad98"
+                "reference": "b52841517e7a7726c3c1056543d75976caf0fb7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/843a9d65ad6c36fb049f55d3cc3129372e47ad98",
-                "reference": "843a9d65ad6c36fb049f55d3cc3129372e47ad98",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/b52841517e7a7726c3c1056543d75976caf0fb7b",
+                "reference": "b52841517e7a7726c3c1056543d75976caf0fb7b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4",
-                "phpcsstandards/phpcsutils": "^1.0.7",
+                "phpcsstandards/phpcsutils": "^1.0.8",
                 "squizlabs/php_codesniffer": "^3.7.1"
             },
             "require-dev": {
@@ -3826,7 +3826,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSExtra/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSExtra"
             },
-            "time": "2023-07-10T15:22:37+00:00"
+            "time": "2023-07-18T01:32:40+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -3834,12 +3834,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "aa23fbf1cbdfa15ac381eec08169b8cb8dea1e49"
+                "reference": "69465cab9d12454e5e7767b9041af0cd8cd13be7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/aa23fbf1cbdfa15ac381eec08169b8cb8dea1e49",
-                "reference": "aa23fbf1cbdfa15ac381eec08169b8cb8dea1e49",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/69465cab9d12454e5e7767b9041af0cd8cd13be7",
+                "reference": "69465cab9d12454e5e7767b9041af0cd8cd13be7",
                 "shasum": ""
             },
             "require": {
@@ -3900,7 +3900,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2023-07-10T14:25:40+00:00"
+            "time": "2023-07-16T21:39:41+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -3908,12 +3908,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "276f68cc74a3e4e1855bab6d01f0089337d00ae0"
+                "reference": "354b4c5ee114a9d10b72f6d311d5d18152162ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/276f68cc74a3e4e1855bab6d01f0089337d00ae0",
-                "reference": "276f68cc74a3e4e1855bab6d01f0089337d00ae0",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/354b4c5ee114a9d10b72f6d311d5d18152162ad0",
+                "reference": "354b4c5ee114a9d10b72f6d311d5d18152162ad0",
                 "shasum": ""
             },
             "require": {
@@ -3958,7 +3958,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2023-07-11T20:18:21+00:00"
+            "time": "2023-07-16T10:58:04+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
