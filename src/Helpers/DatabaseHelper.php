@@ -64,6 +64,12 @@ class DatabaseHelper {
 			event_type varchar(255) NOT NULL,
 			payload text,
 		EOF,
+		'content_syndication' => <<<EOF
+			row_uuid varchar(40) NOT NULL UNIQUE,
+			content_uuid varchar(40) NOT NULL,
+			channel_uuid varchar(40),
+			url varchar(255),
+		EOF,
 		'followers' => <<<EOF
 			follower_uuid varchar(40) NOT NULL UNIQUE,
 			site_uuid varchar(40) NOT NULL,

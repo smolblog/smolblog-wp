@@ -78,6 +78,19 @@ add_action( 'init', fn() => register_post_type( 'reblog', [
 	...$default_cpt_args,
 ] ), 0 );
 
+add_action( 'init', fn() => register_post_type( 'log', [
+	'label'                 => __( 'Log', 'smolblog' ),
+	'description'           => __( 'A debug log entry', 'smolblog' ),
+	'supports'              => array( 'editor' ),
+	'taxonomies'            => array(),
+	'public'                => false,
+	'show_ui'               => true,
+	'show_in_menu'          => true,
+	'menu_position'         => 80,
+	'show_in_admin_bar'     => false,
+	'show_in_nav_menus'     => false,
+] ), 0 );
+
 add_action( 'pre_get_posts', function($query) {
 	if ( ! is_admin() && $query->is_main_query() ) {
 		$query->set( 'post_type', array( 'post', 'page', 'status', 'reblog' ) );
@@ -87,7 +100,7 @@ add_action( 'pre_get_posts', function($query) {
 add_filter( 'the_title_rss', function($title) {
 	global $wp_query;
 	$type = $wp_query->post->post_type;
-	if (in_array($type, [ 'status', 'reblog' ])) {
+	if (in_array($type, [ 'note', 'reblog' ])) {
 		return null;
 	}
 	return $title;

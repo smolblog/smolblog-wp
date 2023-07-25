@@ -78,7 +78,7 @@ class PostProjection implements Projection {
 		$args = [
 			'ID' => self::UuidToInt($content->id),
 			'post_content' => $content->type->getBodyContent(),
-			'post_title' => $this->showTitle(get_class($content->type)) ? $content->type->getTitle() : '',
+			'post_title' => $content->type->getTitle(),
 			'post_date' => $content->publishTimestamp->format( DateTimeInterface::ATOM ),
 		];
 
