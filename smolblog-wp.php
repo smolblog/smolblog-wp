@@ -81,13 +81,24 @@ add_action( 'init', fn() => register_post_type( 'log', [
 	'label'                 => __( 'Log', 'smolblog' ),
 	'description'           => __( 'A debug log entry', 'smolblog' ),
 	'supports'              => array( 'editor' ),
-	'taxonomies'            => array(),
+	'taxonomies'            => array( 'log_level' ),
 	'public'                => false,
 	'show_ui'               => true,
 	'show_in_menu'          => true,
 	'menu_position'         => 80,
 	'show_in_admin_bar'     => false,
 	'show_in_nav_menus'     => false,
+] ), 0 );
+add_action( 'init', fn() => register_taxonomy( 'log_level', [ 'log' ], [
+	'label'             => __( 'Log Level', 'smolblog' ),
+	'hierarchical'      => false,
+	'public'            => false,
+	'show_ui'           => true,
+	'show_admin_column' => true,
+	'show_in_nav_menus' => true,
+	'show_tagcloud'     => false,
+	'rewrite'           => false,
+	'show_in_rest'      => false,
 ] ), 0 );
 
 add_action( 'pre_get_posts', function($query) {

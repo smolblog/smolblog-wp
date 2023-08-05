@@ -6,6 +6,7 @@ use Illuminate\Database\ConnectionInterface;
 use wpdb;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Log\LoggerInterface;
 use Smolblog\Api;
 use Smolblog\Core;
 use Smolblog\MicroBlog;
@@ -82,6 +83,9 @@ class Smolblog {
 					Helpers\EmbedHelper::class => [],
 					Helpers\MediaLibraryHelper::class => [],
 					DebugEndpoint::class => ['depMap' => null, 'db' => ConnectionInterface::class],
+
+					WordPressLogger::class => [],
+					LoggerInterface::class => WordPressLogger::class,
 				];
 			}
 		};
