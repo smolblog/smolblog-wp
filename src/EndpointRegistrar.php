@@ -131,13 +131,26 @@ class EndpointRegistrar implements Registry
 			try {
 				$request = WP_REST_PSR7_ServerRequest::fromRequest( $incoming );
 
-				$request->set_attributes([
-					'smolblogUserId' => $smolblog_user_id,
-					'smolblogPathVars' => $incoming->get_url_params(),
-				]);
+				$request = $request->withAttribute('smolblogUserId', $smolblog_user_id);
+				$request = $request->withAttribute('smolblogPathVars', $incoming->get_url_params());
 
 				if ($endpoint === Spec::class) {
 					$request = $request->withAttribute('endpoints', $this->configuration);
+				}
+
+				if (!empty($request->getUploadedFiles())) {
+					$psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();
+
+					$creator = new \Nyholm\Psr7Server\ServerRequestCreator(
+							$psr17Factory, // ServerRequestFactory
+							$psr17Factory, // UriFactory
+							$psr17Factory, // UploadedFileFactory
+							$psr17Factory  // StreamFactory
+					);
+
+					$serverRequest = $creator->fromGlobals();
+
+					$request = $request->withUploadedFiles($serverRequest->getUploadedFiles());
 				}
 
 				$response = $this->container->get($endpoint)->handle($request);

@@ -80,6 +80,7 @@ class Smolblog {
 					Helpers\SiteHelper::class => [],
 					Helpers\UserHelper::class => [],
 					Helpers\EmbedHelper::class => [],
+					Helpers\MediaLibraryHelper::class => [],
 					DebugEndpoint::class => ['depMap' => null, 'db' => ConnectionInterface::class],
 				];
 			}

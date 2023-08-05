@@ -78,6 +78,17 @@ class DatabaseHelper {
 			display_name varchar(100) NOT NULL,
 			details text,
 		EOF,
+		'media' => <<<EOF
+			content_uuid varchar(40) NOT NULL,
+			user_uuid varchar(40) NOT NULL,
+			site_uuid varchar(40) NOT NULL,
+			title varchar(255) NOT NULL,
+			accessibility_text varchar(255) NOT NULL,
+			type varchar(40) NOT NULL,
+			thumbnail_url varchar(255) NOT NULL,
+			default_url varchar(255) NOT NULL,
+			file text,
+		EOF,
 		'notes' => <<<EOF
 			content_uuid varchar(40) NOT NULL UNIQUE,
 			markdown text NOT NULL,

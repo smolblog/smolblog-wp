@@ -63,7 +63,6 @@ $default_cpt_args = [
 	'public'                => true,
 	'menu_position'         => 5,
 	'has_archive'           => true,
-	'show_in_rest'          => true,
 ];
 
 add_action( 'init', fn() => register_post_type( 'note', [
