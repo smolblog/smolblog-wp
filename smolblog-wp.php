@@ -49,38 +49,47 @@ add_action(
 
 add_action( 'rest_api_init', fn() => $app->container->get(EndpointRegistrar::class)->init() );
 
-function get_current_user_uuid(): Identifier {
-	return UserHelper::IntToUuid(get_current_user_id());
+function get_current_user_uuid(): ?Identifier {
+	if (get_current_user_id() > 0) {
+		return UserHelper::IntToUuid(get_current_user_id());
+	}
+
+	return null;
 }
 
 function get_current_site_uuid(): Identifier {
-	return SiteHelper::IntToUuid(get_current_site_id());
+	return SiteHelper::IntToUuid(get_current_blog_id());
 }
 
 $default_cpt_args = [
 	'supports'              => array( 'editor', 'thumbnail', 'comments', 'custom-fields', 'page-attributes', 'post-formats' ),
-	'taxonomies'            => array( 'category', 'post_tag' ),
+	'taxonomies'            => array( 'post_tag' ),
 	'public'                => true,
 	'menu_position'         => 5,
 	'has_archive'           => true,
 ];
 
-add_action( 'init', fn() => register_post_type( 'note', [
+add_action( 'init', fn() => register_post_type( 'sb-note', [
 	'label'                 => __( 'Note', 'smolblog' ),
 	'description'           => __( 'A short text post', 'smolblog' ),
 	...$default_cpt_args,
 ] ), 0 );
 
-add_action( 'init', fn() => register_post_type( 'reblog', [
+add_action( 'init', fn() => register_post_type( 'sb-reblog', [
 	'label'                 => __( 'Reblog', 'smolblog' ),
 	'description'           => __( 'A webpage from off-site', 'smolblog' ),
+	...$default_cpt_args,
+] ), 0 );
+add_action( 'init', fn() => register_post_type( 'sb-picture', [
+	'label'                 => __( 'Picture', 'smolblog' ),
+	'description'           => __( 'A visual medium', 'smolblog' ),
 	...$default_cpt_args,
 ] ), 0 );
 
 add_action( 'init', fn() => register_post_type( 'log', [
 	'label'                 => __( 'Log', 'smolblog' ),
 	'description'           => __( 'A debug log entry', 'smolblog' ),
-	'supports'              => array( 'editor' ),
+	'supports'              => array( 'title', 'editor' ),
 	'taxonomies'            => array( 'log_level' ),
 	'public'                => false,
 	'show_ui'               => true,
@@ -125,5 +134,6 @@ add_action( 'init',  function() {
 } );
 
 add_action( 'wp_head', function() {
-	echo '<link rel="micropub" href="' . get_rest_url( null, '/smolblog/v2/micropub' ) . '">';
+	$siteId = get_current_site_uuid();
+	echo '<link rel="micropub" href="' . get_rest_url( null, "/smolblog/v2/site/$siteId/micropub" ) . '">';
 });

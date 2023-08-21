@@ -1202,12 +1202,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "eeb761b9a23e00ae4657a085fc138c682b75d6d8"
+                "reference": "028ef2ab76485c9fd3b6d7214daf4efc02c89c53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/eeb761b9a23e00ae4657a085fc138c682b75d6d8",
-                "reference": "eeb761b9a23e00ae4657a085fc138c682b75d6d8",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/028ef2ab76485c9fd3b6d7214daf4efc02c89c53",
+                "reference": "028ef2ab76485c9fd3b6d7214daf4efc02c89c53",
                 "shasum": ""
             },
             "require": {
@@ -1301,7 +1301,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-12T11:08:39+00:00"
+            "time": "2023-08-09T19:41:55+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -1618,12 +1618,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "426de8d5bf95f5053bac76f21aefd1425724adf6"
+                "reference": "c5e9d51e517da7c1b60a9198338ab1621351866f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/426de8d5bf95f5053bac76f21aefd1425724adf6",
-                "reference": "426de8d5bf95f5053bac76f21aefd1425724adf6",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/c5e9d51e517da7c1b60a9198338ab1621351866f",
+                "reference": "c5e9d51e517da7c1b60a9198338ab1621351866f",
                 "shasum": ""
             },
             "require": {
@@ -1720,7 +1720,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-27T02:54:02+00:00"
+            "time": "2023-08-11T03:33:35+00:00"
         },
         {
             "name": "psr/clock",
@@ -2280,12 +2280,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "7d46f65e054bc8b3f3f0df1337019fcef9aa6eb0"
+                "reference": "618874c68145bf38355fe0bfd1cffe70fc83f32c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/7d46f65e054bc8b3f3f0df1337019fcef9aa6eb0",
-                "reference": "7d46f65e054bc8b3f3f0df1337019fcef9aa6eb0",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/618874c68145bf38355fe0bfd1cffe70fc83f32c",
+                "reference": "618874c68145bf38355fe0bfd1cffe70fc83f32c",
                 "shasum": ""
             },
             "require": {
@@ -2365,7 +2365,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-10T21:49:43+00:00"
+            "time": "2023-08-14T21:12:58+00:00"
         },
         {
             "name": "smolblog/activitypub-types",
@@ -2415,11 +2415,11 @@
         },
         {
             "name": "smolblog/smolblog-core",
-            "version": "dev-CU-86785qyx3-Upload-Images",
+            "version": "dev-CU-86786008x-Finish-micropub-spec",
             "dist": {
                 "type": "path",
                 "url": "/Users/eph/Dev/smolblog-core",
-                "reference": "c739b0937e62038425bfb6ffe07507b9e207e15e"
+                "reference": "fb03626432b20b08c89955f06689ee52c4bcaec6"
             },
             "require": {
                 "cebe/markdown": "^1.2",
@@ -2433,6 +2433,7 @@
                 "psr/event-dispatcher": "^1.0",
                 "psr/http-client": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
+                "psr/log": "^3.0",
                 "ramsey/uuid": "^4.6",
                 "smolblog/activitypub-types": "^1.0",
                 "taproot/micropub-adapter": "^0.1.1"
@@ -2496,12 +2497,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "95e5df3dfff8b48965b3d92e8fbcb835e1f03d0a"
+                "reference": "0870356afcf5ca95010d74f36e6a0b41a5c3a875"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/95e5df3dfff8b48965b3d92e8fbcb835e1f03d0a",
-                "reference": "95e5df3dfff8b48965b3d92e8fbcb835e1f03d0a",
+                "url": "https://api.github.com/repos/symfony/console/zipball/0870356afcf5ca95010d74f36e6a0b41a5c3a875",
+                "reference": "0870356afcf5ca95010d74f36e6a0b41a5c3a875",
                 "shasum": ""
             },
             "require": {
@@ -2579,7 +2580,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-30T13:24:47+00:00"
+            "time": "2023-08-17T15:49:45+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -3541,16 +3542,16 @@
         },
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef"
+                "reference": "4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
-                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc",
+                "reference": "4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc",
                 "shasum": ""
             },
             "require-dev": {
@@ -3575,9 +3576,9 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.1"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.2"
             },
-            "time": "2023-06-14T19:23:12+00:00"
+            "time": "2023-08-09T19:43:41+00:00"
         }
     ],
     "packages-dev": [
@@ -3784,12 +3785,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCompatibility/PHPCompatibilityWP.git",
-                "reference": "262f9d81273932315d15d704f69b9d678b939cb3"
+                "reference": "96bce8776a2a83c6bad3a7e1ae75b2598b660197"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibilityWP/zipball/262f9d81273932315d15d704f69b9d678b939cb3",
-                "reference": "262f9d81273932315d15d704f69b9d678b939cb3",
+                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibilityWP/zipball/96bce8776a2a83c6bad3a7e1ae75b2598b660197",
+                "reference": "96bce8776a2a83c6bad3a7e1ae75b2598b660197",
                 "shasum": ""
             },
             "require": {
@@ -3832,7 +3833,7 @@
                 "issues": "https://github.com/PHPCompatibility/PHPCompatibilityWP/issues",
                 "source": "https://github.com/PHPCompatibility/PHPCompatibilityWP"
             },
-            "time": "2023-01-05T13:34:27+00:00"
+            "time": "2023-08-18T03:16:17+00:00"
         },
         {
             "name": "phpcsstandards/phpcsextra",
@@ -3840,12 +3841,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "64b81d1ff23bb0b6f682189169ab823e4489df0e"
+                "reference": "ad2b11964680e23af8a13b3b200da35d98ad7395"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/64b81d1ff23bb0b6f682189169ab823e4489df0e",
-                "reference": "64b81d1ff23bb0b6f682189169ab823e4489df0e",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/ad2b11964680e23af8a13b3b200da35d98ad7395",
+                "reference": "ad2b11964680e23af8a13b3b200da35d98ad7395",
                 "shasum": ""
             },
             "require": {
@@ -3896,7 +3897,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSExtra/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSExtra"
             },
-            "time": "2023-07-20T12:24:28+00:00"
+            "time": "2023-08-16T21:39:53+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -3978,12 +3979,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "7a733cd458240c6fbf20d9e01def547e6aeedf8d"
+                "reference": "a813c38729aef0034ff7b0f5f0ac54e94ea76804"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/7a733cd458240c6fbf20d9e01def547e6aeedf8d",
-                "reference": "7a733cd458240c6fbf20d9e01def547e6aeedf8d",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/a813c38729aef0034ff7b0f5f0ac54e94ea76804",
+                "reference": "a813c38729aef0034ff7b0f5f0ac54e94ea76804",
                 "shasum": ""
             },
             "require": {
@@ -4028,7 +4029,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2023-08-01T16:27:33+00:00"
+            "time": "2023-08-06T23:03:57+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -4036,16 +4037,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "efbaa1df3cd584418a8908e0340f3b83d41b7cd1"
+                "reference": "1eb217b1c69cdb085d409c59671901aa22704f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/efbaa1df3cd584418a8908e0340f3b83d41b7cd1",
-                "reference": "efbaa1df3cd584418a8908e0340f3b83d41b7cd1",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/1eb217b1c69cdb085d409c59671901aa22704f1f",
+                "reference": "1eb217b1c69cdb085d409c59671901aa22704f1f",
                 "shasum": ""
             },
             "require": {
                 "ext-filter": "*",
+                "ext-libxml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlreader": "*",
                 "php": ">=5.4",
                 "phpcsstandards/phpcsextra": "^1.1.0",
                 "phpcsstandards/phpcsutils": "^1.0.8",
@@ -4059,6 +4063,7 @@
                 "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "suggest": {
+                "ext-iconv": "For improved results",
                 "ext-mbstring": "For improved results"
             },
             "default-branch": true,
@@ -4085,7 +4090,7 @@
                 "source": "https://github.com/WordPress/WordPress-Coding-Standards",
                 "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
             },
-            "time": "2023-07-28T14:57:50+00:00"
+            "time": "2023-08-19T08:47:28+00:00"
         }
     ],
     "aliases": [],

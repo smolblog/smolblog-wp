@@ -37,6 +37,7 @@ class DebugEndpoint extends BasicEndpoint {
 				$map
 			),
 			database: print_r($this->db, true),
+			rewrite: (new \WP_Rewrite())->wp_rewrite_rules(),
 		);
 	}
 }

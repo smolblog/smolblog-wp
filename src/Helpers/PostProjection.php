@@ -4,7 +4,6 @@ namespace Smolblog\WP\Helpers;
 
 use DateTimeInterface;
 use Exception;
-use Smolblog\Core\Content\Content;
 use Smolblog\Core\Content\ContentVisibility;
 use Smolblog\Core\Content\Events\{
 	ContentCreated,
@@ -16,8 +15,8 @@ use Smolblog\Core\Content\Events\{
 };
 use Smolblog\Core\Content\Extensions\Tags\Tags;
 use Smolblog\Core\Content\Types\Note\Note;
+use Smolblog\Core\Content\Types\Picture\Picture;
 use Smolblog\Core\Content\Types\Reblog\Reblog;
-use Smolblog\Core\Content\Types\Status\Status;
 use Smolblog\Framework\Messages\Attributes\ExecutionLayerListener;
 use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Messages\Projection;
@@ -141,9 +140,11 @@ class PostProjection implements Projection {
 	private function typeToPostType(string $contentType): string {
 		switch ($contentType) {
 			case Note::class:
-				return 'note';
+				return 'sb-note';
 			case Reblog::class:
-				return 'reblog';
+				return 'sb-reblog';
+			case Picture::class:
+				return 'sb-picture';
 			default:
 				return 'post';
 		}

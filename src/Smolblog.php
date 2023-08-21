@@ -81,7 +81,7 @@ class Smolblog {
 					Helpers\SiteHelper::class => [],
 					Helpers\UserHelper::class => [],
 					Helpers\EmbedHelper::class => [],
-					Helpers\MediaLibraryHelper::class => [],
+					Helpers\MediaLibraryHelper::class => ['log' => LoggerInterface::class],
 					DebugEndpoint::class => ['depMap' => null, 'db' => ConnectionInterface::class],
 
 					WordPressLogger::class => [],

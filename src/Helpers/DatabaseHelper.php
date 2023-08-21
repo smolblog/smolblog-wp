@@ -94,6 +94,13 @@ class DatabaseHelper {
 			markdown text NOT NULL,
 			html text,
 		EOF,
+		'pictures' => <<<EOF
+			content_uuid varchar(40) NOT NULL UNIQUE,
+			media text NOT NULL,
+			caption text,
+			media_html text,
+			caption_html text,
+		EOF,
 		'reblogs' => <<<EOF
 			content_uuid varchar(40) NOT NULL UNIQUE,
 			url varchar(255) NOT NULL,
