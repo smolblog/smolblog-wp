@@ -75,7 +75,7 @@ class Smolblog {
 					Core\Connector\Services\AuthRequestStateRepo::class => Helpers\AuthRequestStateHelper::class,
 					Core\Content\Types\Reblog\ExternalContentService::class => Helpers\EmbedHelper::class,
 
-					Helpers\PostProjection::class => ['bus' => MessageBus::class],
+					Helpers\PostProjection::class => ['bus' => MessageBus::class, 'log' => LoggerInterface::class],
 					Helpers\AsyncHelper::class => [],
 					Helpers\AuthRequestStateHelper::class => [],
 					Helpers\SiteHelper::class => [],

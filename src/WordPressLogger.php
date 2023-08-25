@@ -17,6 +17,8 @@ class WordPressLogger extends AbstractLogger {
 		// 	return;
 		// }
 
+		switch_to_blog( 1 );
+
 		$current = $this->getCurrentContent();
 		$this->log_title ??= date(DateTimeInterface::COOKIE);
 		
@@ -30,10 +32,13 @@ class WordPressLogger extends AbstractLogger {
 		], true);
 
 		if (is_wp_error( $result )) {
-			throw new \Exception( $result->get_error_message() );
+			$blog_id = get_current_blog_id();
+			throw new \Exception( $result->get_error_message() . " ($this->post_id, site $blog_id)" );
 		}
 
 		$this->post_id = $result;
+
+		restore_current_blog();
 	}
 
 	/**

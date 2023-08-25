@@ -4,6 +4,7 @@ namespace Smolblog\WP\Helpers;
 
 use DateTimeInterface;
 use Exception;
+use Psr\Log\LoggerInterface;
 use Smolblog\Core\Content\ContentVisibility;
 use Smolblog\Core\Content\Events\{
 	ContentCreated,
@@ -24,7 +25,7 @@ use Smolblog\Framework\Objects\Identifier;
 use Smolblog\WP\Helpers\SiteHelper;
 
 class PostProjection implements Projection {
-	public function __construct(private MessageBus $bus) {
+	public function __construct(private MessageBus $bus, private LoggerInterface $log) {
 	}
 
 	#[ExecutionLayerListener(earlier: 3)]
@@ -79,6 +80,9 @@ class PostProjection implements Projection {
 			'post_content' => $content->type->getBodyContent(),
 			'post_title' => $content->type->getTitle(),
 			'post_date' => $content->publishTimestamp->format( DateTimeInterface::ATOM ),
+			'tags_input' => isset($content->extensions[Tags::class]) ?
+				array_map(fn($tag) => $tag->text, $content->extensions[Tags::class]->tags) :
+				[],
 		];
 
 		$results = wp_update_post( $args );
@@ -116,14 +120,20 @@ class PostProjection implements Projection {
 	 * @return int|null
 	 */
 	public static function UuidToInt(Identifier $uuid) {
-		$results = get_posts( [
-			'numberposts' => 1,
-			'fields' => 'ids',
-			'meta_key' => 'smolblog_uuid',
-			'meta_value' => $uuid->toString(),
-		] );
+		global $wpdb;
 
-		return $results[0] ?? null;
+		$results = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'smolblog_uuid' AND meta_value = %s",
+				$uuid->toString()
+			)
+		);
+
+		if (!isset($results)) {
+			throw new Exception("Could not find post $uuid.");
+		}
+
+		return $results;
 	}
 
 	private function visibilityToStatus(ContentVisibility $vis) {
