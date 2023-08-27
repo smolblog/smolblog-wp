@@ -355,6 +355,60 @@
             "time": "2023-06-16T13:41:28+00:00"
         },
         {
+            "name": "elephox/mimey",
+            "version": "4.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elephox-dev/mimey.git",
+                "reference": "2b5910b3b35613feb47436d392f857e87183fcc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elephox-dev/mimey/zipball/2b5910b3b35613feb47436d392f857e87183fcc9",
+                "reference": "2b5910b3b35613feb47436d392f857e87183fcc9",
+                "shasum": ""
+            },
+            "require": {
+                "jetbrains/phpstorm-attributes": "^1.0",
+                "php": "^8.1 <8.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6"
+            },
+            "suggest": {
+                "ext-mbstring": "For non-English (user) input parsing"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Elephox\\Mimey\\": [
+                        "src/",
+                        "dist/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ralph Khattar",
+                    "email": "ralph.khattar@gmail.com"
+                },
+                {
+                    "name": "Ricardo Boss",
+                    "email": "contact@ricardoboss.de"
+                }
+            ],
+            "description": "PHP package for converting file extensions to MIME types and vice versa.",
+            "support": {
+                "issues": "https://github.com/elephox-dev/mimey/issues",
+                "source": "https://github.com/elephox-dev/mimey/tree/4.0.5"
+            },
+            "time": "2023-02-21T14:45:43+00:00"
+        },
+        {
             "name": "fig/event-dispatcher-util",
             "version": "1.3.1",
             "source": {
@@ -411,22 +465,22 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.7.x-dev",
+            "version": "7.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "21314fd3f7b673044ec49b7a0b1d0b2ede2d57ff"
+                "reference": "deed4d9504842a5cee61601801c2ad5f21011b91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/21314fd3f7b673044ec49b7a0b1d0b2ede2d57ff",
-                "reference": "21314fd3f7b673044ec49b7a0b1d0b2ede2d57ff",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/deed4d9504842a5cee61601801c2ad5f21011b91",
+                "reference": "deed4d9504842a5cee61601801c2ad5f21011b91",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/promises": "^1.5.3 || ^2.0",
-                "guzzlehttp/psr7": "^1.9.1 || ^2.4.5",
+                "guzzlehttp/promises": "^1.5.3 || ^2.0.1",
+                "guzzlehttp/psr7": "^1.9.1 || ^2.5.1",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.2 || ^3.0"
@@ -518,7 +572,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.7"
+                "source": "https://github.com/guzzle/guzzle/tree/7.8"
             },
             "funding": [
                 {
@@ -534,7 +588,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-03T17:16:17+00:00"
+            "time": "2023-08-27T10:28:50+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -542,12 +596,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "111166291a0f8130081195ac4556a5587d7f1b5d"
+                "reference": "71b12f952d8be69a239989db2fe08314a5189e3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/111166291a0f8130081195ac4556a5587d7f1b5d",
-                "reference": "111166291a0f8130081195ac4556a5587d7f1b5d",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/71b12f952d8be69a239989db2fe08314a5189e3b",
+                "reference": "71b12f952d8be69a239989db2fe08314a5189e3b",
                 "shasum": ""
             },
             "require": {
@@ -602,7 +656,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.0.1"
+                "source": "https://github.com/guzzle/promises/tree/2.0"
             },
             "funding": [
                 {
@@ -618,7 +672,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-03T15:11:55+00:00"
+            "time": "2023-08-27T10:15:36+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -626,12 +680,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "8bd7c33a0734ae1c5d074360512beb716bef3f77"
+                "reference": "be45764272e8873c72dbe3d2edcfdfcc3bc9f727"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/8bd7c33a0734ae1c5d074360512beb716bef3f77",
-                "reference": "8bd7c33a0734ae1c5d074360512beb716bef3f77",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/be45764272e8873c72dbe3d2edcfdfcc3bc9f727",
+                "reference": "be45764272e8873c72dbe3d2edcfdfcc3bc9f727",
                 "shasum": ""
             },
             "require": {
@@ -719,7 +773,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.6.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.6.1"
             },
             "funding": [
                 {
@@ -735,7 +789,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-03T15:06:02+00:00"
+            "time": "2023-08-27T10:13:57+00:00"
         },
         {
             "name": "illuminate/collections",
@@ -1123,6 +1177,48 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2023-06-11T21:11:53+00:00"
+        },
+        {
+            "name": "jetbrains/phpstorm-attributes",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JetBrains/phpstorm-attributes.git",
+                "reference": "a7a83ae5df4dd3c0875484483de19de8edf60a9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-attributes/zipball/a7a83ae5df4dd3c0875484483de19de8edf60a9f",
+                "reference": "a7a83ae5df4dd3c0875484483de19de8edf60a9f",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JetBrains\\PhpStorm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "JetBrains",
+                    "homepage": "https://www.jetbrains.com"
+                }
+            ],
+            "description": "PhpStorm specific attributes",
+            "keywords": [
+                "attributes",
+                "jetbrains",
+                "phpstorm"
+            ],
+            "support": {
+                "issues": "https://youtrack.jetbrains.com/newIssue?project=WI",
+                "source": "https://github.com/JetBrains/phpstorm-attributes/tree/1.0"
+            },
+            "time": "2020-11-17T11:09:47+00:00"
         },
         {
             "name": "liamdennehy/http-signatures-php",
@@ -1618,12 +1714,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "c5e9d51e517da7c1b60a9198338ab1621351866f"
+                "reference": "f7e80e44c931231ab38f949de3721eb58db6118f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/c5e9d51e517da7c1b60a9198338ab1621351866f",
-                "reference": "c5e9d51e517da7c1b60a9198338ab1621351866f",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/f7e80e44c931231ab38f949de3721eb58db6118f",
+                "reference": "f7e80e44c931231ab38f949de3721eb58db6118f",
                 "shasum": ""
             },
             "require": {
@@ -1720,7 +1816,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-11T03:33:35+00:00"
+            "time": "2023-08-25T01:22:16+00:00"
         },
         {
             "name": "psr/clock",
@@ -2415,15 +2511,16 @@
         },
         {
             "name": "smolblog/smolblog-core",
-            "version": "dev-CU-86786008x-Finish-micropub-spec",
+            "version": "dev-CU-86785qyy5-C2PA-Support",
             "dist": {
                 "type": "path",
                 "url": "/Users/eph/Dev/smolblog-core",
-                "reference": "905d8abbf86c9efc7b043fe3e234f22a9f0aa7b8"
+                "reference": "2614749f78e89b3cc49e761f709c428907100448"
             },
             "require": {
                 "cebe/markdown": "^1.2",
                 "crell/tukio": "^1.4",
+                "elephox/mimey": "^4.0",
                 "guzzlehttp/psr7": "^2.5",
                 "illuminate/database": "^9.0",
                 "liamdennehy/http-signatures-php": "dev-use-upstream-phpseclib",
@@ -3841,12 +3938,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "ad2b11964680e23af8a13b3b200da35d98ad7395"
+                "reference": "98bcdbacbda14b1db85f710b1853125726795bbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/ad2b11964680e23af8a13b3b200da35d98ad7395",
-                "reference": "ad2b11964680e23af8a13b3b200da35d98ad7395",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/98bcdbacbda14b1db85f710b1853125726795bbc",
+                "reference": "98bcdbacbda14b1db85f710b1853125726795bbc",
                 "shasum": ""
             },
             "require": {
@@ -3897,7 +3994,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSExtra/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSExtra"
             },
-            "time": "2023-08-16T21:39:53+00:00"
+            "time": "2023-08-26T04:46:45+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -3905,12 +4002,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "69465cab9d12454e5e7767b9041af0cd8cd13be7"
+                "reference": "a731124fa118dcc2e736308e1bc5141b227113e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/69465cab9d12454e5e7767b9041af0cd8cd13be7",
-                "reference": "69465cab9d12454e5e7767b9041af0cd8cd13be7",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/a731124fa118dcc2e736308e1bc5141b227113e8",
+                "reference": "a731124fa118dcc2e736308e1bc5141b227113e8",
                 "shasum": ""
             },
             "require": {
@@ -3923,7 +4020,7 @@
                 "php-parallel-lint/php-console-highlighter": "^1.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcsstandards/phpcsdevcs": "^1.1.6",
-                "yoast/phpunit-polyfills": "^1.0.5 || ^2.0.0"
+                "yoast/phpunit-polyfills": "^1.1.0 || ^2.0.0"
             },
             "default-branch": true,
             "type": "phpcodesniffer-standard",
@@ -3971,7 +4068,7 @@
                 "issues": "https://github.com/PHPCSStandards/PHPCSUtils/issues",
                 "source": "https://github.com/PHPCSStandards/PHPCSUtils"
             },
-            "time": "2023-07-16T21:39:41+00:00"
+            "time": "2023-08-25T11:51:44+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -3979,12 +4076,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "a813c38729aef0034ff7b0f5f0ac54e94ea76804"
+                "reference": "b0ecdf10fa5a15bbf341b6dd75d1b23bd803aaaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/a813c38729aef0034ff7b0f5f0ac54e94ea76804",
-                "reference": "a813c38729aef0034ff7b0f5f0ac54e94ea76804",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/b0ecdf10fa5a15bbf341b6dd75d1b23bd803aaaf",
+                "reference": "b0ecdf10fa5a15bbf341b6dd75d1b23bd803aaaf",
                 "shasum": ""
             },
             "require": {
@@ -4029,7 +4126,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2023-08-06T23:03:57+00:00"
+            "time": "2023-08-27T15:25:51+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

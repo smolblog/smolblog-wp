@@ -12,6 +12,7 @@ use Smolblog\Core;
 use Smolblog\MicroBlog;
 use Smolblog\ActivityPub;
 use Smolblog\IndieWeb;
+use Smolblog\ContentProvenance;
 use Smolblog\Framework\Infrastructure\AppKit;
 use Smolblog\Framework\Infrastructure\DefaultModel;
 use Smolblog\Framework\Infrastructure\ServiceRegistry;
@@ -43,6 +44,7 @@ class Smolblog {
 			MicroBlog\Model::class,
 			ActivityPub\Model::class,
 			IndieWeb\Model::class,
+			ContentProvenance\Model::class,
 			$this->wordpress_model(),
 			...$plugin_models,
 		]);
@@ -65,9 +67,17 @@ class Smolblog {
 							return get_rest_url( null, '/smolblog/v2' . $endpoint );
 						}
 					},
+					ContentProvenance\ContentProvenanceEnvironment::class =>
+						fn() => new class implements ContentProvenance\ContentProvenanceEnvironment {
+							public function getPathToC2patool(): string {
+								return ABSPATH . 'c2patool';
+							}
+						},
 					EndpointRegistrar::class => [ 'container' => ContainerInterface::class ],
 					wpdb::class => fn() => $wpdb,
 					ConnectionInterface::class => fn() => DatabaseHelper::getLaravelConnection(),
+					\Elephox\Mimey\MimeTypesInterface::class => \Elephox\Mimey\MimeTypes::class,
+					\Elephox\Mimey\MimeTypes::class => [],
 
 					ClientInterface::class => \GuzzleHttp\Client::class,
 					\GuzzleHttp\Client::class => fn() => new \GuzzleHttp\Client(['verify' => false]),
