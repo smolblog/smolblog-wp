@@ -76,15 +76,14 @@ class UserHelper implements Listener {
 	}
 
 	public static function UuidToInt(Identifier $uuid) {
-		$user_query = get_users( [
-			'fields' => 'id',
-			'meta_query' => [
-				'key' => 'smolblog_user_id',
-				'value' => $uuid->toString(),
-			],
-		] );
+		global $wpdb;
 
-		return $user_query[0];
+		return $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'smolblog_user_id' AND meta_value = %s",
+				$uuid->toString()
+			)
+		);
 	}
 
 	public static function IntToUuid(int $dbid) {
