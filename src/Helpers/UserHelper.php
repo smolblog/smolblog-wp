@@ -49,6 +49,7 @@ class UserHelper implements Listener {
 	public function onUserCanEditProfile(UserCanEditProfile $query) {
 		if ($query->profileId == $query->userId) {
 			$query->setResults(true);
+			return;
 		}
 
 		$query->setResults(user_can( self::UuidToInt($query->userId), 'edit_users' ));
@@ -59,7 +60,12 @@ class UserHelper implements Listener {
 
 		$query->setResults(array_values(array_map(
 			fn($site) => SiteHelper::SiteFromWpId($site->userblog_id),
-			get_blogs_of_user( $user_id )
+			array_filter(get_blogs_of_user( $user_id ), function($site) use($user_id) {
+				switch_to_blog( $site->userblog_id );
+				$can = user_can( $user_id, 'publish_posts' );
+				restore_current_blog();
+				return $can;
+			})
 		)));
 	}
 

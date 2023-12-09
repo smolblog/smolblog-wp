@@ -88,6 +88,7 @@ class DatabaseHelper {
 			thumbnail_url varchar(255) NOT NULL,
 			default_url varchar(255) NOT NULL,
 			file text,
+			uploaded_at varchar(30),
 		EOF,
 		'notes' => <<<EOF
 			content_uuid varchar(40) NOT NULL UNIQUE,

@@ -13,6 +13,7 @@ use Smolblog\MicroBlog;
 use Smolblog\ActivityPub;
 use Smolblog\IndieWeb;
 use Smolblog\ContentProvenance;
+use Smolblog\Tumblr;
 use Smolblog\Framework\Infrastructure\AppKit;
 use Smolblog\Framework\Infrastructure\DefaultModel;
 use Smolblog\Framework\Infrastructure\ServiceRegistry;
@@ -45,6 +46,7 @@ class Smolblog {
 			ActivityPub\Model::class,
 			IndieWeb\Model::class,
 			ContentProvenance\Model::class,
+			Tumblr\Model::class,
 			$this->wordpress_model(),
 			...$plugin_models,
 		]);

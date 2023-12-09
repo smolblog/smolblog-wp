@@ -137,3 +137,43 @@ add_action( 'wp_head', function() {
 	$siteId = get_current_site_uuid();
 	echo '<link rel="micropub" href="' . get_rest_url( null, "/smolblog/v2/site/$siteId/micropub" ) . '">';
 });
+
+add_action( 'login_enqueue_scripts', function() {
+	$logo_url = plugin_dir_url( __FILE__ ) . 'smolblog.wordmark.ondark.png';
+	?>
+		<style type="text/css">
+			body.login {
+				display: flex;
+				background: #191b20;
+				color: #e9e3db;
+	
+				& div#login h1 a {
+					background-image: url(<?php echo $logo_url; ?>);
+					height:65px;
+					width:320px;
+					background-size: contain;
+					background-repeat: no-repeat;
+					padding-bottom: 30px;
+				}
+	
+				& div#login form,
+				& .message,
+				& .success,
+				& .notice {
+					color: #3c434a;
+				}
+	
+				& p#backtoblog a, & p#nav a {
+					color: #9cd398;
+	
+					&:hover {
+						color: #b7dfb3;
+					}
+				}
+			}
+		</style>
+	<?php
+	});
+	
+	add_filter( 'login_headerurl', fn() => 'https://smolblog.com/' );
+	add_filter( 'login_headertext', fn() => 'Smolblog' );
